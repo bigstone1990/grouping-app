@@ -23,7 +23,7 @@ import { Head, Link } from '@inertiajs/vue3';
                     <div class="p-6 text-gray-900">
                         <ul class="list-disc">
                             <li>
-                                <Link :href="route('draggabletest.index')" class="underline text-blue-400">グループ分け</Link>
+                                <Link :href="route('grouping.index')" class="underline text-blue-400">グループ分け</Link>
                             </li>
                         </ul>
                     </div>
