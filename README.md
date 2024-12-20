@@ -47,5 +47,11 @@ sail artisan lang:publish
 sail composer require askdkc/breezejp --dev
 php artisan breezejp
 
+### ストレージのリンク
+sail artisan storage:link
+
 ## @shopify/draggable インストール
 sail npm install @shopify/draggable --save
+
+## sass-embedded インストール
+sail npm install -D sass-embedded
