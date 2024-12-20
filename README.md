@@ -47,3 +47,5 @@ sail artisan lang:publish
 sail composer require askdkc/breezejp --dev
 php artisan breezejp
 
+## @shopify/draggable インストール
+sail npm install @shopify/draggable --save
