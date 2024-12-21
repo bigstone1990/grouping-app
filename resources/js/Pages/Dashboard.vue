@@ -6,7 +6,7 @@ import { Head, Link } from '@inertiajs/vue3';
 <template>
     <Head title="Dashboard" />
 
-    <AuthenticatedLayout>
+    <AuthenticatedLayout :is100vh="false">
         <template #header>
             <h2
                 class="text-xl font-semibold leading-tight text-gray-800"
@@ -27,6 +27,9 @@ import { Head, Link } from '@inertiajs/vue3';
                             </li>
                             <li>
                                 <Link :href="route('groups.index')" class="underline text-blue-400">グループ一覧</Link>
+                            </li>
+                            <li>
+                                <Link :href="route('members.index')" class="underline text-blue-400">メンバー一覧</Link>
                             </li>
                         </ul>
                     </div>

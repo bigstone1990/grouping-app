@@ -6,6 +6,9 @@ use App\Http\Requests\StoreMemberRequest;
 use App\Http\Requests\UpdateMemberRequest;
 use Illuminate\Http\Request;
 use App\Models\Member;
+use Inertia\Inertia;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class MemberController extends Controller
 {
@@ -14,7 +17,11 @@ class MemberController extends Controller
      */
     public function index()
     {
-        //
+        $members = Member::where('user_id', '=', Auth::id())->orderBy('id')->get();
+
+        return Inertia::render('Member/Index', [
+            'members' => $members,
+        ]);
     }
 
     /**

@@ -27,7 +27,7 @@ const deleteGroup = (id) => {
 <template>
   <Head title="グループ名編集" />
 
-  <AuthenticatedLayout>
+  <AuthenticatedLayout :is100vh="false">
     <template #header>
       <h2
           class="text-xl font-semibold leading-tight text-gray-800"

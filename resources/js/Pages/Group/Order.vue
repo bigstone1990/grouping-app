@@ -1,5 +1,5 @@
 <script setup>
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout100VH.vue';
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, Link, router } from '@inertiajs/vue3';
 import { Sortable, Plugins } from '@shopify/draggable';
 import { ref, reactive, onMounted, onBeforeUnmount } from 'vue';
@@ -53,7 +53,6 @@ onMounted(() => {
 
       groupOrderData.orderData.push({id: id, order: order});
     }
-    // console.log(orderData.data);
   });
 });
 
@@ -65,52 +64,52 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-    <Head title="グループ順編集" />
+  <Head title="グループ順編集" />
 
-    <AuthenticatedLayout>
-        <template #header>
-            <h2
-                class="text-xl font-semibold leading-tight text-gray-800"
-            >
-                グループ順編集
-            </h2>
-        </template>
+  <AuthenticatedLayout :is100vh="true">
+    <template #header>
+      <h2
+        class="text-xl font-semibold leading-tight text-gray-800"
+      >
+        グループ順編集
+      </h2>
+    </template>
 
-        <div class="py-12 PageContent">
-          <div class="h-full mx-auto max-w-7xl sm:px-6 lg:px-8">
-            <div class="PageContentLayout">
-              <section id="GroupOrderContainer" class="GroupOrderContainer">
-                <article id="GroupOrderListWrapper" class="GroupOrderListWrapper">
-                  <header class="GroupOrderListHeader">
-                    <h3 class="GroupOrderListHeading">グループ名</h3>
-                  </header>
+    <div class="py-12 PageContent">
+      <div class="h-full mx-auto max-w-7xl sm:px-6 lg:px-8">
+        <div class="PageContentLayout">
+          <section id="GroupOrderContainer" class="GroupOrderContainer">
+            <article id="GroupOrderListWrapper" class="GroupOrderListWrapper">
+              <header class="GroupOrderListHeader">
+                <h3 class="GroupOrderListHeading">グループ名</h3>
+              </header>
 
-                  <div class="GroupOrderListContainer">
-                    <ul v-if="props.groups.length !== 0" class="GroupOrderList">
-                      <li v-for="group in props.groups" :key="group.id" :data-id="group.id" class="GroupOrderListItem Group--isDraggable">
-                        <div class="GroupOrderListItemContent">
-                          <h4 class="GroupOrderListItemHeading">{{ group.name }}</h4>
-                          <div class="DragHandle"></div>
+              <div class="GroupOrderListContainer">
+                <ul v-if="props.groups.length !== 0" class="GroupOrderList">
+                  <li v-for="group in props.groups" :key="group.id" :data-id="group.id" class="GroupOrderListItem Group--isDraggable">
+                    <div class="GroupOrderListItemContent">
+                      <h4 class="GroupOrderListItemHeading">{{ group.name }}</h4>
+                      <div class="DragHandle"></div>
 
-                          <div class="Pattern Pattern--typeHalftone"></div>
-                          <div class="Pattern Pattern--typePlaced"></div>
-                        </div>
-                      </li>
-                    </ul>
-                    <div v-else class="flex justify-center items-center px-4 h-full">
-                      <p>グループがありません</p>
+                      <div class="Pattern Pattern--typeHalftone"></div>
+                      <div class="Pattern Pattern--typePlaced"></div>
                     </div>
-                  </div>
-                </article>
-                <div class="mt-4 flex gap-4 justify-center">
-                  <Link as="button" :href="route('groups.index')" class="text-white bg-gray-500 border-0 py-2 px-8 focus:outline-none hover:bg-gray-600 rounded text-lg">戻る</Link>
-                  <button type="button" @click="updateOrder" class="text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">更新</button>
+                  </li>
+                </ul>
+                <div v-else class="flex justify-center items-center px-4 h-full">
+                  <p>グループがありません</p>
                 </div>
-              </section>
+              </div>
+            </article>
+            <div class="mt-4 flex gap-4 justify-center">
+              <Link as="button" :href="route('groups.index')" class="text-white bg-gray-500 border-0 py-2 px-8 focus:outline-none hover:bg-gray-600 rounded text-lg">戻る</Link>
+              <button type="button" @click="updateOrder" class="text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">更新</button>
             </div>
-          </div>
+          </section>
         </div>
-    </AuthenticatedLayout>
+      </div>
+    </div>
+  </AuthenticatedLayout>
 </template>
 
 <style lang="scss">

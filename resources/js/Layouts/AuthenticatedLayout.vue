@@ -7,12 +7,16 @@ import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import { Link } from '@inertiajs/vue3';
 
+const props = defineProps({
+    is100vh: Boolean,
+});
+
 const showingNavigationDropdown = ref(false);
 </script>
 
 <template>
     <div>
-        <div class="min-h-screen bg-gray-100">
+        <div class="min-h-screen bg-gray-100" :class="{'h-screen overflow-hidden': props.is100vh}">
             <nav
                 class="border-b border-gray-100 bg-white"
             >
@@ -38,6 +42,24 @@ const showingNavigationDropdown = ref(false);
                                     :active="route().current('dashboard')"
                                 >
                                     Dashboard
+                                </NavLink>
+                                <NavLink
+                                    :href="route('grouping.index')"
+                                    :active="route().current('grouping.index')"
+                                >
+                                    グループ分け
+                                </NavLink>
+                                <NavLink
+                                    :href="route('groups.index')"
+                                    :active="route().current('groups.index')"
+                                >
+                                    グループ管理
+                                </NavLink>
+                                <NavLink
+                                    :href="route('members.index')"
+                                    :active="route().current('members.index')"
+                                >
+                                    メンバー管理
                                 </NavLink>
                             </div>
                         </div>
@@ -146,6 +168,24 @@ const showingNavigationDropdown = ref(false);
                         >
                             Dashboard
                         </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            :href="route('grouping.index')"
+                            :active="route().current('grouping.index')"
+                        >
+                            グループ分け
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            :href="route('groups.index')"
+                            :active="route().current('groups.index')"
+                        >
+                            グループ管理
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            :href="route('members.index')"
+                            :active="route().current('members.index')"
+                        >
+                            メンバー管理
+                        </ResponsiveNavLink>
                     </div>
 
                     <!-- Responsive Settings Options -->
@@ -190,7 +230,7 @@ const showingNavigationDropdown = ref(false);
             </header>
 
             <!-- Page Content -->
-            <main>
+            <main :class="{'h-full': props.is100vh}">
                 <slot />
             </main>
         </div>
