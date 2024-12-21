@@ -26,14 +26,14 @@ const createGroup = () => {
       </h2>
     </template>
 
-    <div class="py-12">
+    <div class="py-4">
       <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div
           class="overflow-hidden bg-white shadow-sm sm:rounded-lg"
         >
-          <div class="p-6 text-gray-900">
+          <div class="p-4 text-gray-900">
             <section class="text-gray-600 body-font relative">
-              <div class="container px-5 py-5 mx-auto">
+              <div class="container mx-auto">
                 <div class="lg:w-1/2 md:w-2/3 mx-auto">
                   <div class="flex flex-col">
                     <form @submit.prevent="createGroup">

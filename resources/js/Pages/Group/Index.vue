@@ -21,16 +21,16 @@ const props = defineProps({
     </template>
     
     <FlashMessage />
-    <div class="py-12">
+    <div class="py-4">
       <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div
           class="overflow-hidden bg-white shadow-sm sm:rounded-lg"
         >
-          <div class="p-6 text-gray-900">
+          <div class="p-4 text-gray-900">
             <section class="text-gray-600">
-              <div class="container px-5 py-5 mx-auto">
+              <div class="container mx-auto">
                 <div class="lg:w-2/3 w-full mx-auto overflow-auto">
-                  <div class="flex gap-4 justify-end pl-4 mb-4 w-full">
+                  <div class="flex gap-4 justify-end mb-4 w-full">
                     <Link as="button" :href="route('groups.create')" class="text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">新規作成</Link>
                     <Link as="button" :href="route('groups.ordering.edit')" class="text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">グループ順編集</Link>
                   </div>

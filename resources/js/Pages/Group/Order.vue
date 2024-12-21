@@ -75,7 +75,7 @@ onBeforeUnmount(() => {
       </h2>
     </template>
 
-    <div class="py-12 PageContent">
+    <div class="py-4 PageContent">
       <div class="h-full mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div class="PageContentLayout">
           <section id="GroupOrderContainer" class="GroupOrderContainer">
@@ -138,7 +138,7 @@ onBeforeUnmount(() => {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 1.5rem;
+  padding: 1rem;
   max-width: 80%;
   width: 100%;
   height: 100%;
