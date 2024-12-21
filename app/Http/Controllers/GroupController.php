@@ -6,6 +6,9 @@ use App\Http\Requests\StoreGroupRequest;
 use App\Http\Requests\UpdateGroupRequest;
 use Illuminate\Http\Request;
 use App\Models\Group;
+use Inertia\Inertia;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class GroupController extends Controller
 {
@@ -14,7 +17,10 @@ class GroupController extends Controller
      */
     public function index()
     {
-        //
+        $groups = Group::where('user_id', '=', Auth::id())->orderBy('order')->get();
+        return Inertia::render('Group/Index', [
+            'groups' => $groups,
+        ]);
     }
 
     /**
@@ -22,7 +28,7 @@ class GroupController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Group/Create');
     }
 
     /**
@@ -30,7 +36,19 @@ class GroupController extends Controller
      */
     public function store(StoreGroupRequest $request)
     {
-        //
+        $maxOrder = Group::where('user_id', '=', Auth::id())->max('order');
+        $newOrder = $maxOrder + 1;
+
+        Group::create([
+            'user_id' => Auth::id(),
+            'name' => $request->groupName,
+            'order' => $newOrder,
+        ]);
+
+        return to_route('groups.index')->with([
+            'message' => '登録しました',
+            'status' => 'success',
+        ]);
     }
 
     /**

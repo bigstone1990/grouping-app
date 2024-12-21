@@ -5,6 +5,9 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\GroupingController;
+use App\Http\Controllers\GroupController;
+use App\Http\Controllers\MemberController;
+use App\Models\Group;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -21,6 +24,17 @@ Route::get('/dashboard', function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/grouping/index', [GroupingController::class, 'index'])->name('grouping.index');
+});
+
+
+Route::middleware('auth')->group(function () {
+    Route::get('groups/ordering/edit', [GroupController::class, 'orderingEdit'])->name('groups.ordering.edit');
+    Route::post('groups/ordering/update', [GroupController::class, 'orderingUpdate'])->name('groups.ordering.update');
+    Route::resource('groups', GroupController::class);
+});
+
+Route::middleware('auth')->group(function () {
+    Route::resource('members', MemberController::class);
 });
 
 Route::middleware('auth')->group(function () {

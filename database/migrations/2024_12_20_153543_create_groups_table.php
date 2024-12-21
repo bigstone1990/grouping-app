@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnUpdate()->cascadeOnUpdate();
             $table->string('name');
+            $table->integer('order');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -25,6 +25,9 @@ import { Head, Link } from '@inertiajs/vue3';
                             <li>
                                 <Link :href="route('grouping.index')" class="underline text-blue-400">グループ分け</Link>
                             </li>
+                            <li>
+                                <Link :href="route('groups.index')" class="underline text-blue-400">グループ一覧</Link>
+                            </li>
                         </ul>
                     </div>
                 </div>
