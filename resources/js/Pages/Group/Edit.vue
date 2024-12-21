@@ -5,24 +5,34 @@ import InputLabel from '@/Components/InputLabel.vue';
 import InputError from '@/Components/InputError.vue';
 import TextInput from '@/Components/TextInput.vue';
 
-const form = useForm({
-  groupName: '',
+const props = defineProps({
+  group: Object,
 });
 
-const createGroup = () => {
-    form.post(route('groups.store'));
+const form = useForm({
+  groupName: props.group.name,
+});
+
+const updateGroup = (id) => {
+    form.put(route('groups.update', {group: id}));
+};
+
+const deleteGroup = (id) => {
+  if (confirm('本当に削除しますか？')) {
+    form.delete(route('groups.destroy', {group: id}));
+  }
 };
 </script>
 
 <template>
-  <Head title="グループ新規作成" />
+  <Head title="グループ名編集" />
 
   <AuthenticatedLayout>
     <template #header>
       <h2
           class="text-xl font-semibold leading-tight text-gray-800"
       >
-        グループ新規作成
+        グループ名編集
       </h2>
     </template>
 
@@ -36,7 +46,7 @@ const createGroup = () => {
               <div class="container px-5 py-5 mx-auto">
                 <div class="lg:w-1/2 md:w-2/3 mx-auto">
                   <div class="flex flex-col">
-                    <form @submit.prevent="createGroup">
+                    <form @submit.prevent="updateGroup(props.group.id)">
                       <div class="p-2 w-full">
                         <div class="relative">
                           <InputLabel for="groupName" value="グループ名" class="leading-7 text-sm text-gray-600" />
@@ -53,7 +63,8 @@ const createGroup = () => {
                       </div>
                       <div class="p-2 w-full flex gap-4 justify-center">
                         <Link as="button" :href="route('groups.index')" class="text-white bg-gray-500 border-0 py-2 px-8 focus:outline-none hover:bg-gray-600 rounded text-lg">戻る</Link>
-                        <button class="text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">作成</button>
+                        <button class="text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">更新</button>
+                        <button type="button" v-on:click="deleteGroup(props.group.id)" class="text-white bg-red-500 border-0 py-2 px-8 focus:outline-none hover:bg-red-600 rounded text-lg">削除</button>
                       </div>
                     </form>
                   </div>

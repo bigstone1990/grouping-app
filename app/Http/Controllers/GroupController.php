@@ -56,7 +56,7 @@ class GroupController extends Controller
      */
     public function show(Group $group)
     {
-        //
+        return abort(404);
     }
 
     /**
@@ -64,7 +64,9 @@ class GroupController extends Controller
      */
     public function edit(Group $group)
     {
-        //
+        return Inertia::render('Group/Edit', [
+            'group' => $group,
+        ]);
     }
 
     /**
@@ -72,7 +74,14 @@ class GroupController extends Controller
      */
     public function update(UpdateGroupRequest $request, Group $group)
     {
-        //
+        $group->name = $request->groupName;
+
+        $group->save();
+
+        return to_route('groups.index')->with([
+            'message' => '更新しました',
+            'status' => 'success',
+        ]);
     }
 
     /**
@@ -80,6 +89,24 @@ class GroupController extends Controller
      */
     public function destroy(Group $group)
     {
-        //
+        $group->delete();
+
+        return to_route('groups.index')->with([
+            'message' => '削除しました',
+            'status' => 'danger',
+        ]);
+    }
+
+    public function orderingEdit()
+    {
+        $groups = Group::where('user_id', '=', Auth::id())->orderBy('order')->get();
+        return Inertia::render('Group/Order', [
+            'groups' => $groups,
+        ]);
+    }
+
+    public function orderingUpdate(Request $request)
+    {
+
     }
 }
