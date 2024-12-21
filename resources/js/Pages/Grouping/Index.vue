@@ -102,7 +102,7 @@ onMounted(() => {
 
 onBeforeUnmount(() => {
   if (sortable.value !== null) {
-    sortable.destroy();
+    sortable.value.destroy();
   }
 })
 </script>
