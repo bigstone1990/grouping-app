@@ -64,6 +64,10 @@ class GroupController extends Controller
      */
     public function edit(Group $group)
     {
+        if ($group->user_id !== Auth::id()) {
+            return abort(404);
+        }
+
         return Inertia::render('Group/Edit', [
             'group' => $group,
         ]);
@@ -74,6 +78,10 @@ class GroupController extends Controller
      */
     public function update(UpdateGroupRequest $request, Group $group)
     {
+        if ($group->user_id !== Auth::id()) {
+            return abort(404);
+        }
+
         $group->name = $request->groupName;
 
         $group->save();
@@ -89,6 +97,10 @@ class GroupController extends Controller
      */
     public function destroy(Group $group)
     {
+        if ($group->user_id !== Auth::id()) {
+            abort(404);
+        }
+
         $group->delete();
 
 
