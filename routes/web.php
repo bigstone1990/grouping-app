@@ -29,7 +29,7 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('groups/ordering/edit', [GroupController::class, 'orderingEdit'])->name('groups.ordering.edit');
-    Route::post('groups/ordering/update', [GroupController::class, 'orderingUpdate'])->name('groups.ordering.update');
+    Route::patch('groups/ordering/update', [GroupController::class, 'orderingUpdate'])->name('groups.ordering.update');
     Route::resource('groups', GroupController::class);
 });
 

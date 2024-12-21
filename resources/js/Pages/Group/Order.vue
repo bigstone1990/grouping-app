@@ -1,9 +1,66 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout100VH.vue';
-import { Head } from '@inertiajs/vue3';
+import { Head, Link, router } from '@inertiajs/vue3';
+import { Sortable, Plugins } from '@shopify/draggable';
+import { ref, reactive, onMounted, onBeforeUnmount } from 'vue';
 
 const props = defineProps({
   groups: Object,
+});
+
+const groupOrderData = reactive({
+  orderData: [],
+});
+
+const updateOrder = () => {
+  router.patch(route('groups.ordering.update'), groupOrderData);
+};
+
+props.groups.forEach(group => {
+  groupOrderData.orderData.push({id: group.id, order: group.order});
+});
+
+const sortContainers = ref(null);
+const sortable = ref(null);
+
+onMounted(() => {
+  sortContainers.value = document.querySelectorAll('.GroupOrderList');
+  if (sortContainers.value.length === 0) {
+    return false;
+  }
+
+  sortable.value = new Sortable(sortContainers.value, {
+    draggable: '.Group--isDraggable',
+    mirror: {
+      constrainDimensions: true,
+    },
+    delay: {
+      mouse: 0,
+      drag: 0,
+      touch: 200
+    },
+    plugins: [Plugins.ResizeMirror],
+  });
+
+  let GroupList;
+
+  sortable.value.on('drag:stopped', (evt) => {
+    groupOrderData.orderData = [];
+    GroupList = sortable.value.containers[0].children;
+    for (let i = 0; i < GroupList.length; i++) {
+      let id = GroupList[i].dataset.id;
+      let order = i + 1;
+
+      groupOrderData.orderData.push({id: id, order: order});
+    }
+    // console.log(orderData.data);
+  });
+});
+
+onBeforeUnmount(() => {
+  if (sortable.value !== null) {
+    sortable.value.destroy();
+  }
 });
 </script>
 
@@ -30,7 +87,7 @@ const props = defineProps({
 
                   <div class="GroupOrderListContainer">
                     <ul v-if="props.groups.length !== 0" class="GroupOrderList">
-                      <li v-for="group in props.groups" :key="group.id" class="GroupOrderListItem Group--isDraggable">
+                      <li v-for="group in props.groups" :key="group.id" :data-id="group.id" class="GroupOrderListItem Group--isDraggable">
                         <div class="GroupOrderListItemContent">
                           <h4 class="GroupOrderListItemHeading">{{ group.name }}</h4>
                           <div class="DragHandle"></div>
@@ -45,6 +102,10 @@ const props = defineProps({
                     </div>
                   </div>
                 </article>
+                <div class="mt-4 flex gap-4 justify-center">
+                  <Link as="button" :href="route('groups.index')" class="text-white bg-gray-500 border-0 py-2 px-8 focus:outline-none hover:bg-gray-600 rounded text-lg">戻る</Link>
+                  <button type="button" @click="updateOrder" class="text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">更新</button>
+                </div>
               </section>
             </div>
           </div>
@@ -75,6 +136,9 @@ const props = defineProps({
 }
 
 .GroupOrderContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   padding: 1.5rem;
   max-width: 80%;
   width: 100%;
@@ -134,7 +198,7 @@ const props = defineProps({
   position: relative;
   display: flex;
   align-items: center;
-  padding: 0.6rem;
+  padding: 1.2rem;
   background-color: #5cb85c;
   border-radius: 0.5rem;
 }

@@ -91,6 +91,13 @@ class GroupController extends Controller
     {
         $group->delete();
 
+
+        $groups = Group::where('user_id', '=', Auth::id())->orderBy('order')->get();
+        for ($i = 0; $i < count($groups); $i++) {
+            $groups[$i]->order = $i + 1;
+            $groups[$i]->save();
+        }
+
         return to_route('groups.index')->with([
             'message' => '削除しました',
             'status' => 'danger',
@@ -107,6 +114,23 @@ class GroupController extends Controller
 
     public function orderingUpdate(Request $request)
     {
+        foreach ($request->orderData as $data) {
+            $groupId = $data['id'];
+            $groupOrder = $data['order'];
+            
+            $group = Group::findOrFail($groupId);
 
+            if ($group->user_id !== Auth::id()) {
+                return abort(404);
+            }
+            
+            $group->order = $groupOrder;
+            $group->save();
+        }
+
+        return to_route('groups.index')->with([
+            'message' => '更新しました',
+            'status' => 'success',
+        ]);
     }
 }
