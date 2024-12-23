@@ -1,5 +1,5 @@
 <script setup>
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout100vh.vue';
 import { Head, Link, router } from '@inertiajs/vue3';
 import { Sortable, Plugins } from '@shopify/draggable';
 import { ref, reactive, onMounted, onBeforeUnmount } from 'vue';
@@ -66,7 +66,7 @@ onBeforeUnmount(() => {
 <template>
   <Head title="グループ順編集" />
 
-  <AuthenticatedLayout :is100vh="true">
+  <AuthenticatedLayout>
     <template #header>
       <h2
         class="text-xl font-semibold leading-tight text-gray-800"

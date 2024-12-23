@@ -12,7 +12,7 @@ const showingNavigationDropdown = ref(false);
 
 <template>
     <div>
-        <div class="min-h-screen bg-gray-100">
+        <div class="h-screen overflow-hidden bg-gray-100">
             <nav
                 class="border-b border-gray-100 bg-white"
             >
@@ -226,7 +226,7 @@ const showingNavigationDropdown = ref(false);
             </header>
 
             <!-- Page Content -->
-            <main>
+            <main class="h-full">
                 <slot />
             </main>
         </div>

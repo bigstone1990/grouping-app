@@ -17,7 +17,7 @@ const createGroup = () => {
 <template>
   <Head title="グループ新規作成" />
 
-  <AuthenticatedLayout :is100vh="false">
+  <AuthenticatedLayout>
     <template #header>
       <h2
           class="text-xl font-semibold leading-tight text-gray-800"

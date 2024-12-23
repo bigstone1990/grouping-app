@@ -18,7 +18,7 @@ defineProps({
 <template>
     <Head title="Profile" />
 
-    <AuthenticatedLayout :is100vh="false">
+    <AuthenticatedLayout>
         <template #header>
             <h2
                 class="text-xl font-semibold leading-tight text-gray-800"
