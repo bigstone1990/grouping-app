@@ -6,6 +6,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use App\Models\Group;
+use App\Models\Member;
 
 class User extends Authenticatable
 {
@@ -44,5 +47,15 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function groups(): HasMany
+    {
+        return $this->hasMany(Group::class);
+    }
+
+    public function members(): HasMany
+    {
+        return $this->hasMany(Member::class);
     }
 }
