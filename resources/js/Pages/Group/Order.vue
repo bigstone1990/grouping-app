@@ -1,5 +1,5 @@
 <script setup>
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout100vh.vue';
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, Link, router } from '@inertiajs/vue3';
 import { Sortable, Plugins } from '@shopify/draggable';
 import { ref, reactive, onMounted, onBeforeUnmount } from 'vue';
@@ -102,8 +102,8 @@ onBeforeUnmount(() => {
               </div>
             </article>
             <div class="mt-4 flex gap-4 justify-center">
-              <Link as="button" :href="route('groups.index')" class="text-white bg-gray-500 border-0 py-2 px-8 focus:outline-none hover:bg-gray-600 rounded text-lg">戻る</Link>
-              <button type="button" @click="updateOrder" class="text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">更新</button>
+              <Link as="button" :href="route('groups.index')" class="text-white bg-gray-500 border-0 py-2 px-8 focus:outline-none hover:bg-gray-600 rounded">戻る</Link>
+              <button type="button" @click="updateOrder" class="text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded">更新</button>
             </div>
           </section>
         </div>
@@ -119,13 +119,10 @@ onBeforeUnmount(() => {
 }
 
 .PageContent {
-  height: calc(100% - 64px - 73px);
   color: #ffffff;
 }
 
 .PageContentLayout {
-  height: 100%;
-  overflow: hidden;
   background-color: #ffffff;
   box-shadow: 0 0 #0000, 0 0 #0000, 0 1px 2px 0 rgb(0 0 0 / 0.1);
 
@@ -137,11 +134,8 @@ onBeforeUnmount(() => {
 .GroupOrderContainer {
   display: flex;
   flex-direction: column;
-  align-items: center;
   padding: 1rem;
   max-width: 80%;
-  width: 100%;
-  height: 100%;
   margin-left: auto;
   margin-right: auto;
 }
@@ -149,7 +143,6 @@ onBeforeUnmount(() => {
 .GroupOrderListWrapper {
   display: flex;
   flex-direction: column;
-  height: 100%;
   width: 100%;
   border-radius: 0.5rem;
   overflow: hidden;
@@ -157,7 +150,7 @@ onBeforeUnmount(() => {
 }
 
 .GroupOrderListHeader {
-  flex: 0 0 4rem;
+  flex: 0 0 3rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -167,7 +160,7 @@ onBeforeUnmount(() => {
 
 .GroupOrderListHeading {
   color: currentColor;
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: 700;
 }
 
@@ -179,7 +172,6 @@ onBeforeUnmount(() => {
 }
 
 .GroupOrderList {
-  height: 100%;
   overflow: scroll;
   display: flex;
   flex-direction: column;
@@ -187,17 +179,22 @@ onBeforeUnmount(() => {
   gap: 1rem;
   padding-left: 1rem;
   padding-right: 1rem;
-}
+  max-height: 322px;
 
-.GroupOrderListItem {
-  width: 100%;
+  @media screen and (min-height: 768px) {
+    max-height: 423px;
+  }
+
+  @media screen and (min-height: 1024px) {
+    max-height: 679px;
+  }
 }
 
 .GroupOrderListItemContent {
   position: relative;
   display: flex;
   align-items: center;
-  padding: 1.2rem;
+  padding: 1rem;
   background-color: #5cb85c;
   border-radius: 0.5rem;
 }
@@ -205,7 +202,7 @@ onBeforeUnmount(() => {
 .GroupOrderListItemHeading {
   flex: 1 1 auto;
   color: currentColor;
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: 700;
   pointer-events: none;
   user-select: none;
