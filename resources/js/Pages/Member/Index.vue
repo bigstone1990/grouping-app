@@ -1,11 +1,18 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, Link } from '@inertiajs/vue3';
+import { ref } from 'vue';
 import FlashMessage from '@/Components/FlashMessage.vue';
 
 const props = defineProps({
   members: Object,
 });
+
+const groupColumns = ref(0);
+
+if (props.members.length !== 0) {
+  groupColumns.value = props.members[0].groups_data.length;
+}
 </script>
 
 <template>
@@ -20,6 +27,7 @@ const props = defineProps({
       </h2>
     </template>
 
+    <FlashMessage />
     <div class="py-4">
       <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div
@@ -28,30 +36,35 @@ const props = defineProps({
           <div class="p-4 text-gray-900">
             <section class="text-gray-600">
               <div class="container mx-auto">
-                <div class="lg:w-2/3 w-full mx-auto overflow-auto">
+                <div class="w-full mx-auto overflow-auto">
                   <div class="flex gap-4 justify-end mb-4 w-full">
                     <Link as="button" :href="route('members.create')" class="text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">新規作成</Link>
                   </div>
-                  <table class="table-auto w-full text-left whitespace-no-wrap">
-                    <thead>
-                      <tr>
-                        <th class="w-20 px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl">操作</th>
-                        <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">メンバー名</th>
-                        <th class="w-28 px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tr rounded-br">操作</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr v-for="member in props.members" :key="member.id">
-                        <td class="border-b-2 px-4 py-3">
-                          <Link as="button" :href="route('members.edit', {member: member.id})" class="w-full text-white bg-green-500 border-0 py-2 px-2 focus:outline-none hover:bg-green-600 rounded">編集</Link>
-                        </td>
-                        <td class="border-b-2 px-4 py-3">{{ member.name }}</td>
-                        <td class="border-b-2 px-4 py-3">
-                          <Link as="button" :href="route('members.edit', {member: member.id})" class="w-full text-white bg-green-500 border-0 py-2 px-2 focus:outline-none hover:bg-green-600 rounded">編集</Link>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
+                  <div class="TableContainer">
+                    <table class="table-auto w-full text-left whitespace-no-wrap">
+                      <thead>
+                        <tr>
+                          <th class="w-24 px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-900 rounded-tl rounded-bl">操作</th>
+                          <th class="w-24 sm:w-48 px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-900">メンバー名</th>
+                          <th v-if="groupColumns !== 0" v-for="group_data in props.members[0].groups_data" :key="group_data.group_id" class="w-16 px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-900" :class="{ 'rounded-tr rounded-br': group_data.group_order === groupColumns }">{{ group_data.group_name }}</th>
+                          <th v-else class="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-900 rounded-tr rounded-br">グループ名</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr v-if="props.members.length !== 0" v-for="member in props.members" :key="member.id">
+                          <td class="border-b-2 px-4 py-3 bg-white">
+                            <Link as="button" :href="route('members.edit', {member: member.member_id})" class="w-full text-white bg-green-500 border-0 py-2 px-4 focus:outline-none hover:bg-green-600 rounded">編集</Link>
+                          </td>
+                          <td class="border-b-2 px-4 py-3 bg-white">{{ member.member_name }}</td>
+                          <td v-if="groupColumns !== 0" v-for="group_data in member.groups_data" :key="group_data.group_id" class="border-b-2 px-4 py-3 bg-white">
+                            <p v-if="group_data.allocatable">○</p>
+                            <p v-else>-</p>
+                          </td>
+                          <td v-else class="border-b-2 px-4 py-3 bg-white">グループがありません</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
             </section>
@@ -61,3 +74,140 @@ const props = defineProps({
     </div>
   </AuthenticatedLayout>
 </template>
+
+<style lang="scss">
+.TableContainer {
+  min-width: 343px;
+  max-height: 410px;
+  overflow-x: auto;
+  overflow-y: auto;
+
+  @media screen and (min-height: 768px) {
+    max-height: 510px;
+  }
+
+  @media screen and (min-height: 1024px) {
+    max-height: 766px;
+  }
+  
+  table {
+    border-collapse: separate;
+    border-spacing: 0;
+    thead {
+      tr {
+        th {
+          white-space: nowrap;
+        }
+
+        &:first-of-type {
+          th {
+            &::before {
+              content: "";
+              position: absolute;
+              top: 0;
+              left: 0px;
+              width: 100%;
+              height: 100%;
+              border-right: 1px solid white;
+              z-index: -1;
+            }
+
+            &:first-of-type {
+              position: sticky;
+              top: 0;
+              left: 0;
+              z-index: 1;
+            }
+
+            &:nth-of-type(2) {
+              position: sticky;
+              top: 0;
+              left: calc(6rem);
+              z-index: 1;
+
+              // &::before {
+              //   content: "";
+              //   position: absolute;
+              //   top: 0;
+              //   left: -1px;
+              //   width: 100%;
+              //   height: 100%;
+              //   // border-top: 1px solid #f00;
+              //   // border-bottom: 1px solid #f00;
+              //   border-left: 1px solid white;
+              //   border-right: 1px solid white;
+              //   z-index: -1;
+              // }
+            }
+
+            &:not(:first-of-type, :nth-of-type(2)) {
+              position: sticky;
+              top: 0;
+            }
+          }
+        }
+      }
+    }
+
+    tbody {
+      tr {
+        td {
+          white-space: nowrap;
+
+          &:first-of-type {
+            position: sticky;
+            left: 0;
+          }
+          
+          &:nth-of-type(2) {
+            position: sticky;
+            left: 6rem;
+          }
+        }
+      }
+    }
+  }  
+}  
+
+
+// .Sticky_a:before {
+//   content: "";
+//   position: absolute;
+//   top: 0;
+//   left: 0;
+//   width: 100%;
+//   height: 100%;
+//   border-left: 1px solid #f00;
+//   border-right: 1px solid #f00;
+//   background: #ffeb3b;
+//   z-index: -1;
+// }
+
+// .Sticky_b:before {
+//   content: "";
+//   position: absolute;
+//   top: 0;
+//   left: 0;
+//   width: 100%;
+//   height: 100%;
+//   border-top: 1px solid #f00;
+//   border-bottom: 1px solid #f00;
+//   background: #ffeb3b;
+//   z-index: -1;
+// }
+
+// .Sticky_ab:before {
+//   content: "";
+//   position: absolute;
+//   top: 0;
+//   left: 0;
+//   width: 100%;
+//   height: 100%;
+//   border-top: 1px solid #f00;
+//   border-bottom: 1px solid #f00;
+//   border-left: 1px solid #f00;
+//   border-right: 1px solid #f00;
+//   background: #ffeb3b;
+//   z-index: -1;
+// }
+</style>

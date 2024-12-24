@@ -1,0 +1,171 @@
+<script setup>
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import { Head, Link } from '@inertiajs/vue3';
+import { ref } from 'vue';
+import FlashMessage from '@/Components/FlashMessage.vue';
+
+const props = defineProps({
+  members: Object,
+});
+
+const groupColumns = ref(0);
+
+if (props.members.length !== 0) {
+  groupColumns.value = props.members[0].groups_data.length;
+}
+</script>
+
+<template>
+  <Head title="メンバー一覧" />
+
+  <AuthenticatedLayout>
+    <template #header>
+      <h2
+        class="text-xl font-semibold leading-tight text-gray-800"
+      >
+        メンバー一覧
+      </h2>
+    </template>
+
+    <FlashMessage />
+    <div class="py-4">
+      <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
+        <div
+          class="overflow-hidden bg-white shadow-sm sm:rounded-lg"
+        >
+          <div class="p-4 text-gray-900">
+            <section class="text-gray-600">
+              <div class="container mx-auto">
+                <div class="w-full mx-auto overflow-auto">
+                  <div class="flex gap-4 justify-end mb-4 w-full">
+                    <Link as="button" :href="route('members.create')" class="text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">新規作成</Link>
+                  </div>
+                  <div class="TableContainer">
+                    <table class="table-auto w-full text-left whitespace-no-wrap">
+                      <thead>
+                        <tr>
+                          <th class="Sticky_ab w-24 px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-900 rounded-tl rounded-bl">操作</th>
+                          <th class="Sticky_b w-24 sm:w-48 px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-900">メンバー名</th>
+                          <th v-if="groupColumns !== 0" v-for="group_data in props.members[0].groups_data" :key="group_data.group_id" class="Sticky_b w-16 px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-900" :class="{ 'rounded-tr rounded-br': group_data.group_order === groupColumns }">{{ group_data.group_name }}</th>
+                          <th v-else class="Sticky_b px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-900 rounded-tr rounded-br">グループ名</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr v-if="props.members.length !== 0" v-for="member in props.members" :key="member.id">
+                          <td class="Sticky_a border-b-2 px-4 py-3">
+                            <Link as="button" :href="route('members.edit', {member: member.member_id})" class="w-full text-white bg-green-500 border-0 py-2 px-4 focus:outline-none hover:bg-green-600 rounded">編集</Link>
+                          </td>
+                          <td class="border-b-2 px-4 py-3">{{ member.member_name }}</td>
+                          <td v-if="groupColumns !== 0" v-for="group_data in member.groups_data" :key="group_data.group_id" class="border-b-2 px-4 py-3">
+                            <p v-if="group_data.allocatable">○</p>
+                            <p v-else>-</p>
+                          </td>
+                          <td v-else class="border-b-2 px-4 py-3">グループがありません</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+    </div>
+  </AuthenticatedLayout>
+</template>
+
+<style lang="scss">
+.TableContainer {
+  min-width: 343px;
+  max-height: 410px;
+  overflow-x: auto;
+  overflow-y: auto;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+}
+th, td {
+  vertical-align: middle;
+  padding: 20px;
+  border: 1px solid #f00;
+  color: #000;
+  font-size: 14px;
+  text-align: center;
+  white-space: nowrap;
+}
+th {
+  background: #795548;
+}
+td {
+  background: #fff;
+}
+.Sticky_a {
+  position: sticky;
+  top: 0;
+  left: 0;
+  background: none;
+  border-left: none;
+  border-right: none;
+}
+.Sticky_a:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-left: 1px solid #f00;
+  border-right: 1px solid #f00;
+  background: #ffeb3b;
+  z-index: -1;
+}
+.Sticky_b {
+  position: sticky;
+  top: 0;
+  left: 0;
+  background: none;
+  border-top: none;
+  border-bottom: none;
+}
+.Sticky_b:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-top: 1px solid #f00;
+  border-bottom: 1px solid #f00;
+  background: #ffeb3b;
+  z-index: -1;
+}
+.Sticky_ab {
+  position: sticky;
+  top: 0;
+  left: 0;
+  background: none;
+  border-top: none;
+  border-bottom: none;
+  border-left: none;
+  border-right: none;
+  z-index: 1;
+}
+.Sticky_ab:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-top: 1px solid #f00;
+  border-bottom: 1px solid #f00;
+  border-left: 1px solid #f00;
+  border-right: 1px solid #f00;
+  background: #ffeb3b;
+  z-index: -1;
+}
+</style>

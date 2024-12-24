@@ -17,10 +17,37 @@ class MemberController extends Controller
      */
     public function index()
     {
+        $membersData = [];
+        
         $members = Member::where('user_id', '=', Auth::id())->orderBy('id')->get();
+        
+        foreach ($members as $member) {
+            $groupsData = [];
+
+            $groups = $member->groups()->orderBy('order')->get();
+
+            foreach ($groups as $group) {
+                $groupData = [
+                    'group_id' => $group->id,
+                    'group_name' => $group->name,
+                    'group_order' => $group->order,
+                    'allocatable' => $group->pivot->allocatable,
+                ];
+
+                array_push($groupsData, $groupData);
+            }
+
+            $memberData = [
+                'member_id' => $member->id,
+                'member_name' => $member->name,
+                'groups_data' => $groupsData,
+            ];
+
+            array_push($membersData, $memberData);
+        }
 
         return Inertia::render('Member/Index', [
-            'members' => $members,
+            'members' => $membersData,
         ]);
     }
 

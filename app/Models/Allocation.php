@@ -12,7 +12,7 @@ class Allocation extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'user_id',
+        'member_id',
         'group_id',
         'allocatable',
     ];

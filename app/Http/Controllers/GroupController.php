@@ -9,6 +9,8 @@ use App\Models\Group;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Models\Member;
+use App\Models\Allocation;
 
 class GroupController extends Controller
 {
@@ -39,11 +41,21 @@ class GroupController extends Controller
         $maxOrder = Group::where('user_id', '=', Auth::id())->max('order');
         $newOrder = $maxOrder + 1;
 
-        Group::create([
+        $group = Group::create([
             'user_id' => Auth::id(),
             'name' => $request->groupName,
             'order' => $newOrder,
         ]);
+
+        $members = Member::where('user_id', '=', Auth::id())->orderBy('id')->get();
+
+        foreach ($members as $member) {
+            Allocation::create([
+                'member_id' => $member->id,
+                'group_id' => $group->id,
+                'allocatable' => true,
+            ]);
+        }
 
         return to_route('groups.index')->with([
             'message' => '登録しました',

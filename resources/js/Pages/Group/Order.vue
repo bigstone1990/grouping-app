@@ -96,7 +96,7 @@ onBeforeUnmount(() => {
                     </div>
                   </li>
                 </ul>
-                <div v-else class="flex justify-center items-center px-4 h-full">
+                <div v-else class="flex justify-center items-center px-4 text-gray-600">
                   <p>グループがありません</p>
                 </div>
               </div>
