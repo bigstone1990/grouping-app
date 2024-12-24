@@ -31,8 +31,8 @@ const props = defineProps({
               <div class="container mx-auto">
                 <div class="lg:w-2/3 w-full mx-auto overflow-auto">
                   <div class="flex gap-4 justify-end mb-4 w-full">
-                    <Link as="button" :href="route('groups.create')" class="text-white bg-indigo-500 border-0 py-2 px-4 focus:outline-none hover:bg-indigo-600 rounded">新規作成</Link>
-                    <Link as="button" :href="route('groups.ordering.edit')" class="text-white bg-indigo-500 border-0 py-2 px-4 focus:outline-none hover:bg-indigo-600 rounded">グループ順編集</Link>
+                    <Link as="button" :href="route('groups.create')" class="text-white bg-indigo-500 border-0 py-2 px-8 hover:bg-indigo-600 rounded">新規作成</Link>
+                    <Link as="button" :href="route('groups.ordering.edit')" class="text-white bg-indigo-500 border-0 py-2 px-8 hover:bg-indigo-600 rounded">グループ順編集</Link>
                   </div>
                   <table class="table-auto w-full text-left whitespace-no-wrap">
                     <thead>
@@ -47,7 +47,7 @@ const props = defineProps({
                         <td class="border-b-2 px-4 py-3">{{ group.order }}</td>
                         <td class="border-b-2 px-4 py-3">{{ group.name }}</td>
                         <td class="border-b-2 px-4 py-3">
-                          <Link as="button" :href="route('groups.edit', {group: group.id})" class="w-full text-white bg-green-500 border-0 py-2 px-4 focus:outline-none hover:bg-green-600 rounded">編集</Link>
+                          <Link as="button" :href="route('groups.edit', {group: group.id})" class="w-full text-white bg-green-500 border-0 py-2 px-4 hover:bg-green-600 rounded">編集</Link>
                         </td>
                       </tr>
                       <tr v-else>

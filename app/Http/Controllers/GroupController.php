@@ -113,6 +113,12 @@ class GroupController extends Controller
             abort(404);
         }
 
+        $allocations = Allocation::where('group_id', '=', $group->id)->get();
+
+        foreach ($allocations as $allocation) {
+            $allocation->delete();
+        }
+
         $group->delete();
 
 

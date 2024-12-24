@@ -38,7 +38,7 @@ if (props.members.length !== 0) {
               <div class="container mx-auto">
                 <div class="w-full mx-auto overflow-auto">
                   <div class="flex gap-4 justify-end mb-4 w-full">
-                    <Link as="button" :href="route('members.create')" class="text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">新規作成</Link>
+            <Link as="button" :href="route('members.create')" class="text-white bg-indigo-500 border-0 py-2 px-8 hover:bg-indigo-600 rounded">新規作成</Link>
                   </div>
                   <div class="TableContainer">
                     <table class="table-auto w-full text-left whitespace-no-wrap">
@@ -53,7 +53,7 @@ if (props.members.length !== 0) {
                       <tbody>
                         <tr v-if="props.members.length !== 0" v-for="member in props.members" :key="member.id">
                           <td class="border-b-2 px-4 py-3 bg-white">
-                            <Link as="button" :href="route('members.edit', {member: member.member_id})" class="w-full text-white bg-green-500 border-0 py-2 px-4 focus:outline-none hover:bg-green-600 rounded">編集</Link>
+                            <Link as="button" :href="route('members.edit', {member: member.member_id})" class="w-full text-white bg-green-500 border-0 py-2 px-4 hover:bg-green-600 rounded">編集</Link>
                           </td>
                           <td class="border-b-2 px-4 py-3 bg-white">{{ member.member_name }}</td>
                           <td v-if="groupColumns !== 0" v-for="group_data in member.groups_data" :key="group_data.group_id" class="border-b-2 px-4 py-3 bg-white">
@@ -124,20 +124,6 @@ if (props.members.length !== 0) {
               top: 0;
               left: calc(6rem);
               z-index: 1;
-
-              // &::before {
-              //   content: "";
-              //   position: absolute;
-              //   top: 0;
-              //   left: -1px;
-              //   width: 100%;
-              //   height: 100%;
-              //   // border-top: 1px solid #f00;
-              //   // border-bottom: 1px solid #f00;
-              //   border-left: 1px solid white;
-              //   border-right: 1px solid white;
-              //   z-index: -1;
-              // }
             }
 
             &:not(:first-of-type, :nth-of-type(2)) {
@@ -168,46 +154,4 @@ if (props.members.length !== 0) {
     }
   }  
 }  
-
-
-// .Sticky_a:before {
-//   content: "";
-//   position: absolute;
-//   top: 0;
-//   left: 0;
-//   width: 100%;
-//   height: 100%;
-//   border-left: 1px solid #f00;
-//   border-right: 1px solid #f00;
-//   background: #ffeb3b;
-//   z-index: -1;
-// }
-
-// .Sticky_b:before {
-//   content: "";
-//   position: absolute;
-//   top: 0;
-//   left: 0;
-//   width: 100%;
-//   height: 100%;
-//   border-top: 1px solid #f00;
-//   border-bottom: 1px solid #f00;
-//   background: #ffeb3b;
-//   z-index: -1;
-// }
-
-// .Sticky_ab:before {
-//   content: "";
-//   position: absolute;
-//   top: 0;
-//   left: 0;
-//   width: 100%;
-//   height: 100%;
-//   border-top: 1px solid #f00;
-//   border-bottom: 1px solid #f00;
-//   border-left: 1px solid #f00;
-//   border-right: 1px solid #f00;
-//   background: #ffeb3b;
-//   z-index: -1;
-// }
 </style>

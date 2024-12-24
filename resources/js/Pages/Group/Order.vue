@@ -102,8 +102,8 @@ onBeforeUnmount(() => {
               </div>
             </article>
             <div class="mt-4 flex gap-4 justify-center">
-              <Link as="button" :href="route('groups.index')" class="text-white bg-gray-500 border-0 py-2 px-8 focus:outline-none hover:bg-gray-600 rounded">戻る</Link>
-              <button type="button" @click="updateOrder" class="text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded">更新</button>
+              <Link as="button" :href="route('groups.index')" class="text-white bg-gray-500 border-0 py-2 px-8 hover:bg-gray-600 rounded">戻る</Link>
+              <button type="button" @click="updateOrder" class="text-white bg-indigo-500 border-0 py-2 px-8 hover:bg-indigo-600 rounded">更新</button>
             </div>
           </section>
         </div>
