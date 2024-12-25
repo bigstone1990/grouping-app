@@ -40,18 +40,28 @@ const showingNavigationDropdown = ref(false);
                                     Dashboard
                                 </NavLink>
                                 <NavLink
+                                    v-if="$page.props.auth.permissions.staffHigher"
                                     :href="route('grouping.index')"
                                     :active="route().current('grouping.index')"
                                 >
                                     グループ分け
                                 </NavLink>
                                 <NavLink
+                                    v-if="$page.props.auth.permissions.admin"
+                                    :href="route('users.index')"
+                                    :active="route().current('users.index')"
+                                >
+                                    ユーザー管理
+                                </NavLink>
+                                <NavLink
+                                    v-if="$page.props.auth.permissions.staffHigher"
                                     :href="route('groups.index')"
                                     :active="route().current('groups.index')"
                                 >
                                     グループ管理
                                 </NavLink>
                                 <NavLink
+                                    v-if="$page.props.auth.permissions.staffHigher"
                                     :href="route('members.index')"
                                     :active="route().current('members.index')"
                                 >
@@ -165,18 +175,28 @@ const showingNavigationDropdown = ref(false);
                             Dashboard
                         </ResponsiveNavLink>
                         <ResponsiveNavLink
+                            v-if="$page.props.auth.permissions.staffHigher"
                             :href="route('grouping.index')"
                             :active="route().current('grouping.index')"
                         >
                             グループ分け
                         </ResponsiveNavLink>
                         <ResponsiveNavLink
+                            v-if="$page.props.auth.permissions.admin"
+                            :href="route('users.index')"
+                            :active="route().current('users.index')"
+                        >
+                            ユーザー管理
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            v-if="$page.props.auth.permissions.staffHigher"
                             :href="route('groups.index')"
                             :active="route().current('groups.index')"
                         >
                             グループ管理
                         </ResponsiveNavLink>
                         <ResponsiveNavLink
+                            v-if="$page.props.auth.permissions.staffHigher"
                             :href="route('members.index')"
                             :active="route().current('members.index')"
                         >

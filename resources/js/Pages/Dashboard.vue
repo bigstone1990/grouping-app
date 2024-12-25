@@ -31,6 +31,9 @@ import { Head, Link } from '@inertiajs/vue3';
                             <li>
                                 <Link :href="route('members.index')" class="underline text-blue-400">メンバー一覧</Link>
                             </li>
+                            <li>
+                                <Link :href="route('users.index')" class="underline text-blue-400">ユーザー一覧</Link>
+                            </li>
                         </ul>
                     </div>
                 </div>
