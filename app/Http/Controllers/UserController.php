@@ -11,6 +11,8 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
@@ -19,7 +21,11 @@ class UserController extends Controller
      */
     public function index()
     {
-        return Inertia::render('User/Index');
+        $users = User::all();
+
+        return Inertia::render('User/Index', [
+            'users' => $users,
+        ]);
     }
 
     /**
@@ -27,7 +33,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('User/Create');
     }
 
     /**
@@ -35,7 +41,19 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
-        //
+        $password = Str::random(8);
+
+        User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($password),
+            'role' => intval($request->role),
+        ]);
+
+        return to_route('users.index')->with([
+            'message' => '登録しました',
+            'status' => 'success',
+        ]);
     }
 
     /**
@@ -43,7 +61,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        //
+        return abort(404);
     }
 
     /**
@@ -51,7 +69,9 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        //
+        return Inertia::render('User/Edit', [
+            'user' => $user,
+        ]);
     }
 
     /**
@@ -59,7 +79,14 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, User $user)
     {
-        //
+        $user->role = intval($request->role);
+
+        $user->save();
+
+        return to_route('users.index')->with([
+            'message' => '更新しました',
+            'status' => 'success',
+        ]);
     }
 
     /**
@@ -67,6 +94,11 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+        $user->delete();
+
+        return to_route('users.index')->with([
+            'message' => '削除しました',
+            'status' => 'success',
+        ]);
     }
 }

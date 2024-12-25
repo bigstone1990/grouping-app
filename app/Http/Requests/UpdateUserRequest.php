@@ -22,7 +22,7 @@ class UpdateUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'role' => 'required|string|in:1,5,9',
         ];
     }
 }
