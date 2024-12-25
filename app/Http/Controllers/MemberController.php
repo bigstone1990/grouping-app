@@ -176,7 +176,7 @@ class MemberController extends Controller
 
         return to_route('members.index')->with([
             'message' => '削除しました',
-            'status' => 'danger',
+            'status' => 'success',
         ]);
     }
 }

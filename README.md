@@ -55,3 +55,6 @@ sail npm install @shopify/draggable --save
 
 ## sass-embedded インストール
 sail npm install -D sass-embedded
+
+## toastr インストール
+sail npm install --save toastr

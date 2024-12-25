@@ -1,11 +1,33 @@
 <script setup>
+
+import { usePage } from '@inertiajs/vue3';
+import toastr from 'toastr';
+import 'toastr/build/toastr.min.css';
+
+toastr.options = {
+  "closeButton": false,
+  "debug": false,
+  "newestOnTop": false,
+  "progressBar": false,
+  "positionClass": "toast-top-right",
+  "preventDuplicates": false,
+  "onclick": null,
+  "showDuration": "300",
+  "hideDuration": "1000",
+  "timeOut": "5000",
+  "extendedTimeOut": "1000",
+  "showEasing": "swing",
+  "hideEasing": "linear",
+  "showMethod": "fadeIn",
+  "hideMethod": "fadeOut"
+}
+
+const { props } = usePage();
+
+if (props.flash.status === 'success') {
+  toastr.success(props.flash.message);
+}
 </script>
 
 <template>
-    <div v-if="$page.props.flash.status === 'success'" class="mx-auto max-w-7xl bg-blue-300 text-white py-4 px-4 sm:px-6 lg:px-8">
-      {{ $page.props.flash.message }}
-    </div>
-    <div v-if="$page.props.flash.status === 'danger'" class="mx-auto max-w-7xl bg-red-300 text-white py-4 px-4 sm:px-6 lg:px-8">
-      {{ $page.props.flash.message }}
-    </div>
 </template>

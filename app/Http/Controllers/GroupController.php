@@ -130,7 +130,7 @@ class GroupController extends Controller
 
         return to_route('groups.index')->with([
             'message' => '削除しました',
-            'status' => 'danger',
+            'status' => 'success',
         ]);
     }
 
