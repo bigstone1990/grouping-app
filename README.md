@@ -58,3 +58,19 @@ sail npm install -D sass-embedded
 
 ## toastr インストール
 sail npm install --save toastr
+
+## メールの設定(開発環境用)
+### Mailtrapの設定
+Mailtrapにログイン
+左側リストのEmail Testing -> Inboxes を選択
+My Inbox を選択
+Integration でSMTP の設定にした状態で、PHP -> Laravel 9+ を選択
+Copy して、プロジェクトの.env に必要な項目を上書き（MAIL_PASSWORD はCopy しないと表示されない）
+
+### 非同期処理
+.env に次の項目を変更
+QUEUE_CONNECTION=database
+
+ターミナルでワーカー起動
+sail artisan queue:work
+*queue:workプロセスをバックグラウンドで永続的に実行し続けるには、Supervisorなどのプロセスモニタを使用して、キューワーカの実行が停止しないようにする必要があります。

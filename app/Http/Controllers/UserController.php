@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use App\Jobs\SendUserCreatedMail;
 
 class UserController extends Controller
 {
@@ -43,12 +44,14 @@ class UserController extends Controller
     {
         $password = Str::random(8);
 
-        User::create([
+        $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($password),
             'role' => intval($request->role),
         ]);
+
+        SendUserCreatedMail::dispatch($user, $password);
 
         return to_route('users.index')->with([
             'message' => '登録しました',
