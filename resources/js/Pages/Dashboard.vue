@@ -20,16 +20,16 @@ import { Head, Link } from '@inertiajs/vue3';
                 <div class="Page">
                     <div class="PageContent">
                         <ul class="flex gap-4 flex-wrap">
-                            <li class="DashboardButtonWrapper">
+                            <li v-if="$page.props.auth.permissions.staffHigher" class="DashboardButtonWrapper">
                                 <Link as="button" :href="route('grouping.index')" class="DashboardButton">グループ分け</Link>
                             </li>
-                            <li class="DashboardButtonWrapper">
+                            <li v-if="$page.props.auth.permissions.admin" class="DashboardButtonWrapper">
                                 <Link as="button" :href="route('users.index')" class="DashboardButton">ユーザー管理</Link>
                             </li>
-                            <li class="DashboardButtonWrapper">
+                            <li v-if="$page.props.auth.permissions.staffHigher" class="DashboardButtonWrapper">
                                 <Link as="button" :href="route('groups.index')" class="DashboardButton">グループ管理</Link>
                             </li>
-                            <li class="DashboardButtonWrapper">
+                            <li v-if="$page.props.auth.permissions.staffHigher" class="DashboardButtonWrapper">
                                 <Link as="button" :href="route('members.index')" class="DashboardButton">メンバー管理</Link>
                             </li>
                         </ul>
