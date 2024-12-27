@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('allocations', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('member_id')->constrained()->cascadeOnUpdate()->cascadeOnUpdate();
-            $table->foreignId('group_id')->constrained()->cascadeOnUpdate()->cascadeOnUpdate();
+            $table->foreignId('member_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('group_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->boolean('allocatable');
             $table->softDeletes();
             $table->timestamps();

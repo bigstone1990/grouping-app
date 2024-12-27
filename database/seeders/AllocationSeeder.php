@@ -32,15 +32,15 @@ class AllocationSeeder extends Seeder
             [
                 'member_id' => 2,
                 'group_id' => 1,
-                'allocatable' => false,
-            ],
-            [
-                'member_id' => 2,
-                'group_id' => 2,
                 'allocatable' => true,
             ],
             [
                 'member_id' => 2,
+                'group_id' => 2,
+                'allocatable' => true,
+            ],
+            [
+                'member_id' => 2,
                 'group_id' => 3,
                 'allocatable' => true,
             ],
@@ -57,7 +57,7 @@ class AllocationSeeder extends Seeder
             [
                 'member_id' => 3,
                 'group_id' => 3,
-                'allocatable' => false,
+                'allocatable' => true,
             ],
             [
                 'member_id' => 4,
@@ -67,7 +67,7 @@ class AllocationSeeder extends Seeder
             [
                 'member_id' => 4,
                 'group_id' => 2,
-                'allocatable' => false,
+                'allocatable' => true,
             ],
             [
                 'member_id' => 4,
@@ -89,156 +89,156 @@ class AllocationSeeder extends Seeder
                 'group_id' => 3,
                 'allocatable' => true,
             ],
-            [
-                'member_id' => 6,
-                'group_id' => 1,
-                'allocatable' => true,
-            ],
-            [
-                'member_id' => 6,
-                'group_id' => 2,
-                'allocatable' => true,
-            ],
-            [
-                'member_id' => 6,
-                'group_id' => 3,
-                'allocatable' => true,
-            ],
-            [
-                'member_id' => 7,
-                'group_id' => 1,
-                'allocatable' => true,
-            ],
-            [
-                'member_id' => 7,
-                'group_id' => 2,
-                'allocatable' => true,
-            ],
-            [
-                'member_id' => 7,
-                'group_id' => 3,
-                'allocatable' => true,
-            ],
-            [
-                'member_id' => 8,
-                'group_id' => 1,
-                'allocatable' => true,
-            ],
-            [
-                'member_id' => 8,
-                'group_id' => 2,
-                'allocatable' => true,
-            ],
-            [
-                'member_id' => 8,
-                'group_id' => 3,
-                'allocatable' => true,
-            ],
-            [
-                'member_id' => 9,
-                'group_id' => 1,
-                'allocatable' => true,
-            ],
-            [
-                'member_id' => 9,
-                'group_id' => 2,
-                'allocatable' => true,
-            ],
-            [
-                'member_id' => 9,
-                'group_id' => 3,
-                'allocatable' => true,
-            ],
-            [
-                'member_id' => 10,
-                'group_id' => 1,
-                'allocatable' => true,
-            ],
-            [
-                'member_id' => 10,
-                'group_id' => 2,
-                'allocatable' => true,
-            ],
-            [
-                'member_id' => 10,
-                'group_id' => 3,
-                'allocatable' => true,
-            ],
-            [
-                'member_id' => 11,
-                'group_id' => 1,
-                'allocatable' => true,
-            ],
-            [
-                'member_id' => 11,
-                'group_id' => 2,
-                'allocatable' => true,
-            ],
-            [
-                'member_id' => 11,
-                'group_id' => 3,
-                'allocatable' => true,
-            ],
-            [
-                'member_id' => 12,
-                'group_id' => 1,
-                'allocatable' => true,
-            ],
-            [
-                'member_id' => 12,
-                'group_id' => 2,
-                'allocatable' => true,
-            ],
-            [
-                'member_id' => 12,
-                'group_id' => 3,
-                'allocatable' => true,
-            ],
-            [
-                'member_id' => 13,
-                'group_id' => 1,
-                'allocatable' => true,
-            ],
-            [
-                'member_id' => 13,
-                'group_id' => 2,
-                'allocatable' => true,
-            ],
-            [
-                'member_id' => 13,
-                'group_id' => 3,
-                'allocatable' => true,
-            ],
-            [
-                'member_id' => 14,
-                'group_id' => 1,
-                'allocatable' => true,
-            ],
-            [
-                'member_id' => 14,
-                'group_id' => 2,
-                'allocatable' => true,
-            ],
-            [
-                'member_id' => 14,
-                'group_id' => 3,
-                'allocatable' => true,
-            ],
-            [
-                'member_id' => 15,
-                'group_id' => 1,
-                'allocatable' => true,
-            ],
-            [
-                'member_id' => 15,
-                'group_id' => 2,
-                'allocatable' => true,
-            ],
-            [
-                'member_id' => 15,
-                'group_id' => 3,
-                'allocatable' => true,
-            ],
+            // [
+            //     'member_id' => 6,
+            //     'group_id' => 1,
+            //     'allocatable' => true,
+            // ],
+            // [
+            //     'member_id' => 6,
+            //     'group_id' => 2,
+            //     'allocatable' => true,
+            // ],
+            // [
+            //     'member_id' => 6,
+            //     'group_id' => 3,
+            //     'allocatable' => true,
+            // ],
+            // [
+            //     'member_id' => 7,
+            //     'group_id' => 1,
+            //     'allocatable' => true,
+            // ],
+            // [
+            //     'member_id' => 7,
+            //     'group_id' => 2,
+            //     'allocatable' => true,
+            // ],
+            // [
+            //     'member_id' => 7,
+            //     'group_id' => 3,
+            //     'allocatable' => true,
+            // ],
+            // [
+            //     'member_id' => 8,
+            //     'group_id' => 1,
+            //     'allocatable' => true,
+            // ],
+            // [
+            //     'member_id' => 8,
+            //     'group_id' => 2,
+            //     'allocatable' => true,
+            // ],
+            // [
+            //     'member_id' => 8,
+            //     'group_id' => 3,
+            //     'allocatable' => true,
+            // ],
+            // [
+            //     'member_id' => 9,
+            //     'group_id' => 1,
+            //     'allocatable' => true,
+            // ],
+            // [
+            //     'member_id' => 9,
+            //     'group_id' => 2,
+            //     'allocatable' => true,
+            // ],
+            // [
+            //     'member_id' => 9,
+            //     'group_id' => 3,
+            //     'allocatable' => true,
+            // ],
+            // [
+            //     'member_id' => 10,
+            //     'group_id' => 1,
+            //     'allocatable' => true,
+            // ],
+            // [
+            //     'member_id' => 10,
+            //     'group_id' => 2,
+            //     'allocatable' => true,
+            // ],
+            // [
+            //     'member_id' => 10,
+            //     'group_id' => 3,
+            //     'allocatable' => true,
+            // ],
+            // [
+            //     'member_id' => 11,
+            //     'group_id' => 1,
+            //     'allocatable' => true,
+            // ],
+            // [
+            //     'member_id' => 11,
+            //     'group_id' => 2,
+            //     'allocatable' => true,
+            // ],
+            // [
+            //     'member_id' => 11,
+            //     'group_id' => 3,
+            //     'allocatable' => true,
+            // ],
+            // [
+            //     'member_id' => 12,
+            //     'group_id' => 1,
+            //     'allocatable' => true,
+            // ],
+            // [
+            //     'member_id' => 12,
+            //     'group_id' => 2,
+            //     'allocatable' => true,
+            // ],
+            // [
+            //     'member_id' => 12,
+            //     'group_id' => 3,
+            //     'allocatable' => true,
+            // ],
+            // [
+            //     'member_id' => 13,
+            //     'group_id' => 1,
+            //     'allocatable' => true,
+            // ],
+            // [
+            //     'member_id' => 13,
+            //     'group_id' => 2,
+            //     'allocatable' => true,
+            // ],
+            // [
+            //     'member_id' => 13,
+            //     'group_id' => 3,
+            //     'allocatable' => true,
+            // ],
+            // [
+            //     'member_id' => 14,
+            //     'group_id' => 1,
+            //     'allocatable' => true,
+            // ],
+            // [
+            //     'member_id' => 14,
+            //     'group_id' => 2,
+            //     'allocatable' => true,
+            // ],
+            // [
+            //     'member_id' => 14,
+            //     'group_id' => 3,
+            //     'allocatable' => true,
+            // ],
+            // [
+            //     'member_id' => 15,
+            //     'group_id' => 1,
+            //     'allocatable' => true,
+            // ],
+            // [
+            //     'member_id' => 15,
+            //     'group_id' => 2,
+            //     'allocatable' => true,
+            // ],
+            // [
+            //     'member_id' => 15,
+            //     'group_id' => 3,
+            //     'allocatable' => true,
+            // ],
         ]);
     }
 }

@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
             GroupSeeder::class,
             MemberSeeder::class,
             AllocationSeeder::class,
+            GroupingSeeder::class,
         ]);
     }
 }
