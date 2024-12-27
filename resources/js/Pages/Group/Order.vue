@@ -75,37 +75,39 @@ onBeforeUnmount(() => {
       </h2>
     </template>
 
-    <div class="py-4 PageContent">
-      <div class="h-full mx-auto max-w-7xl sm:px-6 lg:px-8">
-        <div class="PageContentLayout">
-          <section id="GroupOrderContainer" class="GroupOrderContainer">
-            <article id="GroupOrderListWrapper" class="GroupOrderListWrapper">
-              <header class="GroupOrderListHeader">
-                <h3 class="GroupOrderListHeading">グループ名</h3>
-              </header>
-
-              <div class="GroupOrderListContainer">
-                <ul v-if="props.groups.length !== 0" class="GroupOrderList">
-                  <li v-for="group in props.groups" :key="group.id" :data-id="group.id" class="GroupOrderListItem Group--isDraggable">
-                    <div class="GroupOrderListItemContent">
-                      <h4 class="GroupOrderListItemHeading">{{ group.name }}</h4>
-                      <div class="DragHandle"></div>
-
-                      <div class="Pattern Pattern--typeHalftone"></div>
-                      <div class="Pattern Pattern--typePlaced"></div>
-                    </div>
-                  </li>
-                </ul>
-                <div v-else class="flex justify-center items-center px-4 text-gray-600">
-                  <p>グループがありません</p>
+    <div class="PageContainer">
+      <div class="PageWrapper">
+        <div class="Page">
+          <div class="PageContent">
+            <section id="GroupOrderContainer" class="GroupOrderContainer">
+              <article id="GroupOrderListWrapper" class="GroupOrderListWrapper">
+                <header class="GroupOrderListHeader">
+                  <h3 class="GroupOrderListHeading">グループ名</h3>
+                </header>
+  
+                <div class="GroupOrderListContainer">
+                  <ul v-if="props.groups.length !== 0" class="GroupOrderList">
+                    <li v-for="group in props.groups" :key="group.id" :data-id="group.id" class="GroupOrderListItem Group--isDraggable">
+                      <div class="GroupOrderListItemContent">
+                        <h4 class="GroupOrderListItemHeading">{{ group.name }}</h4>
+                        <div class="DragHandle"></div>
+  
+                        <div class="Pattern Pattern--typeHalftone"></div>
+                        <div class="Pattern Pattern--typePlaced"></div>
+                      </div>
+                    </li>
+                  </ul>
+                  <div v-else class="flex justify-center items-center px-4 text-gray-600">
+                    <p>グループがありません</p>
+                  </div>
                 </div>
+              </article>
+              <div class="mt-4 flex gap-4 justify-center">
+                <Link as="button" :href="route('groups.index')" class="text-white bg-gray-500 border-0 py-2 px-8 hover:bg-gray-600 rounded">戻る</Link>
+                <button type="button" @click="updateOrder" class="text-white bg-indigo-500 border-0 py-2 px-8 hover:bg-indigo-600 rounded">更新</button>
               </div>
-            </article>
-            <div class="mt-4 flex gap-4 justify-center">
-              <Link as="button" :href="route('groups.index')" class="text-white bg-gray-500 border-0 py-2 px-8 hover:bg-gray-600 rounded">戻る</Link>
-              <button type="button" @click="updateOrder" class="text-white bg-indigo-500 border-0 py-2 px-8 hover:bg-indigo-600 rounded">更新</button>
-            </div>
-          </section>
+            </section>
+          </div>
         </div>
       </div>
     </div>
@@ -113,28 +115,53 @@ onBeforeUnmount(() => {
 </template>
 
 <style lang="scss">
+@use 'sass:map';
+@use '../../../sass/variables.scss' as *;
+
 .draggable--is-dragging,
 .draggable--is-dragging * {
   cursor: grabbing;
 }
 
-.PageContent {
-  color: #ffffff;
+.PageContainer {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
 }
 
-.PageContentLayout {
+.PageWrapper {
+  height: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 80rem /* 1280px */;
+
+  @media screen and (min-width: map.get($breakpoint-data, smartphone-wide)) {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  @media screen and (min-width: map.get($breakpoint-data, tablet-wide)) {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+.Page {
   background-color: #ffffff;
   box-shadow: 0 0 #0000, 0 0 #0000, 0 1px 2px 0 rgb(0 0 0 / 0.1);
 
-  @media screen and (min-width: 640px) {
+  @media screen and (min-width: map.get($breakpoint-data, smartphone-wide)) {
     border-radius: 0.5rem;
   }
+}
+
+.PageContent {
+  padding: 1rem;
+  color: #ffffff;
 }
 
 .GroupOrderContainer {
   display: flex;
   flex-direction: column;
-  padding: 1rem;
   max-width: 80%;
   margin-left: auto;
   margin-right: auto;
@@ -181,11 +208,11 @@ onBeforeUnmount(() => {
   padding-right: 1rem;
   max-height: 322px;
 
-  @media screen and (min-height: 768px) {
+  @media screen and (min-height: map.get($breakpoint-data, tablet-base)) {
     max-height: 423px;
   }
 
-  @media screen and (min-height: 1024px) {
+  @media screen and (min-height: map.get($breakpoint-data, tablet-wide)) {
     max-height: 679px;
   }
 }

@@ -36,12 +36,10 @@ const deleteUser = (id) => {
       </h2>
     </template>
 
-    <div class="py-4">
-      <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
-        <div
-          class="overflow-hidden bg-white shadow-sm sm:rounded-lg"
-        >
-          <div class="p-4 text-gray-900">
+    <div class="PageContainer">
+      <div class="PageWrapper">
+        <div class="Page">
+          <div class="PageContent">
             <section class="text-gray-600 body-font relative">
               <div class="container mx-auto">
                 <div class="lg:w-1/2 md:w-2/3 mx-auto">
@@ -78,21 +76,21 @@ const deleteUser = (id) => {
                           <InputLabel for="role" value="権限" class="leading-7 text-sm text-gray-600" />
                           <div class="flex gap-4">
                             <div class="RoleContainer" :class="{ 'IsChecked': form.role === '1' }">
-                              <div class="flex items-center gap-2">
+                              <div class="flex items-center">
                                 <input type="radio" id="roleAdmin" v-model="form.role" value="1">
-                                <InputLabel for="roleAdmin" value="管理者" class="flex-auto py-2 leading-7 text-sm text-gray-600" :class="{ 'text-white': form.role === '1' }"/>
+                                <InputLabel for="roleAdmin" value="管理者" class="flex-auto pl-2 py-2 leading-7 text-sm text-gray-600" :class="{ 'text-white': form.role === '1' }"/>
                               </div>
                             </div>
                             <div class="RoleContainer" :class="{ 'IsChecked': form.role === '5' }">
-                              <div class="flex items-center gap-2">
+                              <div class="flex items-center">
                                 <input type="radio" id="roleStaff" v-model="form.role" value="5">
-                                <InputLabel for="roleStaff" value="スタッフ" class="flex-auto py-2 leading-7 text-sm text-gray-600" :class="{ 'text-white': form.role === '5' }" />
+                                <InputLabel for="roleStaff" value="スタッフ" class="flex-auto pl-2 py-2 leading-7 text-sm text-gray-600" :class="{ 'text-white': form.role === '5' }" />
                               </div>
                             </div>
                             <div class="RoleContainer" :class="{ 'IsChecked': form.role === '9' }">
-                              <div class="flex items-center gap-2">
+                              <div class="flex items-center">
                                 <input type="radio" id="roleUser" v-model="form.role" value="9">
-                                <InputLabel for="roleUser" value="利用者" class="flex-auto py-2 leading-7 text-sm text-gray-600" :class="{ 'text-white': form.role === '9' }" />
+                                <InputLabel for="roleUser" value="利用者" class="flex-auto pl-2 py-2 leading-7 text-sm text-gray-600" :class="{ 'text-white': form.role === '9' }" />
                               </div>
                             </div>
                           </div>
@@ -117,6 +115,45 @@ const deleteUser = (id) => {
 </template>
 
 <style lang="scss">
+@use 'sass:map';
+@use '../../../sass/variables.scss' as *;
+
+.PageContainer {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+.PageWrapper {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 80rem; /* 1280px */
+
+    @media screen and (min-width: map.get($breakpoint-data, smartphone-wide)) {
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+    }
+
+    @media screen and (min-width: map.get($breakpoint-data, tablet-wide)) {
+        padding-left: 2rem;
+        padding-right: 2rem;
+    }
+}
+
+.Page {
+    overflow: hidden;
+    background-color: #ffffff;
+    box-shadow: 0 0 #0000, 0 0 #0000, 0 1px 2px 0 rgb(0 0 0 / 0.05);
+
+    @media screen and (min-width: map.get($breakpoint-data, smartphone-wide)) {
+        border-radius: 0.5rem;
+    }
+}
+
+.PageContent {
+    padding: 1rem;
+    color: #111827;
+}
+
 .RoleContainer {
   flex: 0 1 calc(calc(100% - 2rem) / 3);
   padding-left: 0.5rem;

@@ -28,12 +28,10 @@ if (props.members.length !== 0) {
     </template>
 
     <FlashMessage />
-    <div class="py-4">
-      <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
-        <div
-          class="overflow-hidden bg-white shadow-sm sm:rounded-lg"
-        >
-          <div class="p-4 text-gray-900">
+    <div class="PageContainer">
+      <div class="PageWrapper">
+        <div class="Page">
+          <div class="PageContent">
             <section class="text-gray-600">
               <div class="container mx-auto">
                 <div class="w-full mx-auto overflow-auto">
@@ -45,7 +43,7 @@ if (props.members.length !== 0) {
                       <thead>
                         <tr>
                           <th class="w-24 px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-900 rounded-tl rounded-bl">操作</th>
-                          <th class="w-24 sm:w-48 px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-900">メンバー名</th>
+                          <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-900">メンバー名</th>
                           <th v-if="groupColumns !== 0" v-for="group_data in props.members[0].groups_data" :key="group_data.group_id" class="w-16 px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-900" :class="{ 'rounded-tr rounded-br': group_data.group_order === groupColumns }">{{ group_data.group_name }}</th>
                           <th v-else class="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-900 rounded-tr rounded-br">グループ名</th>
                         </tr>
@@ -76,17 +74,56 @@ if (props.members.length !== 0) {
 </template>
 
 <style lang="scss">
+@use 'sass:map';
+@use '../../../sass/variables.scss' as *;
+
+.PageContainer {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+.PageWrapper {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 80rem; /* 1280px */
+
+    @media screen and (min-width: map.get($breakpoint-data, smartphone-wide)) {
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+    }
+
+    @media screen and (min-width: map.get($breakpoint-data, tablet-wide)) {
+        padding-left: 2rem;
+        padding-right: 2rem;
+    }
+}
+
+.Page {
+    overflow: hidden;
+    background-color: #ffffff;
+    box-shadow: 0 0 #0000, 0 0 #0000, 0 1px 2px 0 rgb(0 0 0 / 0.05);
+
+    @media screen and (min-width: map.get($breakpoint-data, smartphone-wide)) {
+        border-radius: 0.5rem;
+    }
+}
+
+.PageContent {
+    padding: 1rem;
+    color: #111827;
+}
+
 .TableContainer {
   min-width: 343px;
   max-height: 410px;
   overflow-x: auto;
   overflow-y: auto;
 
-  @media screen and (min-height: 768px) {
+  @media screen and (min-height: map.get($breakpoint-data, tablet-base)) {
     max-height: 510px;
   }
 
-  @media screen and (min-height: 1024px) {
+  @media screen and (min-height: map.get($breakpoint-data, tablet-wide)) {
     max-height: 766px;
   }
   
