@@ -41,8 +41,8 @@ const showingNavigationDropdown = ref(false);
                                 </NavLink>
                                 <NavLink
                                     v-if="$page.props.auth.permissions.staffHigher"
-                                    :href="route('grouping.index')"
-                                    :active="route().current('grouping.index')"
+                                    :href="route('groupings.index')"
+                                    :active="route().current('groupings.index')"
                                 >
                                     グループ分け
                                 </NavLink>
@@ -176,8 +176,8 @@ const showingNavigationDropdown = ref(false);
                         </ResponsiveNavLink>
                         <ResponsiveNavLink
                             v-if="$page.props.auth.permissions.staffHigher"
-                            :href="route('grouping.index')"
-                            :active="route().current('grouping.index')"
+                            :href="route('groupings.index')"
+                            :active="route().current('groupings.index')"
                         >
                             グループ分け
                         </ResponsiveNavLink>
