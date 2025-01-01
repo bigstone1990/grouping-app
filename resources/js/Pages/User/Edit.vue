@@ -7,6 +7,7 @@ import TextInput from '@/Components/TextInput.vue';
 
 const props = defineProps({
   user: Object,
+  modifiable: Boolean,
   deletable: Boolean,
 });
 
@@ -75,32 +76,39 @@ const deleteUser = (id) => {
                       <div class="p-2 w-full">
                         <div class="relative">
                           <InputLabel for="role" value="権限" class="leading-7 text-sm text-gray-600" />
-                          <div class="flex gap-4">
-                            <div class="RoleContainer" :class="{ 'IsChecked': form.role === '1' }">
-                              <div class="flex items-center">
-                                <input type="radio" id="roleAdmin" v-model="form.role" value="1">
-                                <InputLabel for="roleAdmin" value="管理者" class="flex-auto pl-2 py-2 leading-7 text-sm text-gray-600" :class="{ 'text-white': form.role === '1' }"/>
+                          <template v-if="props.modifiable">
+                            <div class="flex gap-4">
+                              <div class="RoleContainer" :class="{ 'IsChecked': form.role === '1' }">
+                                <div class="flex items-center">
+                                  <input type="radio" id="roleAdmin" v-model="form.role" value="1">
+                                  <InputLabel for="roleAdmin" value="管理者" class="flex-auto pl-2 py-2 leading-7 text-sm text-gray-600" :class="{ 'text-white': form.role === '1' }"/>
+                                </div>
+                              </div>
+                              <div class="RoleContainer" :class="{ 'IsChecked': form.role === '5' }">
+                                <div class="flex items-center">
+                                  <input type="radio" id="roleStaff" v-model="form.role" value="5">
+                                  <InputLabel for="roleStaff" value="スタッフ" class="flex-auto pl-2 py-2 leading-7 text-sm text-gray-600" :class="{ 'text-white': form.role === '5' }" />
+                                </div>
+                              </div>
+                              <div class="RoleContainer" :class="{ 'IsChecked': form.role === '9' }">
+                                <div class="flex items-center">
+                                  <input type="radio" id="roleUser" v-model="form.role" value="9">
+                                  <InputLabel for="roleUser" value="利用者" class="flex-auto pl-2 py-2 leading-7 text-sm text-gray-600" :class="{ 'text-white': form.role === '9' }" />
+                                </div>
                               </div>
                             </div>
-                            <div class="RoleContainer" :class="{ 'IsChecked': form.role === '5' }">
-                              <div class="flex items-center">
-                                <input type="radio" id="roleStaff" v-model="form.role" value="5">
-                                <InputLabel for="roleStaff" value="スタッフ" class="flex-auto pl-2 py-2 leading-7 text-sm text-gray-600" :class="{ 'text-white': form.role === '5' }" />
-                              </div>
-                            </div>
-                            <div class="RoleContainer" :class="{ 'IsChecked': form.role === '9' }">
-                              <div class="flex items-center">
-                                <input type="radio" id="roleUser" v-model="form.role" value="9">
-                                <InputLabel for="roleUser" value="利用者" class="flex-auto pl-2 py-2 leading-7 text-sm text-gray-600" :class="{ 'text-white': form.role === '9' }" />
-                              </div>
-                            </div>
-                          </div>
-                          <InputError class="mt-2" :message="form.errors.role" />
+                            <InputError class="mt-2" :message="form.errors.role" />
+                          </template>
+                          <template v-else>
+                            <div v-if="props.user.role === 1" class="text-sm">管理者</div>
+                            <div v-else-if="props.user.role === 5" class="text-sm">スタッフ</div>
+                            <div v-else-if="props.user.role === 9" class="text-sm">利用者</div>
+                          </template>
                         </div>
                       </div>
                       <div class="p-2 w-full flex gap-4 justify-center">
                         <Link as="button" :href="route('users.index')" class="text-white bg-gray-500 border-0 py-2 px-8 hover:bg-gray-600 rounded">戻る</Link>
-                        <button class="text-white bg-indigo-500 border-0 py-2 px-8 hover:bg-indigo-600 rounded">更新</button>
+                        <button v-if="props.modifiable" class="text-white bg-indigo-500 border-0 py-2 px-8 hover:bg-indigo-600 rounded">更新</button>
                         <button v-if="props.deletable" type="button" v-on:click="deleteUser(props.user.id)" class="text-white bg-red-500 border-0 py-2 px-8 hover:bg-red-600 rounded">削除</button>
                       </div>
                     </form>

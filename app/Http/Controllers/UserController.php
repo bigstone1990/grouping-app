@@ -72,13 +72,18 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
+        $modifiable = true;
         $deletable = true;
         if ($user->id === Auth::id()) {
             $deletable = false;
+            if ($user->role === 1) {
+                $modifiable = false;
+            }
         }
 
         return Inertia::render('User/Edit', [
             'user' => $user,
+            'modifiable' => $modifiable,
             'deletable' => $deletable,
         ]);
     }
@@ -88,6 +93,12 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, User $user)
     {
+        if ($user->id === Auth::id()) {
+            if ($user->role === 1) {
+                return abort(404);
+            }
+        }
+
         $user->role = intval($request->role);
 
         $user->save();
