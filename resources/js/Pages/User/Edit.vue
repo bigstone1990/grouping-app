@@ -7,6 +7,7 @@ import TextInput from '@/Components/TextInput.vue';
 
 const props = defineProps({
   user: Object,
+  deletable: Boolean,
 });
 
 const form = useForm({
@@ -100,7 +101,7 @@ const deleteUser = (id) => {
                       <div class="p-2 w-full flex gap-4 justify-center">
                         <Link as="button" :href="route('users.index')" class="text-white bg-gray-500 border-0 py-2 px-8 hover:bg-gray-600 rounded">戻る</Link>
                         <button class="text-white bg-indigo-500 border-0 py-2 px-8 hover:bg-indigo-600 rounded">更新</button>
-                        <button type="button" v-on:click="deleteUser(props.user.id)" class="text-white bg-red-500 border-0 py-2 px-8 hover:bg-red-600 rounded">削除</button>
+                        <button v-if="props.deletable" type="button" v-on:click="deleteUser(props.user.id)" class="text-white bg-red-500 border-0 py-2 px-8 hover:bg-red-600 rounded">削除</button>
                       </div>
                     </form>
                   </div>

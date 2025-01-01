@@ -72,8 +72,14 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
+        $deletable = true;
+        if ($user->id === Auth::id()) {
+            $deletable = false;
+        }
+
         return Inertia::render('User/Edit', [
             'user' => $user,
+            'deletable' => $deletable,
         ]);
     }
 
@@ -97,6 +103,10 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
+        if ($user->id === Auth::id()) {
+            return abort(404);
+        }
+
         $user->delete();
 
         return to_route('users.index')->with([
