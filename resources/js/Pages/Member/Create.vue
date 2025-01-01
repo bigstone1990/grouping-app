@@ -65,7 +65,7 @@ const createMember = () => {
                       <div class="p-2 w-full">
                         <div class="relative">
                           <InputLabel for="groupAllocatable" value="グループ設定" class="leading-7 text-sm text-gray-600" />
-                          <div class="flex gap-4 flex-wrap">
+                          <div v-if="props.groups.length !== 0" class="flex gap-4 flex-wrap">
                             <div v-for="group in form.groupAllocatable" :key="group.group_id" class="GroupContainer" :class="{ 'IsChecked': group.group_allocatable }">
                               <div class="flex items-center">
                                 <Checkbox :id="group.group_id" v-model:checked="group.group_allocatable" />
@@ -73,6 +73,7 @@ const createMember = () => {
                               </div>
                             </div>
                           </div>
+                          <div v-else class="text-sm">グループがありません</div>
                         </div>
                       </div>
                       <div class="p-2 w-full flex gap-4 justify-center">
