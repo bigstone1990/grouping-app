@@ -11,6 +11,8 @@ use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\Allocation;
+use App\Models\Grouping;
+use Carbon\Carbon;
 
 class MemberController extends Controller
 {
@@ -23,29 +25,33 @@ class MemberController extends Controller
         
         $members = Member::where('user_id', '=', Auth::id())->orderBy('id')->get();
         
-        foreach ($members as $member) {
-            $groupsData = [];
-
-            $groups = $member->groups()->orderBy('order')->get();
-
-            foreach ($groups as $group) {
-                $groupData = [
-                    'group_id' => $group->id,
-                    'group_name' => $group->name,
-                    'group_order' => $group->order,
-                    'allocatable' => $group->pivot->allocatable,
+        if (!$members->isEmpty()) {
+            foreach ($members as $member) {
+                $groupsData = [];
+    
+                $groups = $member->groups()->orderBy('order')->get();
+    
+                if (!$groups->isEmpty()) {
+                    foreach ($groups as $group) {
+                        $groupData = [
+                            'group_id' => $group->id,
+                            'group_name' => $group->name,
+                            'group_order' => $group->order,
+                            'allocatable' => $group->pivot->allocatable,
+                        ];
+        
+                        array_push($groupsData, $groupData);
+                    }
+                }
+    
+                $memberData = [
+                    'member_id' => $member->id,
+                    'member_name' => $member->name,
+                    'groups_data' => $groupsData,
                 ];
-
-                array_push($groupsData, $groupData);
+    
+                array_push($membersData, $memberData);
             }
-
-            $memberData = [
-                'member_id' => $member->id,
-                'member_name' => $member->name,
-                'groups_data' => $groupsData,
-            ];
-
-            array_push($membersData, $memberData);
         }
 
         return Inertia::render('Member/Index', [
@@ -75,12 +81,14 @@ class MemberController extends Controller
             'name' => $request->memberName,
         ]);
 
-        foreach ($request->groupAllocatable as $group) {
-            Allocation::create([
-                'member_id' => $member->id,
-                'group_id' => $group['group_id'],
-                'allocatable' => $group['group_allocatable'],
-            ]);
+        if (!empty($request->groupAllocatable)) {
+            foreach ($request->groupAllocatable as $group) {
+                Allocation::create([
+                    'member_id' => $member->id,
+                    'group_id' => $group['group_id'],
+                    'allocatable' => $group['group_allocatable'],
+                ]);
+            }
         }
 
         return to_route('members.index')->with([
@@ -110,15 +118,17 @@ class MemberController extends Controller
 
         $groups = $member->groups()->orderBy('order')->get();
 
-        foreach ($groups as $group) {
-            $groupData = [
-                'group_id' => $group->id,
-                'group_name' => $group->name,
-                'group_order' => $group->order,
-                'allocatable' => $group->pivot->allocatable,
-            ];
-
-            array_push($groupsData, $groupData);
+        if (!$groups->isEmpty()) {
+            foreach ($groups as $group) {
+                $groupData = [
+                    'group_id' => $group->id,
+                    'group_name' => $group->name,
+                    'group_order' => $group->order,
+                    'allocatable' => $group->pivot->allocatable,
+                ];
+    
+                array_push($groupsData, $groupData);
+            }
         }
 
         $memberData = [
@@ -145,10 +155,15 @@ class MemberController extends Controller
 
         $member->save();
 
-        foreach ($request->groupAllocatable as $group) {
-            $allocation = Allocation::where('member_id', '=', $member->id)->where('group_id', '=', $group['group_id'])->first();
-            $allocation->allocatable = $group['group_allocatable'];
-            $allocation->save();
+        if (!empty($request->groupAllocatable)) {
+            foreach ($request->groupAllocatable as $group) {
+                $allocation = Allocation::where('member_id', '=', $member->id)->where('group_id', '=', $group['group_id'])->first();
+
+                if (!is_null($allocation)) {
+                    $allocation->allocatable = $group['group_allocatable'];
+                    $allocation->save();
+                }
+            }
         }
 
         return to_route('members.index')->with([
@@ -162,14 +177,25 @@ class MemberController extends Controller
      */
     public function destroy(Member $member)
     {
-        if ($member->user_id !== Auth::id()) {
+        $userId = Auth::id();
+
+        if ($member->user_id !== $userId) {
             abort(404);
         }
 
         $allocations = Allocation::where('member_id', '=', $member->id)->get();
 
-        foreach ($allocations as $allocation) {
-            $allocation->delete();
+        if (!$allocations->isEmpty()) {
+            foreach ($allocations as $allocation) {
+                $allocation->delete();
+            }
+        }
+
+        $date = Carbon::today();
+        $grouping = Grouping::where('date', '=', $date)->where('user_id', '=', $userId)->where('member_id', '=', $member->id)->first();
+
+        if (!is_null($grouping)) {
+            $grouping->delete();
         }
 
         $member->delete();

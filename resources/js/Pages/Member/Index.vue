@@ -60,6 +60,11 @@ if (props.members.length !== 0) {
                           </td>
                           <td v-else class="border-b-2 px-4 py-3 bg-white">グループがありません</td>
                         </tr>
+                        <tr v-else>
+                          <td class="border-b-2 px-4 py-3 bg-white"></td>
+                          <td class="border-b-2 px-4 py-3 bg-white">メンバーがいません</td>
+                          <td class="border-b-2 px-4 py-3 bg-white"></td>
+                        </tr>
                       </tbody>
                     </table>
                   </div>

@@ -18,9 +18,15 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware(['auth', 'verified','can:staff-higher'])->group(function () {
-    Route::get('/grouping/index', [GroupingController::class, 'index'])->name('grouping.index');
+    Route::get('groupings', [GroupingController::class, 'index'])->name('groupings.index');
+    Route::get('groupings/create', [GroupingController::class, 'create'])->name('groupings.create');
+    Route::post('groupings', [GroupingController::class, 'store'])->name('groupings.store');
+    Route::get('groupings/{user_id}/{date}', [GroupingController::class, 'show'])->name('groupings.show');
+    Route::get('groupings/{user_id}/{date}/edit', [GroupingController::class, 'edit'])->name('groupings.edit');
+    Route::match(['put', 'patch'], 'groupings/{user_id}/{date}', [GroupingController::class, 'update'])->name('groupings.update');
+    Route::delete('groupings/{user_id}/{date}', [GroupingController::class, 'destroy'])->name('groupings.destroy');
+    Route::get('groupings/past', [GroupingController::class, 'past'])->name('groupings.past');
 });
-
 
 Route::middleware(['auth', 'verified','can:staff-higher'])->group(function () {
     Route::get('groups/ordering/edit', [GroupController::class, 'orderingEdit'])->name('groups.ordering.edit');
