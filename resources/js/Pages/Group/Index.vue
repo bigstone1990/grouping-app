@@ -27,34 +27,36 @@ const props = defineProps({
           <div class="PageContent">
             <section class="text-gray-600">
               <div class="container mx-auto">
-                <div class="lg:w-2/3 w-full mx-auto overflow-auto">
+                <div class="w-full mx-auto overflow-auto">
                   <div class="flex gap-4 justify-end mb-4 w-full">
                     <Link as="button" :href="route('groups.create')" class="text-white bg-indigo-500 border-0 py-2 px-8 hover:bg-indigo-600 rounded">新規作成</Link>
                     <Link as="button" :href="route('groups.ordering.edit')" class="text-white bg-indigo-500 border-0 py-2 px-8 hover:bg-indigo-600 rounded">グループ順編集</Link>
                   </div>
-                  <table class="table-auto w-full text-left whitespace-no-wrap">
-                    <thead>
-                      <tr>
-                        <th class="w-16 px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-900 rounded-tl rounded-bl">順番</th>
-                        <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-900">グループ名</th>
-                        <th class="w-24 px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-900 rounded-tr rounded-br">操作</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr v-if="props.groups.length !== 0" v-for="group in props.groups" :key="group.id">
-                        <td class="border-b-2 px-4 py-3">{{ group.order }}</td>
-                        <td class="border-b-2 px-4 py-3">{{ group.name }}</td>
-                        <td class="border-b-2 px-4 py-3">
-                          <Link as="button" :href="route('groups.edit', {group: group.id})" class="w-full text-white bg-green-500 border-0 py-2 px-4 hover:bg-green-600 rounded">編集</Link>
-                        </td>
-                      </tr>
-                      <tr v-else>
-                        <td class="border-b-2 px-4 py-3"></td>
-                        <td class="border-b-2 px-4 py-3">グループがありません</td>
-                        <td class="border-b-2 px-4 py-3"></td>
-                      </tr>
-                    </tbody>
-                  </table>
+                  <div class="TableContainer">
+                    <table class="table-fixed w-full text-left whitespace-normal">
+                      <thead>
+                        <tr>
+                          <th class="w-16 px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-900 rounded-tl rounded-bl">順番</th>
+                          <th class="w-44 px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-900">グループ名</th>
+                          <th class="w-24 px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-900 rounded-tr rounded-br">操作</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr v-if="props.groups.length !== 0" v-for="group in props.groups" :key="group.id">
+                          <td class="border-b-2 px-4 py-3 bg-white">{{ group.order }}</td>
+                          <td class="border-b-2 px-4 py-3 bg-white">{{ group.name }}</td>
+                          <td class="border-b-2 px-4 py-3 bg-white">
+                            <Link as="button" :href="route('groups.edit', {group: group.id})" class="w-full text-white bg-green-500 border-0 py-2 px-4 hover:bg-green-600 rounded">編集</Link>
+                          </td>
+                        </tr>
+                        <tr v-else>
+                          <td class="border-b-2 px-4 py-3 bg-white"></td>
+                          <td class="border-b-2 px-4 py-3 bg-white">グループがありません</td>
+                          <td class="border-b-2 px-4 py-3 bg-white"></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
             </section>
@@ -105,4 +107,60 @@ const props = defineProps({
     color: #111827;
 }
 
+.TableContainer {
+  min-width: 343px;
+  max-height: 410px;
+  overflow-x: auto;
+  overflow-y: auto;
+
+  @media screen and (min-height: map.get($breakpoint-data, tablet-base)) {
+    max-height: 510px;
+  }
+
+  @media screen and (min-height: map.get($breakpoint-data, tablet-wide)) {
+    max-height: 766px;
+  }
+
+  @media screen and (min-height: map.get($breakpoint-data, fhd-base)) {
+    max-height: 823px;
+  }
+  
+  table {
+    border-collapse: separate;
+    border-spacing: 0;
+    thead {
+      tr {
+        th {
+          overflow-wrap: break-word;
+        }
+
+        &:first-of-type {
+          th {
+            position: sticky;
+            top: 0;
+
+            &::before {
+              content: "";
+              position: absolute;
+              top: 0;
+              left: 0px;
+              width: 100%;
+              height: 100%;
+              border-right: 1px solid white;
+              z-index: -1;
+            }
+          }
+        }
+      }
+    }
+
+    tbody {
+      tr {
+        td {
+          overflow-wrap: break-word;
+        }
+      }
+    }
+  }  
+}
 </style>

@@ -62,10 +62,10 @@ const props = defineProps({
                           </td>
                         </tr>
                         <tr v-else>
-                          <td class="border-b-2 px-4 py-3"></td>
-                          <td class="border-b-2 px-4 py-3">メンバーがいません</td>
-                          <td class="border-b-2 px-4 py-3"></td>
-                          <td class="border-b-2 px-4 py-3"></td>
+                          <td class="border-b-2 px-4 py-3 bg-white"></td>
+                          <td class="border-b-2 px-4 py-3 bg-white">メンバーがいません</td>
+                          <td class="border-b-2 px-4 py-3 bg-white"></td>
+                          <td class="border-b-2 px-4 py-3 bg-white"></td>
                         </tr>
                       </tbody>
                     </table>
@@ -164,14 +164,14 @@ const props = defineProps({
               position: sticky;
               top: 0;
               left: 0;
-              z-index: 1;
+              z-index: 2;
             }
 
             &:nth-of-type(2) {
               position: sticky;
               top: 0;
               left: calc(6rem);
-              z-index: 1;
+              z-index: 2;
             }
 
             &:not(:first-of-type, :nth-of-type(2)) {

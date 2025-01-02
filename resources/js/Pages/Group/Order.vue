@@ -165,6 +165,7 @@ onBeforeUnmount(() => {
   max-width: 80%;
   margin-left: auto;
   margin-right: auto;
+  color: #ffffff;
 }
 
 .GroupOrderListWrapper {
@@ -214,6 +215,10 @@ onBeforeUnmount(() => {
 
   @media screen and (min-height: map.get($breakpoint-data, tablet-wide)) {
     max-height: 679px;
+  }
+
+  @media screen and (min-height: map.get($breakpoint-data, fhd-base)) {
+    max-height: 735px;
   }
 }
 
