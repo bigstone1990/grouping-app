@@ -32,7 +32,7 @@ const props = defineProps({
                     <Link as="button" :href="route('groups.create')" class="text-white bg-indigo-500 border-0 py-2 px-8 hover:bg-indigo-600 rounded">新規作成</Link>
                     <Link as="button" :href="route('groups.ordering.edit')" class="text-white bg-indigo-500 border-0 py-2 px-8 hover:bg-indigo-600 rounded">グループ順編集</Link>
                   </div>
-                  <div class="TableContainer">
+                  <div class="GroupTableContainer">
                     <table class="table-fixed w-full text-left whitespace-normal">
                       <thead>
                         <tr>
@@ -107,7 +107,7 @@ const props = defineProps({
     color: #111827;
 }
 
-.TableContainer {
+.GroupTableContainer {
   min-width: 343px;
   max-height: 410px;
   overflow-x: auto;

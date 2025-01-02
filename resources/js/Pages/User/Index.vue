@@ -32,7 +32,7 @@ const props = defineProps({
                   <div class="flex gap-4 justify-end mb-4 w-full">
                     <Link as="button" :href="route('users.create')" class="text-white bg-indigo-500 border-0 py-2 px-8 hover:bg-indigo-600 rounded">新規作成</Link>
                   </div>
-                  <div class="TableContainer">
+                  <div class="UserTableContainer">
                     <table class="table-fixed w-full text-left whitespace-normal">
                       <thead>
                         <tr>
@@ -120,7 +120,7 @@ const props = defineProps({
     color: #111827;
 }
 
-.TableContainer {
+.UserTableContainer {
   min-width: 343px;
   max-height: 410px;
   overflow-x: auto;

@@ -156,7 +156,7 @@ onBeforeUnmount(() => {
 
 .PageContent {
   padding: 1rem;
-  color: #ffffff;
+  color: #111827;
 }
 
 .GroupOrderContainer {
