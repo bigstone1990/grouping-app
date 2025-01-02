@@ -33,13 +33,13 @@ const props = defineProps({
                     <Link as="button" :href="route('users.create')" class="text-white bg-indigo-500 border-0 py-2 px-8 hover:bg-indigo-600 rounded">新規作成</Link>
                   </div>
                   <div class="TableContainer">
-                    <table class="table-auto w-full text-left whitespace-no-wrap">
+                    <table class="table-fixed w-full text-left whitespace-normal">
                       <thead>
                         <tr>
                           <th class="w-24 px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-900 rounded-tl rounded-bl">操作</th>
-                          <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-900">ユーザー名</th>
-                          <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-900">メールアドレス</th>
-                          <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-900 rounded-tr rounded-br">権限</th>
+                          <th class="w-28 px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-900">ユーザー名</th>
+                          <th class="w-48 px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-900">メールアドレス</th>
+                          <th class="w-24 px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-900 rounded-tr rounded-br">権限</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -56,7 +56,7 @@ const props = defineProps({
                             <template v-else-if="user.role === 5">
                               スタッフ
                             </template>
-                            <template v-else>
+                            <template v-else-if="user.role === 9">
                               利用者
                             </template>
                           </td>
@@ -133,6 +133,10 @@ const props = defineProps({
   @media screen and (min-height: map.get($breakpoint-data, tablet-wide)) {
     max-height: 766px;
   }
+
+  @media screen and (min-height: map.get($breakpoint-data, fhd-base)) {
+    max-height: 823px;
+  }
   
   table {
     border-collapse: separate;
@@ -140,7 +144,7 @@ const props = defineProps({
     thead {
       tr {
         th {
-          white-space: nowrap;
+          overflow-wrap: break-word;
         }
 
         &:first-of-type {
@@ -182,7 +186,7 @@ const props = defineProps({
     tbody {
       tr {
         td {
-          white-space: nowrap;
+          overflow-wrap: break-word;
 
           &:first-of-type {
             position: sticky;

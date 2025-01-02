@@ -19,7 +19,7 @@ import { Head, Link } from '@inertiajs/vue3';
             <div class="PageWrapper">
                 <div class="Page">
                     <div class="PageContent">
-                        <ul class="flex gap-4 flex-wrap">
+                        <ul v-if="$page.props.auth.permissions.staffHigher" class="flex gap-4 flex-wrap">
                             <li v-if="$page.props.auth.permissions.staffHigher" class="DashboardButtonWrapper">
                                 <Link as="button" :href="route('groupings.index')" class="DashboardButton">グループ分け</Link>
                             </li>
@@ -33,6 +33,7 @@ import { Head, Link } from '@inertiajs/vue3';
                                 <Link as="button" :href="route('members.index')" class="DashboardButton">メンバー管理</Link>
                             </li>
                         </ul>
+                        <div v-else>現在表示できるメニューがありません</div>
                     </div>
                 </div>
             </div>
@@ -95,7 +96,7 @@ import { Head, Link } from '@inertiajs/vue3';
     padding-bottom: 1rem;
     padding-left: 2rem;
     padding-right: 2rem;
-    border-radius: 0.25rem;
+    border-radius: 0.5rem;
 
     @media screen and (min-width: map.get($breakpoint-data, tablet-base)) {
         font-size: 2rem;
