@@ -68,9 +68,6 @@ const props = defineProps({
 </template>
 
 <style lang="scss">
-@use 'sass:map';
-@use '../../../sass/variables.scss' as *;
-
 .GroupTableContainer {
   min-width: 343px;
   max-width: calc(4rem + 11rem + 6rem);

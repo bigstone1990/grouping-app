@@ -41,9 +41,6 @@ import { Head, Link } from '@inertiajs/vue3';
 </template>
 
 <style lang="scss">
-@use 'sass:map';
-@use '../../sass/variables.scss' as *;
-
 .DashboardButtonWrapper {
     flex: 0 1 calc(calc(100% - 1rem) / 2);
 
@@ -71,5 +68,4 @@ import { Head, Link } from '@inertiajs/vue3';
         }
     }
 }
-
 </style>

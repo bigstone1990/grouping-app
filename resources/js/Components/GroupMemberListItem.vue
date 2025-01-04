@@ -20,9 +20,6 @@ const props = defineProps({
 </template>
 
 <style lang="scss">
-@use 'sass:map';
-@use '../../sass/variables.scss' as *;
-
 .draggable-container-parent--capacity {
   .Member--isDraggable {
     &:not(.draggable-mirror) {

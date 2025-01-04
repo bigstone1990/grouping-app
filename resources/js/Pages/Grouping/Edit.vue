@@ -147,9 +147,6 @@ onBeforeUnmount(() => {
 </template>
 
 <style lang="scss">
-@use 'sass:map';
-@use '../../../sass/variables.scss' as *;
-
 .GroupingEditPageContentLayout {
   display: flex;
   flex-direction: column;

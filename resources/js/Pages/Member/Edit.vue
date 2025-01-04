@@ -100,9 +100,6 @@ const deleteMember = (id) => {
 </template>
 
 <style lang="scss">
-@use 'sass:map';
-@use '../../../sass/variables.scss' as *;
-
 .GroupAllocateContainer {
   flex: 0 1 calc(calc(100% - 1rem) / 2);
   padding-left: 0.5rem;
@@ -116,6 +113,4 @@ const deleteMember = (id) => {
     border-color: #5cb85c;
   }
 }
-
-
 </style>

@@ -26,9 +26,6 @@ const props = defineProps({
 </template>
 
 <style lang="scss">
-@use 'sass:map';
-@use '../../sass/variables.scss' as *;
-
 .GroupListItem {
   flex: 1 0 auto;
   overflow: hidden;

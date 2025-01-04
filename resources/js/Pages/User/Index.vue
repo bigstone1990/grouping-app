@@ -78,9 +78,6 @@ const props = defineProps({
 </template>
 
 <style lang="scss">
-@use 'sass:map';
-@use '../../../sass/variables.scss' as *;
-
 .UserTableContainer {
   min-width: 343px;
   max-width: calc(6rem + 10rem + 12rem + 6rem);

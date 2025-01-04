@@ -16,9 +16,6 @@ const props = defineProps({
 </template>
 
 <style lang="scss">
-@use 'sass:map';
-@use '../../sass/variables.scss' as *;
-
 .GroupMemberListItem {
   position: relative;
   width: 100%;

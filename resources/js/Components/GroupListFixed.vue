@@ -24,9 +24,6 @@ const props = defineProps({
 </template>
 
 <style lang="scss">
-@use 'sass:map';
-@use '../../sass/variables.scss' as *;
-
 .GroupListWrapper {
   display: flex;
   flex-direction: column;
@@ -57,7 +54,6 @@ const props = defineProps({
 
 .GroupList {
   height: 100%;
-  overflow: scroll;
   display: flex;
   flex-direction: column;
   gap: 1rem;

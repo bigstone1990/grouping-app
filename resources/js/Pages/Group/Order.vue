@@ -115,9 +115,6 @@ onBeforeUnmount(() => {
 </template>
 
 <style lang="scss">
-@use 'sass:map';
-@use '../../../sass/variables.scss' as *;
-
 .draggable--is-dragging,
 .draggable--is-dragging * {
   cursor: grabbing;

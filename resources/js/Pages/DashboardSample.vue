@@ -28,7 +28,4 @@ import { Head } from '@inertiajs/vue3';
 </template>
 
 <style lang="scss">
-@use 'sass:map';
-@use '../../sass/variables.scss' as *;
-
 </style>
