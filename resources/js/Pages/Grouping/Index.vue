@@ -1,6 +1,6 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import GroupList from '@/Components/GroupList.vue';
+import GroupList from '@/Components/GroupListFixed.vue';
 import { Head, Link } from '@inertiajs/vue3';
 
 

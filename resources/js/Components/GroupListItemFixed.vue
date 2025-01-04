@@ -1,5 +1,5 @@
 <script setup>
-import GroupMemberListItem from './GroupMemberListItem.vue';
+import GroupMemberListItem from './GroupMemberListItemFixed.vue';
 
 const props = defineProps({
   group: Object,

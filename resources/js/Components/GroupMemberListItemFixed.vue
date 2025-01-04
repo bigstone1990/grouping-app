@@ -10,10 +10,6 @@ const props = defineProps({
     <li class="MemberListItem Member--isDraggable" :class="{ ['MemberListItem--item' + props.options.index]: props.options.index }">
     <div class="MemberListItemContent">
       <h4 class="MemberListItemHeading">{{ props.member.member_name }}</h4>
-      <div class="DragHandle"></div>
-
-      <div class="Pattern Pattern--typeHalftone"></div>
-      <div class="Pattern Pattern--typePlaced"></div>
     </div>
   </li>
   </li>
@@ -22,23 +18,6 @@ const props = defineProps({
 <style lang="scss">
 @use 'sass:map';
 @use '../../sass/variables.scss' as *;
-
-.draggable-container-parent--capacity {
-  .Member--isDraggable {
-    &:not(.draggable-mirror) {
-      .MemberListItemContent {
-        background-color: #ff3300;
-  
-        .DragHandle {
-          &::before,
-          &::after {
-            background-color: #ff3300;
-          }
-        }
-      }
-    }
-  }
-}
 
 .GroupMemberListItem {
   position: relative;
@@ -81,6 +60,24 @@ const props = defineProps({
   .MemberListItem {
     width: 100%;
     height: 100%;
+
+    .MemberListItemContent {
+      position: relative;
+      display: flex;
+      align-items: center;
+      padding: 0.5rem;
+      background-color: #5cb85c;
+      border-radius: 0.5rem;
+
+      .MemberListItemHeading {
+        flex: 1 1 auto;
+        color: currentColor;
+        font-size: 1rem;
+        font-weight: 700;
+        pointer-events: none;
+        user-select: none;
+      }
+    }
   }
 }
 </style>

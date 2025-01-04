@@ -1,5 +1,5 @@
 <script setup>
-import GroupListItem from './GroupListItem.vue';
+import GroupListItem from './GroupListItemFixed.vue';
 
 const props = defineProps({
   groups: Object,
