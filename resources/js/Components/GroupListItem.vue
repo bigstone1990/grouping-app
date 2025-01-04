@@ -26,6 +26,9 @@ const props = defineProps({
 </template>
 
 <style lang="scss">
+@use 'sass:map';
+@use '../../sass/variables.scss' as *;
+
 .GroupListItem {
   flex: 1 0 auto;
   overflow: hidden;
@@ -33,11 +36,6 @@ const props = defineProps({
   background-color: #ffffff;
   box-shadow: 0 0 #0000, 0 0 #0000, 0 1px 2px 0 rgb(0 0 0 / 0.1);
   border-radius: 0.5rem;
-
-  @media screen and (min-width: 1024px) {
-    width: calc(calc(100% - 1rem) / 2);
-    flex: initial;
-  }
 }
 
 .GroupListItemContent {
@@ -46,7 +44,7 @@ const props = defineProps({
 }
 
 .GroupListItemHeader {
-  flex: 0 0 3rem;
+  flex: 0 0 2.5rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -56,29 +54,29 @@ const props = defineProps({
 
 .GroupListItemHeading {
   color: currentColor;
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: 700;
 }
 
 .GroupMemberListContainer {
   padding-top: 1rem;
   padding-bottom: 1rem;
-  background-image: repeating-linear-gradient(-45deg, currentColor 0%, currentColor 40%, #111827 40%, #111827 50%, currentColor 50%);
-  background-size: 0.8rem 0.8rem;
+  background-color: #ffedcc;
+  // background-image: repeating-linear-gradient(-45deg, currentColor 0%, currentColor 40%, #111827 40%, #111827 50%, currentColor 50%);
+  // background-size: 0.8rem 0.8rem;
 }
 
 .GroupMemberList {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   gap: 1rem;
   padding-left: 1rem;
   padding-right: 1rem;
-  min-height: 3rem;
+  min-height: 2.5rem;
 
-
-  @media screen and (min-width: 1024px) {
-    flex-direction: column;
-    flex-wrap: nowrap;
+  @media screen and (min-width: map.get($breakpoint-data, smartphone-wide)) {
+    flex-direction: row;
+    flex-wrap: wrap;
   }
 }
 </style>

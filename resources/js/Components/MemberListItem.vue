@@ -18,10 +18,17 @@ const props = defineProps({
 </template>
 
 <style lang="scss">
-.MemberListItem {
-  width: calc(calc(100% - 2rem) / 3);
+@use 'sass:map';
+@use '../../sass/variables.scss' as *;
 
-  @media screen and (min-width: 1024px) {
+.MemberListItem {
+  width: 100%;
+
+  @media screen and (min-width: map.get($breakpoint-data, smartphone-wide)) {
+    width: calc(calc(100% - 1rem) / 2);
+  }
+
+  @media screen and (min-width: map.get($breakpoint-data, tablet-wide)) {
     width: 100%;
   }
 }
@@ -30,7 +37,7 @@ const props = defineProps({
   position: relative;
   display: flex;
   align-items: center;
-  padding: 0.6rem;
+  padding: 0.5rem;
   background-color: #5cb85c;
   border-radius: 0.5rem;
 }
@@ -38,7 +45,7 @@ const props = defineProps({
 .MemberListItemHeading {
   flex: 1 1 auto;
   color: currentColor;
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: 700;
   pointer-events: none;
   user-select: none;

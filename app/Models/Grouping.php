@@ -13,7 +13,7 @@ class Grouping extends Model
     protected $fillable = [
         'date',
         'user_id',
-        'member_id',
         'group_id',
+        'member_id',
     ];
 }

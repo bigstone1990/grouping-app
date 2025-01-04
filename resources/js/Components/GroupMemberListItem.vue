@@ -9,6 +9,9 @@ const props = defineProps({
 </template>
 
 <style lang="scss">
+@use 'sass:map';
+@use '../../sass/variables.scss' as *;
+
 .draggable-container-parent--capacity {
   .Member--isDraggable {
     &:not(.draggable-mirror) {
@@ -28,13 +31,13 @@ const props = defineProps({
 
 .GroupMemberListItem {
   position: relative;
-  width: calc(calc(100% - 2rem) / 3);
-  height: 3rem;
+  width: 100%;
+  height: 2.5rem;
   border-radius: 0.5rem;
   overflow: hidden;
 
-  @media screen and (min-width: 1024px) {
-    width: 100%;
+  @media screen and (min-width: map.get($breakpoint-data, smartphone-wide)) {
+    width: calc(calc(100% - 1rem) / 2);
   }
 
   &::before {
