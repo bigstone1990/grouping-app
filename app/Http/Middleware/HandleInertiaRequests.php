@@ -35,7 +35,6 @@ class HandleInertiaRequests extends Middleware
                 'user' => $request->user(),
                 'permissions' => [
                     'admin' => $request->user() ? $request->user()->can('admin') : null,
-                    'staffHigher' => $request->user() ? $request->user()->can('staff-higher') : null,
                 ],
             ],
             'flash' => [

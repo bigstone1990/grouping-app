@@ -10,14 +10,14 @@ use App\Http\Controllers\MemberController;
 use App\Http\Controllers\UserController;
 
 Route::get('/', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+    return redirect()->route('dashboard');
+})->middleware(['auth', 'verified'])->name('top');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware(['auth', 'verified','can:staff-higher'])->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('groupings', [GroupingController::class, 'index'])->name('groupings.index');
     Route::get('groupings/create', [GroupingController::class, 'create'])->name('groupings.create');
     Route::post('groupings', [GroupingController::class, 'store'])->name('groupings.store');
@@ -28,13 +28,13 @@ Route::middleware(['auth', 'verified','can:staff-higher'])->group(function () {
     Route::get('groupings/past', [GroupingController::class, 'past'])->name('groupings.past');
 });
 
-Route::middleware(['auth', 'verified','can:staff-higher'])->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('groups/ordering/edit', [GroupController::class, 'orderingEdit'])->name('groups.ordering.edit');
     Route::patch('groups/ordering/update', [GroupController::class, 'orderingUpdate'])->name('groups.ordering.update');
     Route::resource('groups', GroupController::class);
 });
 
-Route::middleware(['auth', 'verified','can:staff-higher'])->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('members', MemberController::class);
 });
 

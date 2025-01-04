@@ -123,42 +123,6 @@ onBeforeUnmount(() => {
   cursor: grabbing;
 }
 
-.PageContainer {
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-}
-
-.PageWrapper {
-  height: 100%;
-  margin-left: auto;
-  margin-right: auto;
-  max-width: 80rem /* 1280px */;
-
-  @media screen and (min-width: map.get($breakpoint-data, smartphone-wide)) {
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
-  }
-
-  @media screen and (min-width: map.get($breakpoint-data, tablet-wide)) {
-    padding-left: 2rem;
-    padding-right: 2rem;
-  }
-}
-
-.Page {
-  background-color: #ffffff;
-  box-shadow: 0 0 #0000, 0 0 #0000, 0 1px 2px 0 rgb(0 0 0 / 0.1);
-
-  @media screen and (min-width: map.get($breakpoint-data, smartphone-wide)) {
-    border-radius: 0.5rem;
-  }
-}
-
-.PageContent {
-  padding: 1rem;
-  color: #111827;
-}
-
 .GroupOrderContainer {
   display: flex;
   flex-direction: column;
@@ -167,169 +131,171 @@ onBeforeUnmount(() => {
   margin-left: auto;
   margin-right: auto;
   color: #ffffff;
-}
 
-.GroupOrderListWrapper {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  border-radius: 0.5rem;
-  overflow: hidden;
-  box-shadow: 0 0 #0000, 0 0 #0000, 0 1px 2px 0 rgb(0 0 0 / 0.1);
-}
+  .GroupOrderListWrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    box-shadow: 0 0 #0000, 0 0 #0000, 0 1px 2px 0 rgb(0 0 0 / 0.1);
 
-.GroupOrderListHeader {
-  flex: 0 0 3rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 1rem;
-  background-color: #111827;
-}
+    .GroupOrderListHeader {
+      flex: 0 0 3rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 1rem;
+      background-color: #111827;
 
-.GroupOrderListHeading {
-  color: currentColor;
-  font-size: 1rem;
-  font-weight: 700;
-}
+      .GroupOrderListHeading {
+        color: currentColor;
+        font-size: 1rem;
+        font-weight: 700;
+      }
+    }
 
-.GroupOrderListContainer {
-  flex: 1 1 auto;
-  overflow: hidden;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-}
+    .GroupOrderListContainer {
+      flex: 1 1 auto;
+      overflow: hidden;
+      padding-top: 1rem;
+      padding-bottom: 1rem;
 
-.GroupOrderList {
-  overflow: scroll;
-  display: flex;
-  flex-direction: column;
-  flex-wrap: nowrap;
-  gap: 1rem;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  max-height: 322px;
-
-  @media screen and (min-height: map.get($breakpoint-data, tablet-base)) {
-    max-height: 422px;
-  }
-
-  @media screen and (min-height: map.get($breakpoint-data, tablet-wide)) {
-    max-height: 678px;
-  }
-
-  @media screen and (min-height: map.get($breakpoint-data, fhd-base)) {
-    max-height: 734px;
-  }
-}
-
-.GroupOrderListItemContent {
-  position: relative;
-  display: flex;
-  align-items: center;
-  padding: 1rem;
-  background-color: #5cb85c;
-  border-radius: 0.5rem;
-}
-
-.GroupOrderListItemHeading {
-  flex: 1 1 auto;
-  color: currentColor;
-  font-size: 1rem;
-  font-weight: 700;
-  pointer-events: none;
-  user-select: none;
-}
-
-.DragHandle {
-  flex: 0 0 1rem;
-  margin-left: 1rem;
-  position: relative;
-  width: 1rem;
-  height: 1rem;
-  background-color: currentColor;
-
-  &::before,
-  &::after {
-    content: '';
-    position: absolute;
-    right: 0;
-    left: 0;
-    display: block;
-    height: 0.2rem;
-    background-color: #5cb85c;
-  }
-
-  &::before {
-    top: 0.2rem;
-  }
-
-  &::after {
-      bottom: 0.2rem;
-  }
-}
-
-.Group--isDraggable {
-  cursor: grab;
-
-  &:focus {
-    outline: none;
-  }
-
-  &:focus,
-  &:hover {
-    .GroupOrderListItemContent {
-      background-color: #0042ff;
-
-      .DragHandle {
-        &::before,
-        &::after {
-          background-color: #0042ff;
+      .GroupOrderList {
+        overflow-y: scroll;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        gap: 1rem;
+        padding-left: 1rem;
+        padding-right: 1rem;
+        max-height: 322px;
+      
+        @media screen and (min-height: map.get($breakpoint-data, tablet-base)) {
+          max-height: 422px;
         }
-      }
-    }
-  }
-
-  &.draggable-source--is-dragging {
-    .GroupOrderListItemContent {
-      background-color: #0042ff;
-
-      .DragHandle {
-        &::before,
-        &::after {
-          background-color: #0042ff;
+      
+        @media screen and (min-height: map.get($breakpoint-data, tablet-wide)) {
+          max-height: 678px;
         }
-      }
+      
+        @media screen and (min-height: map.get($breakpoint-data, fhd-base)) {
+          max-height: 734px;
+        }
 
-      .Pattern--typeHalftone {
-        opacity: 1;
-        visibility: visible;
-        animation-play-state: running;
-      }
-    }
-  }
+        .GroupOrderListItem {
+          .GroupOrderListItemContent {
+            position: relative;
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            background-color: #5cb85c;
+            border-radius: 0.5rem;
 
-  &.draggable-source--placed {
-    .GroupOrderListItemContent {
-      .Pattern--typePlaced {
-        opacity: 1;
-        visibility: visible;
-        animation-play-state: running;
-      }
-    }
-  }
+            .GroupOrderListItemHeading {
+              flex: 1 1 auto;
+              color: currentColor;
+              font-size: 1rem;
+              font-weight: 700;
+              pointer-events: none;
+              user-select: none;
+            }
 
-  &.draggable-mirror {
-    z-index: 9999;
+            .DragHandle {
+              flex: 0 0 1rem;
+              margin-left: 1rem;
+              position: relative;
+              width: 1rem;
+              height: 1rem;
+              background-color: currentColor;
 
-    .GroupOrderListItemContent {
-      background-color: #0042ff;
-      transform: scale(1.025);
+              &::before,
+              &::after {
+                content: '';
+                position: absolute;
+                right: 0;
+                left: 0;
+                display: block;
+                height: 0.2rem;
+                background-color: #5cb85c;
+              }
 
-      .DragHandle {
-        &::before,
-        &::after {
-          background-color: #0042ff;
+              &::before {
+                top: 0.2rem;
+              }
+
+              &::after {
+                  bottom: 0.2rem;
+              }
+            }
+          }
+        }
+        
+        .Group--isDraggable {
+          cursor: grab;
+        
+          &:focus {
+            outline: none;
+          }
+        
+          &:focus,
+          &:hover {
+            .GroupOrderListItemContent {
+              background-color: #0042ff;
+        
+              .DragHandle {
+                &::before,
+                &::after {
+                  background-color: #0042ff;
+                }
+              }
+            }
+          }
+        
+          &.draggable-source--is-dragging {
+            .GroupOrderListItemContent {
+              background-color: #0042ff;
+        
+              .DragHandle {
+                &::before,
+                &::after {
+                  background-color: #0042ff;
+                }
+              }
+        
+              .Pattern--typeHalftone {
+                opacity: 1;
+                visibility: visible;
+                animation-play-state: running;
+              }
+            }
+          }
+        
+          &.draggable-source--placed {
+            .GroupOrderListItemContent {
+              .Pattern--typePlaced {
+                opacity: 1;
+                visibility: visible;
+                animation-play-state: running;
+              }
+            }
+          }
+        
+          &.draggable-mirror {
+            z-index: 9999;
+        
+            .GroupOrderListItemContent {
+              background-color: #0042ff;
+              transform: scale(1.025);
+        
+              .DragHandle {
+                &::before,
+                &::after {
+                  background-color: #0042ff;
+                }
+              }
+            }
+          }
         }
       }
     }

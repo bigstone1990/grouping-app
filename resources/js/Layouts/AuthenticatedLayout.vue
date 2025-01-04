@@ -40,7 +40,6 @@ const showingNavigationDropdown = ref(false);
                                     ダッシュボード
                                 </NavLink>
                                 <NavLink
-                                    v-if="$page.props.auth.permissions.staffHigher"
                                     :href="route('groupings.index')"
                                     :active="route().current('groupings.index')"
                                 >
@@ -54,14 +53,12 @@ const showingNavigationDropdown = ref(false);
                                     ユーザー管理
                                 </NavLink>
                                 <NavLink
-                                    v-if="$page.props.auth.permissions.staffHigher"
                                     :href="route('groups.index')"
                                     :active="route().current('groups.index')"
                                 >
                                     グループ管理
                                 </NavLink>
                                 <NavLink
-                                    v-if="$page.props.auth.permissions.staffHigher"
                                     :href="route('members.index')"
                                     :active="route().current('members.index')"
                                 >
@@ -175,7 +172,6 @@ const showingNavigationDropdown = ref(false);
                             ダッシュボード
                         </ResponsiveNavLink>
                         <ResponsiveNavLink
-                            v-if="$page.props.auth.permissions.staffHigher"
                             :href="route('groupings.index')"
                             :active="route().current('groupings.index')"
                         >
@@ -189,14 +185,12 @@ const showingNavigationDropdown = ref(false);
                             ユーザー管理
                         </ResponsiveNavLink>
                         <ResponsiveNavLink
-                            v-if="$page.props.auth.permissions.staffHigher"
                             :href="route('groups.index')"
                             :active="route().current('groups.index')"
                         >
                             グループ管理
                         </ResponsiveNavLink>
                         <ResponsiveNavLink
-                            v-if="$page.props.auth.permissions.staffHigher"
                             :href="route('members.index')"
                             :active="route().current('members.index')"
                         >

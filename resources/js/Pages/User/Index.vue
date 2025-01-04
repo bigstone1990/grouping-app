@@ -53,17 +53,14 @@ const props = defineProps({
                             <template v-if="user.role === 1">
                               管理者
                             </template>
-                            <template v-else-if="user.role === 5">
-                              スタッフ
-                            </template>
                             <template v-else-if="user.role === 9">
-                              利用者
+                              一般
                             </template>
                           </td>
                         </tr>
                         <tr v-else>
                           <td class="border-b-2 px-4 py-3 bg-white"></td>
-                          <td class="border-b-2 px-4 py-3 bg-white">メンバーがいません</td>
+                          <td class="border-b-2 px-4 py-3 bg-white">ユーザーがいません</td>
                           <td class="border-b-2 px-4 py-3 bg-white"></td>
                           <td class="border-b-2 px-4 py-3 bg-white"></td>
                         </tr>
@@ -83,42 +80,6 @@ const props = defineProps({
 <style lang="scss">
 @use 'sass:map';
 @use '../../../sass/variables.scss' as *;
-
-.PageContainer {
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-}
-
-.PageWrapper {
-    margin-left: auto;
-    margin-right: auto;
-    max-width: 80rem; /* 1280px */
-
-    @media screen and (min-width: map.get($breakpoint-data, smartphone-wide)) {
-        padding-left: 1.5rem;
-        padding-right: 1.5rem;
-    }
-
-    @media screen and (min-width: map.get($breakpoint-data, tablet-wide)) {
-        padding-left: 2rem;
-        padding-right: 2rem;
-    }
-}
-
-.Page {
-    overflow: hidden;
-    background-color: #ffffff;
-    box-shadow: 0 0 #0000, 0 0 #0000, 0 1px 2px 0 rgb(0 0 0 / 0.05);
-
-    @media screen and (min-width: map.get($breakpoint-data, smartphone-wide)) {
-        border-radius: 0.5rem;
-    }
-}
-
-.PageContent {
-    padding: 1rem;
-    color: #111827;
-}
 
 .UserTableContainer {
   min-width: 343px;

@@ -68,22 +68,16 @@ const createUser = () => {
                         <div class="relative">
                           <InputLabel for="role" value="権限" class="leading-7 text-sm text-gray-600" />
                           <div class="flex gap-4">
-                            <div class="RoleContainer" :class="{ 'IsChecked': form.role === '1' }">
+                            <div class="UserRoleContainer" :class="{ 'IsChecked': form.role === '1' }">
                               <div class="flex items-center">
                                 <input type="radio" id="roleAdmin" v-model="form.role" value="1">
                                 <InputLabel for="roleAdmin" value="管理者" class="flex-auto pl-2 py-2 leading-7 text-sm text-gray-600" :class="{ 'text-white': form.role === '1' }"/>
                               </div>
                             </div>
-                            <div class="RoleContainer" :class="{ 'IsChecked': form.role === '5' }">
-                              <div class="flex items-center">
-                                <input type="radio" id="roleStaff" v-model="form.role" value="5">
-                                <InputLabel for="roleStaff" value="スタッフ" class="flex-auto pl-2 py-2 leading-7 text-sm text-gray-600" :class="{ 'text-white': form.role === '5' }" />
-                              </div>
-                            </div>
-                            <div class="RoleContainer" :class="{ 'IsChecked': form.role === '9' }">
+                            <div class="UserRoleContainer" :class="{ 'IsChecked': form.role === '9' }">
                               <div class="flex items-center">
                                 <input type="radio" id="roleUser" v-model="form.role" value="9">
-                                <InputLabel for="roleUser" value="利用者" class="flex-auto pl-2 py-2 leading-7 text-sm text-gray-600" :class="{ 'text-white': form.role === '9' }" />
+                                <InputLabel for="roleUser" value="一般" class="flex-auto pl-2 py-2 leading-7 text-sm text-gray-600" :class="{ 'text-white': form.role === '9' }" />
                               </div>
                             </div>
                           </div>
@@ -110,47 +104,13 @@ const createUser = () => {
 @use 'sass:map';
 @use '../../../sass/variables.scss' as *;
 
-.PageContainer {
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-}
-
-.PageWrapper {
-    margin-left: auto;
-    margin-right: auto;
-    max-width: 80rem; /* 1280px */
-
-    @media screen and (min-width: map.get($breakpoint-data, smartphone-wide)) {
-        padding-left: 1.5rem;
-        padding-right: 1.5rem;
-    }
-
-    @media screen and (min-width: map.get($breakpoint-data, tablet-wide)) {
-        padding-left: 2rem;
-        padding-right: 2rem;
-    }
-}
-
-.Page {
-    overflow: hidden;
-    background-color: #ffffff;
-    box-shadow: 0 0 #0000, 0 0 #0000, 0 1px 2px 0 rgb(0 0 0 / 0.05);
-
-    @media screen and (min-width: map.get($breakpoint-data, smartphone-wide)) {
-        border-radius: 0.5rem;
-    }
-}
-
-.PageContent {
-    padding: 1rem;
-    color: #111827;
-}
-
-.RoleContainer {
-  flex: 0 1 calc(calc(100% - 2rem) / 3);
+.UserRoleContainer {
+  flex: 0 1 calc(calc(100% - 1rem) / 2);
   padding-left: 0.5rem;
   border-radius: 0.5rem;
-  border: 1px solid black;
+  border: 1px solid #d1d5db;
+  box-shadow: 0 0 #0000, 0 0 #0000, 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  background-color: #f3f4f6;
 
   &.IsChecked {
     background-color: #5cb85c;

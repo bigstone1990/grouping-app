@@ -22,7 +22,7 @@ class UpdateMemberRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'memberName' => ['required'],
+            'memberName' => ['required', 'string', 'max:255'],
         ];
     }
 }

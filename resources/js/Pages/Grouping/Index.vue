@@ -34,7 +34,7 @@ const props = defineProps({
               <section id="GroupContainer" class="GroupContainer">
                 <GroupList v-if="props.groupings.length !== 0" :groups="props.groupings" :options="{index: 1}" />
                 <div v-else class="flex justify-center items-start p-4 h-full">
-                  <p class="text-gray-900">グループがありません</p>
+                  <p class="text-gray-900">グループ分けが未作成です</p>
                 </div>
               </section>
             </div>
@@ -48,42 +48,6 @@ const props = defineProps({
 <style lang="scss">
 @use 'sass:map';
 @use '../../../sass/variables.scss' as *;
-
-.PageContainer {
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-}
-
-.PageWrapper {
-    margin-left: auto;
-    margin-right: auto;
-    max-width: 80rem; /* 1280px */
-
-    @media screen and (min-width: map.get($breakpoint-data, smartphone-wide)) {
-        padding-left: 1.5rem;
-        padding-right: 1.5rem;
-    }
-
-    @media screen and (min-width: map.get($breakpoint-data, tablet-wide)) {
-        padding-left: 2rem;
-        padding-right: 2rem;
-    }
-}
-
-.Page {
-    overflow: hidden;
-    background-color: #ffffff;
-    box-shadow: 0 0 #0000, 0 0 #0000, 0 1px 2px 0 rgb(0 0 0 / 0.05);
-
-    @media screen and (min-width: map.get($breakpoint-data, smartphone-wide)) {
-        border-radius: 0.5rem;
-    }
-}
-
-.PageContent {
-    padding: 1rem;
-    color: #111827;
-}
 
 .GroupingIndexPageContentLayout {
   display: flex;
