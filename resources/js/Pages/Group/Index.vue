@@ -109,9 +109,12 @@ const props = defineProps({
 
 .GroupTableContainer {
   min-width: 343px;
+  max-width: calc(4rem + 11rem + 6rem);
   max-height: 410px;
   overflow-x: auto;
   overflow-y: auto;
+  margin-left: auto;
+  margin-right: auto;
 
   @media screen and (min-height: map.get($breakpoint-data, tablet-base)) {
     max-height: 510px;
@@ -122,7 +125,7 @@ const props = defineProps({
   }
 
   @media screen and (min-height: map.get($breakpoint-data, fhd-base)) {
-    max-height: 823px;
+    max-height: 822px;
   }
   
   table {

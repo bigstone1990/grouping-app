@@ -37,7 +37,7 @@ const props = defineProps({
                       <thead>
                         <tr>
                           <th class="w-24 px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-900 rounded-tl rounded-bl">操作</th>
-                          <th class="w-28 px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-900">ユーザー名</th>
+                          <th class="w-40 px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-900">ユーザー名</th>
                           <th class="w-48 px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-900">メールアドレス</th>
                           <th class="w-24 px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-900 rounded-tr rounded-br">権限</th>
                         </tr>
@@ -122,9 +122,12 @@ const props = defineProps({
 
 .UserTableContainer {
   min-width: 343px;
+  max-width: calc(6rem + 10rem + 12rem + 6rem);
   max-height: 410px;
   overflow-x: auto;
   overflow-y: auto;
+  margin-left: auto;
+  margin-right: auto;
 
   @media screen and (min-height: map.get($breakpoint-data, tablet-base)) {
     max-height: 510px;
@@ -135,7 +138,7 @@ const props = defineProps({
   }
 
   @media screen and (min-height: map.get($breakpoint-data, fhd-base)) {
-    max-height: 823px;
+    max-height: 822px;
   }
   
   table {

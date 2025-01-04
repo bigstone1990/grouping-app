@@ -38,14 +38,14 @@ if (props.members.length !== 0) {
                   <div class="flex gap-4 justify-end mb-4 w-full">
                     <Link as="button" :href="route('members.create')" class="text-white bg-indigo-500 border-0 py-2 px-8 hover:bg-indigo-600 rounded">新規作成</Link>
                   </div>
-                  <div class="TableContainer">
-                    <table class="table-auto w-full text-left whitespace-no-wrap">
+                  <div class="MemberTableContainer">
+                    <table class="table-fixed w-full text-left whitespace-normal">
                       <thead>
                         <tr>
                           <th class="w-24 px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-900 rounded-tl rounded-bl">操作</th>
-                          <th class="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-900">メンバー名</th>
-                          <th v-if="groupColumns !== 0" v-for="group_data in props.members[0].groups_data" :key="group_data.group_id" class="w-16 px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-900" :class="{ 'rounded-tr rounded-br': group_data.group_order === groupColumns }">{{ group_data.group_name }}</th>
-                          <th v-else class="px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-900 rounded-tr rounded-br">グループ名</th>
+                          <th class="w-40 px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-900">メンバー名</th>
+                          <th v-if="groupColumns !== 0" v-for="group_data in props.members[0].groups_data" :key="group_data.group_id" class="w-44 px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-900" :class="{ 'rounded-tr rounded-br': group_data.group_order === groupColumns }">{{ group_data.group_name }}</th>
+                          <th v-else class="w-44 px-4 py-3 title-font tracking-wider font-medium text-gray-100 text-sm bg-gray-900 rounded-tr rounded-br">グループ名</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -118,7 +118,7 @@ if (props.members.length !== 0) {
     color: #111827;
 }
 
-.TableContainer {
+.MemberTableContainer {
   min-width: 343px;
   max-height: 410px;
   overflow-x: auto;
@@ -131,6 +131,10 @@ if (props.members.length !== 0) {
   @media screen and (min-height: map.get($breakpoint-data, tablet-wide)) {
     max-height: 766px;
   }
+
+  @media screen and (min-height: map.get($breakpoint-data, fhd-base)) {
+    max-height: 822px;
+  }
   
   table {
     border-collapse: separate;
@@ -138,7 +142,7 @@ if (props.members.length !== 0) {
     thead {
       tr {
         th {
-          white-space: nowrap;
+          overflow-wrap: break-word;
         }
 
         &:first-of-type {
@@ -158,14 +162,14 @@ if (props.members.length !== 0) {
               position: sticky;
               top: 0;
               left: 0;
-              z-index: 1;
+              z-index: 2;
             }
 
             &:nth-of-type(2) {
               position: sticky;
               top: 0;
               left: calc(6rem);
-              z-index: 1;
+              z-index: 2;
             }
 
             &:not(:first-of-type, :nth-of-type(2)) {
@@ -180,7 +184,7 @@ if (props.members.length !== 0) {
     tbody {
       tr {
         td {
-          white-space: nowrap;
+          overflow-wrap: break-word;
 
           &:first-of-type {
             position: sticky;

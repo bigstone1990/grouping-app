@@ -162,7 +162,8 @@ onBeforeUnmount(() => {
 .GroupOrderContainer {
   display: flex;
   flex-direction: column;
-  max-width: 80%;
+  width: 80%;
+  max-width: calc(4rem + 11rem + 6rem);
   margin-left: auto;
   margin-right: auto;
   color: #ffffff;
@@ -210,15 +211,15 @@ onBeforeUnmount(() => {
   max-height: 322px;
 
   @media screen and (min-height: map.get($breakpoint-data, tablet-base)) {
-    max-height: 423px;
+    max-height: 422px;
   }
 
   @media screen and (min-height: map.get($breakpoint-data, tablet-wide)) {
-    max-height: 679px;
+    max-height: 678px;
   }
 
   @media screen and (min-height: map.get($breakpoint-data, fhd-base)) {
-    max-height: 735px;
+    max-height: 734px;
   }
 }
 
