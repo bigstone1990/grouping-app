@@ -3,6 +3,8 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import MemberList from '@/Components/MemberList.vue';
 import GroupList from '@/Components/GroupList.vue';
 import { Head, Link } from '@inertiajs/vue3';
+import { Sortable, Plugins } from '@shopify/draggable';
+import { ref, onMounted, onBeforeUnmount } from 'vue';
 
 
 const props = defineProps({
@@ -12,6 +14,101 @@ const props = defineProps({
 const updateGrouping = () => {
   // form.put(route('groups.update', {group: id}));
 };
+
+const sortContainers = ref(null);
+const sortable = ref(null);
+
+onMounted(() => {
+  sortContainers.value = document.querySelectorAll('.MemberList, .GroupMemberListItem');
+  if (sortContainers.value.length === 0) {
+    return false;
+  }
+
+  sortable.value = new Sortable(sortContainers.value, {
+    draggable: '.Member--isDraggable',
+    mirror: {
+      constrainDimensions: true,
+    },
+    delay: {
+      mouse: 0,
+      drag: 0,
+      touch: 200
+    },
+    plugins: [Plugins.ResizeMirror],
+  });
+
+  let GroupMemberListItemContainer = [];
+  const SortableContainers = sortable.value.containers;
+
+  for (let i = 1; i < SortableContainers.length; i++) {
+    GroupMemberListItemContainer.push(SortableContainers[i]);
+  }
+
+
+  const GroupMemberListItemCapacity = 1;
+  let GroupMemberListItemChildren;
+  let CapacityReached;
+  let SourceContainer;
+  let OverContainer;
+
+  sortable.value.on('drag:start', (evt) => {
+    SourceContainer = evt.sourceContainer;
+  });
+
+  sortable.value.on('drag:over:container', (evt) => {
+    SourceContainer = evt.sourceContainer;
+    OverContainer = evt.overContainer;
+    if (SourceContainer !== OverContainer) {
+      if (GroupMemberListItemContainer.includes(OverContainer)) {
+        GroupMemberListItemChildren = sortable.value.getDraggableElementsForContainer(OverContainer).length;
+        if (GroupMemberListItemChildren >= GroupMemberListItemCapacity) {
+          evt.overContainer.classList.add('draggable-container-parent--capacity');
+          CapacityReached = true;
+        }
+      }
+    }
+  });
+
+  sortable.value.on('drag:out:container', (evt) => {
+    OverContainer = evt.overContainer;
+    if (SourceContainer !== OverContainer) {
+      if (GroupMemberListItemContainer.includes(OverContainer)) {
+        if (OverContainer.classList.contains('draggable-container-parent--capacity')) {
+          OverContainer.classList.remove('draggable-container-parent--capacity');
+          CapacityReached = false;
+        }
+      }
+    }
+  });
+
+  sortable.value.on('sortable:sort', (evt) => {
+    if (!CapacityReached) {
+      return;
+    }
+    else {
+      evt.cancel();
+    }
+  });
+
+  sortable.value.on('sortable:sorted', (evt) => {
+    return;
+  });
+
+  sortable.value.on('drag:stop', (evt) => {
+    if (GroupMemberListItemContainer.includes(OverContainer)) {
+      if (OverContainer.classList.contains('draggable-container-parent--capacity')) {
+        OverContainer.classList.remove('draggable-container-parent--capacity');
+        CapacityReached = false;
+      }
+    }
+  })
+});
+
+onBeforeUnmount(() => {
+  if (sortable.value !== null) {
+    sortable.value.destroy();
+  }
+})
 </script>
 
 <template>

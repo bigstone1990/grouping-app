@@ -97,7 +97,9 @@ class GroupingService
             }
         }
 
-        array_push($groupingData, $groupData);
+        if (!empty($groupData)) {
+            array_push($groupingData, $groupData);
+        }
 
         return $groupingData;
     }

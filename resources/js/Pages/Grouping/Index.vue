@@ -27,12 +27,15 @@ const props = defineProps({
           <div class="PageContent">
             <div class="flex gap-4 justify-end mb-4 w-full">
               <Link v-if="props.groupings.length === 0" as="button" :href="route('groupings.create')" class="text-white bg-indigo-500 border-0 py-2 px-8 hover:bg-indigo-600 rounded">作成</Link>
-              <Link v-else as="button" :href="route('groupings.edit', {user_id: 1, date: '2024-12-28'})" class="text-white bg-indigo-500 border-0 py-2 px-8 hover:bg-indigo-600 rounded">編集</Link>
+              <Link v-else as="button" :href="route('groupings.edit', {user_id: 1, date: 'today'})" class="text-white bg-indigo-500 border-0 py-2 px-8 hover:bg-indigo-600 rounded">編集</Link>
               <Link as="button" :href="route('groupings.past')" class="text-white bg-indigo-500 border-0 py-2 px-8 hover:bg-indigo-600 rounded">履歴</Link>
             </div>
             <div class="GroupingIndexPageContentLayout">
               <section id="GroupContainer" class="GroupContainer">
-                <GroupList :groups="props.groupings" :options="{index: 1}" />
+                <GroupList v-if="props.groupings.length !== 0" :groups="props.groupings" :options="{index: 1}" />
+                <div v-else class="flex justify-center items-start p-4 h-full">
+                  <p class="text-gray-900">グループがありません</p>
+                </div>
               </section>
             </div>
           </div>
