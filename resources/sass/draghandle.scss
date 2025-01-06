@@ -1,0 +1,27 @@
+.DragHandle {
+  flex: 0 0 1rem;
+  margin-left: 1rem;
+  position: relative;
+  width: 1rem;
+  height: 1rem;
+  background-color: currentColor;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    left: 0;
+    display: block;
+    height: 0.2rem;
+    background-color: #5cb85c;
+  }
+
+  &::before {
+    top: 0.2rem;
+  }
+
+  &::after {
+      bottom: 0.2rem;
+  }
+}

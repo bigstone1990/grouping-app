@@ -152,34 +152,5 @@ onBeforeUnmount(() => {
 </template>
 
 <style lang="scss">
-.GroupingEditPageContentLayout {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  color: #ffffff;
-
-  @media screen and (min-width: map.get($breakpoint-data, tablet-wide)) {
-    flex-direction: row;
-  }
-
-  .MemberContainer,
-  .GroupContainer {
-    overflow: hidden;
-    background-color: #ffffff;
-    box-shadow: 0 0 #0000, 0 0 #0000, 0 1px 2px 0 rgb(0 0 0 / 0.1);
-    border-radius: 0.5rem;
-  }
-
-  .MemberContainer {
-    @media screen and (min-width: map.get($breakpoint-data, tablet-wide)) {
-      flex: 1 1 30%;
-    }
-  }
-
-  .GroupContainer {
-    @media screen and (min-width: map.get($breakpoint-data, tablet-wide)) {
-      flex: 1 1 calc(100% - 30% - 1rem);
-    }
-  }
-}
+@use '../../../sass/grouping.scss';
 </style>

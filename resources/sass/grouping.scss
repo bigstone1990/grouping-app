@@ -1,0 +1,356 @@
+@use 'sass:map';
+@use '../sass/variables.scss' as *;
+@use '../sass/pattern.scss';
+@use '../sass/draghandle.scss';
+
+.GroupingIndexPageContentLayout,
+.GroupingEditPageContentLayout {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  color: #ffffff;
+
+  @media screen and (min-width: map.get($breakpoint-data, tablet-wide)) {
+    flex-direction: row;
+  }
+
+  .MemberContainer,
+  .GroupContainer {
+    overflow: hidden;
+    background-color: #ffffff;
+    box-shadow: 0 0 #0000, 0 0 #0000, 0 1px 2px 0 rgb(0 0 0 / 0.1);
+    border-radius: 0.5rem;
+  }
+}
+
+.GroupingIndexPageContentLayout{
+  .GroupContainer {
+    @media screen and (min-width: map.get($breakpoint-data, tablet-wide)) {
+      flex: 1 1 100%;
+    }
+  }
+}
+
+.GroupingEditPageContentLayout {
+  .MemberContainer {
+    @media screen and (min-width: map.get($breakpoint-data, tablet-wide)) {
+      flex: 1 1 30%;
+    }
+  }
+
+  .GroupContainer {
+    @media screen and (min-width: map.get($breakpoint-data, tablet-wide)) {
+      flex: 1 1 calc(100% - 30% - 1rem);
+    }
+  }
+}
+
+.MemberListWrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  .MemberListHeader {
+    flex: 0 0 2.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    background-color: #111827;
+
+    .MemberListHeading {
+      color: currentColor;
+      font-size: 1rem;
+      font-weight: 700;
+    }
+  }
+
+  .MemberListContainer {
+    flex: 1 1 auto;
+    overflow: hidden;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+
+    .MemberList {
+      height: 100%;
+      max-height: 190px;
+      overflow: scroll;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      padding-left: 1rem;
+      padding-right: 1rem;
+    
+      @media screen and (min-width: map.get($breakpoint-data, smartphone-wide)) {
+        flex-direction: row;
+        flex-wrap: wrap;
+        max-height: 135px;
+      }
+    
+      @media screen and (min-width: map.get($breakpoint-data, tablet-wide)) {
+        flex-direction: column;
+        flex-wrap: nowrap;
+        max-height: initial;
+      }
+    }
+  }
+}
+
+.MemberListItem {
+  width: 100%;
+
+  @media screen and (min-width: map.get($breakpoint-data, smartphone-wide)) {
+    width: calc(calc(100% - 1rem) / 2);
+  }
+
+  @media screen and (min-width: map.get($breakpoint-data, tablet-wide)) {
+    width: 100%;
+  }
+
+  .MemberListItemContent {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 0.5rem;
+    background-color: #5cb85c;
+    border-radius: 0.5rem;
+
+    .MemberListItemHeading {
+      flex: 1 1 auto;
+      color: currentColor;
+      font-size: 1rem;
+      font-weight: 700;
+      pointer-events: none;
+      user-select: none;
+    }
+  }
+}
+
+.Member--isDraggable {
+  cursor: grab;
+
+  &:focus {
+    outline: none;
+  }
+
+  &:focus,
+  &:hover {
+    .MemberListItemContent {
+      background-color: #0042ff;
+
+      .DragHandle {
+        &::before,
+        &::after {
+          background-color: #0042ff;
+        }
+      }
+    }
+  }
+
+  &.draggable-source--is-dragging {
+    .MemberListItemContent {
+      background-color: #0042ff;
+
+      .DragHandle {
+        &::before,
+        &::after {
+          background-color: #0042ff;
+        }
+      }
+
+      .Pattern--typeHalftone {
+        opacity: 1;
+        visibility: visible;
+        animation-play-state: running;
+      }
+    }
+  }
+
+  &.draggable-source--placed {
+    .MemberListItemContent {
+      .Pattern--typePlaced {
+        opacity: 1;
+        visibility: visible;
+        animation-play-state: running;
+      }
+    }
+  }
+
+  &.draggable-mirror {
+    z-index: 9999;
+
+    .MemberListItemContent {
+      background-color: #0042ff;
+      transform: scale(1.025);
+
+      .DragHandle {
+        &::before,
+        &::after {
+          background-color: #0042ff;
+        }
+      }
+    }
+  }
+}
+
+.GroupingIndexPageContentLayout {
+  .Member--isDraggable {
+    cursor: initial;
+  
+    &:focus,
+    &:hover {
+      .MemberListItemContent {
+        background-color: #5cb85c;
+      }
+    }
+  }
+}
+
+.GroupListWrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  .GroupListHeader {
+    flex: 0 0 2.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5rem;
+    background-color: #111827;
+
+    .GroupListHeading {
+      color: currentColor;
+      font-size: 1rem;
+      font-weight: 700;
+    }
+  }
+
+  .GroupListContainer {
+    flex: 1 1 auto;
+    overflow: hidden;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+
+    .GroupList {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+  }
+}
+
+.GroupListItem {
+  flex: 1 0 auto;
+  overflow: hidden;
+  width: 100%;
+  background-color: #ffffff;
+  box-shadow: 0 0 #0000, 0 0 #0000, 0 1px 2px 0 rgb(0 0 0 / 0.1);
+  border-radius: 0.5rem;
+
+  .GroupListItemContent {
+    display: flex;
+    flex-direction: column;
+
+    .GroupListItemHeader {
+      flex: 0 0 2.5rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 0.5rem;
+      background-color: #ffa500;
+
+      .GroupListItemHeading {
+        color: currentColor;
+        font-size: 1rem;
+        font-weight: 700;
+      }
+    }
+
+    .GroupMemberListContainer {
+      padding-top: 1rem;
+      padding-bottom: 1rem;
+      background-color: #ffedcc;
+      // background-image: repeating-linear-gradient(-45deg, currentColor 0%, currentColor 40%, #111827 40%, #111827 50%, currentColor 50%);
+      // background-size: 0.8rem 0.8rem;
+
+      .GroupMemberList {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        padding-left: 1rem;
+        padding-right: 1rem;
+        min-height: 2.5rem;
+      
+        @media screen and (min-width: map.get($breakpoint-data, smartphone-wide)) {
+          flex-direction: row;
+          flex-wrap: wrap;
+        }
+      }
+    }
+  }
+}
+
+.GroupMemberListItem {
+  position: relative;
+  width: 100%;
+  height: 2.5rem;
+  border-radius: 0.5rem;
+  overflow: hidden;
+
+  @media screen and (min-width: map.get($breakpoint-data, smartphone-wide)) {
+    width: calc(calc(100% - 1rem) / 2);
+  }
+
+  &::before {
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    color: #111827;
+    font-size: 1rem;
+    font-weight: 700;
+    content: "ドロップ可能";
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+  }
+
+  &:not(:has(> :not(.draggable--original))) {
+    border: 1px solid #111827;
+
+    &::before {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+
+  .MemberListItem {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.draggable-container-parent--capacity {
+  .Member--isDraggable {
+    &:not(.draggable-mirror) {
+      .MemberListItemContent {
+        background-color: #ff3300;
+  
+        .DragHandle {
+          &::before,
+          &::after {
+            background-color: #ff3300;
+          }
+        }
+      }
+    }
+  }
+}

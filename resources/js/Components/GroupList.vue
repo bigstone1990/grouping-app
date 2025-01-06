@@ -25,40 +25,4 @@ const props = defineProps({
 </template>
 
 <style lang="scss">
-.GroupListWrapper {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-
-.GroupListHeader {
-  flex: 0 0 2.5rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0.5rem;
-  background-color: #111827;
-}
-
-.GroupListHeading {
-  color: currentColor;
-  font-size: 1rem;
-  font-weight: 700;
-}
-
-.GroupListContainer {
-  flex: 1 1 auto;
-  overflow: hidden;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-}
-
-.GroupList {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  padding-left: 1rem;
-  padding-right: 1rem;
-}
 </style>
