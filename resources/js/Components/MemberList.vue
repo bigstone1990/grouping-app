@@ -6,8 +6,8 @@ const props = defineProps({
   options: Object,
 });
 
-// const members = ref([{id: 1, name: 'テストメンバー1'}, {id: 2, name: 'テストメンバー2'}, {id: 3, name: 'テストメンバー3'}, {id: 4, name: 'テストメンバー4'}, {id: 5, name: 'テストメンバー5'}, {id: 6, name: 'テストメンバー6'}, {id: 7, name: 'テストメンバー7'}, {id: 8, name: 'テストメンバー8'}, {id: 9, name: 'テストメンバー9'}]);
-const members = ref([]);
+const members = ref([{id: 1, name: 'テストメンバー1'}, {id: 2, name: 'テストメンバー2'}, {id: 3, name: 'テストメンバー3'}, {id: 4, name: 'テストメンバー4'}, {id: 5, name: 'テストメンバー5'}, {id: 6, name: 'テストメンバー6'}, {id: 7, name: 'テストメンバー7'}, {id: 8, name: 'テストメンバー8'}, {id: 9, name: 'テストメンバー9'}]);
+// const members = ref([]);
 
 </script>
 
@@ -22,12 +22,10 @@ const members = ref([]);
     </header>
 
     <div class="MemberListContainer">
-      <ul v-if="members.length !== 0" class="MemberList">
-        <MemberListItem v-for="member in members" :key="member.id" :heading="member.name" :options="{index: member.id}" />
+      <ul class="MemberList">
+        <MemberListItem v-if="members.length !== 0" v-for="member in members" :key="member.id" :heading="member.name" :options="{index: member.id}" />
+        <p v-else class="text-gray-600">メンバーがいません</p>
       </ul>
-      <div v-else class="flex justify-center items-start px-4 h-full">
-        <p class="text-gray-900">メンバーがいません</p>
-      </div>
     </div>
 </article>
 </template>

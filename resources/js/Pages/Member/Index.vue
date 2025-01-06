@@ -55,8 +55,8 @@ if (props.members.length !== 0) {
                           </td>
                           <td class="border-b-2 px-4 py-3 bg-white">{{ member.member_name }}</td>
                           <td v-if="groupColumns !== 0" v-for="group_data in member.groups_data" :key="group_data.group_id" class="border-b-2 px-4 py-3 bg-white">
-                            <p v-if="group_data.allocatable">○</p>
-                            <p v-else>-</p>
+                            <template v-if="group_data.allocatable">○</template>
+                            <template v-else>-</template>
                           </td>
                           <td v-else class="border-b-2 px-4 py-3 bg-white">グループがありません</td>
                         </tr>

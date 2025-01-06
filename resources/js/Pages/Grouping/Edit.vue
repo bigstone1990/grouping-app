@@ -40,9 +40,14 @@ onMounted(() => {
   let GroupMemberListItemContainer = [];
   const SortableContainers = sortable.value.containers;
 
-  for (let i = 1; i < SortableContainers.length; i++) {
-    GroupMemberListItemContainer.push(SortableContainers[i]);
+  for (let i = 0; i < SortableContainers.length; i++) {
+    let SortableContainer = SortableContainers[i];
+    if (!SortableContainer.classList.contains('MemberList')) {
+      GroupMemberListItemContainer.push(SortableContainer);
+    }
   }
+
+  console.log(GroupMemberListItemContainer);
 
 
   const GroupMemberListItemCapacity = 1;

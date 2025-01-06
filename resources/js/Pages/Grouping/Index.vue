@@ -3,7 +3,6 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import GroupList from '@/Components/GroupListFixed.vue';
 import { Head, Link } from '@inertiajs/vue3';
 
-
 const props = defineProps({
   'groupings': Object,
 });
@@ -32,10 +31,7 @@ const props = defineProps({
             </div>
             <div class="GroupingIndexPageContentLayout">
               <section id="GroupContainer" class="GroupContainer">
-                <GroupList v-if="props.groupings.length !== 0" :groups="props.groupings" :options="{index: 1}" />
-                <div v-else class="flex justify-center items-start p-4 h-full">
-                  <p class="text-gray-900">グループ分けが未作成です</p>
-                </div>
+                <GroupList :groups="props.groupings" :options="{index: 1}" />
               </section>
             </div>
           </div>

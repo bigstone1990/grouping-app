@@ -13,12 +13,12 @@ const props = defineProps({
       <h3 class="GroupListHeading">本日のグループ分け</h3>
     </header>
     <div class="GroupListContainer">
-      <ul v-if="props.groups.length !== 0" class="GroupList">
-        <GroupListItem v-for="group in props.groups" :key="group.group_id" :group="group" :options="{index: group.group_id}" />
+      <ul class="GroupList">
+        <GroupListItem v-if="props.groups.length !== 0" v-for="group in props.groups" :key="group.group_id" :group="group" :options="{index: group.group_id}" />
+        <div v-else class="flex justify-center px-4">
+          <p class="text-gray-600">グループ分けが未作成です</p>
+        </div>
       </ul>
-      <div v-else class="flex justify-center items-center p-4 h-full">
-        <p>グループがありません</p>
-      </div>
     </div>
   </article>
 </template>
