@@ -6,7 +6,7 @@ import InputError from '@/Components/InputError.vue';
 import TextInput from '@/Components/TextInput.vue';
 
 const form = useForm({
-  name: '',
+  userName: '',
   email: '',
   role: '9',
 });
@@ -44,11 +44,11 @@ const createUser = () => {
                             id="name"
                             type="text"
                             class="mt-1 block w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                            v-model="form.name"
+                            v-model="form.userName"
                             required
                             autofocus
                           />
-                          <InputError class="mt-2" :message="form.errors.name" />
+                          <InputError class="mt-2" :message="form.errors.userName" />
                         </div>
                       </div>
                       <div class="p-2 w-full">

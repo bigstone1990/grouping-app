@@ -257,6 +257,8 @@ return [
         'username' => 'ユーザー名',
         'year' => '年',
         'groupName' => 'グループ名',
+        'memberName' => 'メンバー名',
+        'userName' => 'ユーザー名',
     ],
 
 ];

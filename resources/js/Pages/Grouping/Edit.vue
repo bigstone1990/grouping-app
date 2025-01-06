@@ -167,13 +167,13 @@ onBeforeUnmount(() => {
 
   .MemberContainer {
     @media screen and (min-width: map.get($breakpoint-data, tablet-wide)) {
-      flex: 1 1 25%;
+      flex: 1 1 30%;
     }
   }
 
   .GroupContainer {
     @media screen and (min-width: map.get($breakpoint-data, tablet-wide)) {
-      flex: 1 1 calc(100% - 25% - 1rem);
+      flex: 1 1 calc(100% - 30% - 1rem);
     }
   }
 }
