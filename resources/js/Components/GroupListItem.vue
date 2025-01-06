@@ -4,6 +4,7 @@ import GroupMemberListItem from './GroupMemberListItem.vue';
 const props = defineProps({
   group: Object,
   options: Object,
+  isDraggablePage: Boolean,
 });
 </script>
 
@@ -15,7 +16,7 @@ const props = defineProps({
       </header>
       <div class="GroupMemberListContainer">
         <ul v-if="props.group.members.length > 0" class="GroupMemberList">
-          <GroupMemberListItem v-for="member in props.group.members" :key="member.member_id" :member="member" :options="{index: member.member_id}" />
+          <GroupMemberListItem v-for="member in props.group.members" :key="member.member_id" :member="member" :options="{index: member.member_id}" :isDraggablePage="props.isDraggablePage" />
         </ul>
         <div v-else class="flex justify-center items-center px-4 h-full">
           <p class="text-gray-900">メンバーがいません</p>

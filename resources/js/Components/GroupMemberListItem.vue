@@ -2,6 +2,7 @@
 const props = defineProps({
   member: Object,
   options: Object,
+  isDraggablePage: Boolean,
 });
 </script>
 
@@ -10,10 +11,10 @@ const props = defineProps({
     <li class="MemberListItem Member--isDraggable" :class="{ ['MemberListItem--item' + props.options.index]: props.options.index }">
     <div class="MemberListItemContent">
       <h4 class="MemberListItemHeading">{{ props.member.member_name }}</h4>
-      <div class="DragHandle"></div>
+      <div v-if="props.isDraggablePage" class="DragHandle"></div>
 
-      <div class="Pattern Pattern--typeHalftone"></div>
-      <div class="Pattern Pattern--typePlaced"></div>
+      <div v-if="props.isDraggablePage" class="Pattern Pattern--typeHalftone"></div>
+      <div v-if="props.isDraggablePage" class="Pattern Pattern--typePlaced"></div>
     </div>
   </li>
   </li>
@@ -78,6 +79,24 @@ const props = defineProps({
   .MemberListItem {
     width: 100%;
     height: 100%;
+
+    .MemberListItemContent {
+      position: relative;
+      display: flex;
+      align-items: center;
+      padding: 0.5rem;
+      background-color: #5cb85c;
+      border-radius: 0.5rem;
+
+      .MemberListItemHeading {
+        flex: 1 1 auto;
+        color: currentColor;
+        font-size: 1rem;
+        font-weight: 700;
+        pointer-events: none;
+        user-select: none;
+      }
+    }
   }
 }
 </style>

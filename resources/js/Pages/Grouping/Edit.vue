@@ -141,7 +141,7 @@ onBeforeUnmount(() => {
                 <MemberList :options="{index: 1}" />
               </section>
               <section id="GroupContainer" class="GroupContainer">
-                <GroupList :groups="props.groupings" :options="{index: 1}" />
+                <GroupList :groups="props.groupings" :options="{index: 1}" :isDraggablePage="true" />
               </section>
             </div>
           </div>

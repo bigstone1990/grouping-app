@@ -4,6 +4,7 @@ import GroupListItem from './GroupListItem.vue';
 const props = defineProps({
   groups: Object,
   options: Object,
+  isDraggablePage: Boolean,
 });
 </script>
 
@@ -14,7 +15,7 @@ const props = defineProps({
     </header>
     <div class="GroupListContainer">
       <ul class="GroupList">
-        <GroupListItem v-if="props.groups.length !== 0" v-for="group in props.groups" :key="group.group_id" :group="group" :options="{index: group.group_id}" />
+        <GroupListItem v-if="props.groups.length !== 0" v-for="group in props.groups" :key="group.group_id" :group="group" :options="{index: group.group_id}" :isDraggablePage="props.isDraggablePage" />
         <div v-else class="flex justify-center px-4">
           <p class="text-gray-600">グループ分けが未作成です</p>
         </div>
