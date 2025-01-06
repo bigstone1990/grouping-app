@@ -21,9 +21,11 @@ class MemberController extends Controller
      */
     public function index()
     {
+        $userId = Auth::id();
+
         $membersData = [];
         
-        $members = Member::where('user_id', '=', Auth::id())->orderBy('id')->get();
+        $members = Member::where('user_id', '=', $userId)->orderBy('id')->get();
         
         if (!$members->isEmpty()) {
             foreach ($members as $member) {
@@ -32,6 +34,15 @@ class MemberController extends Controller
                 $groups = $member->groups()->orderBy('order')->get();
     
                 if (!$groups->isEmpty()) {
+                    // user_id チェック
+                    foreach ($groups as $group) {
+                        $groupTmp = Group::findOrFail($group->id);
+
+                        if ($groupTmp->user_id !== $userId) {
+                            return abort(404);
+                        }
+                    }
+
                     foreach ($groups as $group) {
                         $groupData = [
                             'group_id' => $group->id,
@@ -64,7 +75,9 @@ class MemberController extends Controller
      */
     public function create()
     {
-        $groups = Group::where('user_id', '=', Auth::id())->orderBy('order')->get();
+        $userId = Auth::id();
+
+        $groups = Group::where('user_id', '=', $userId)->orderBy('order')->get();
 
         return Inertia::render('Member/Create', [
             'groups' => $groups,
@@ -76,8 +89,21 @@ class MemberController extends Controller
      */
     public function store(StoreMemberRequest $request)
     {
+        $userId = Auth::id();
+
+        // user_id チェック
+        if (!empty($request->groupAllocatable)) {
+            foreach ($request->groupAllocatable as $group) {
+                $groupTmp = Group::findOrFail($group['group_id']);
+
+                if ($groupTmp->user_id !== $userId) {
+                    return abort(404);
+                }
+            }
+        }
+
         $member = Member::create([
-            'user_id' => Auth::id(),
+            'user_id' => $userId,
             'name' => $request->memberName,
         ]);
 
@@ -110,7 +136,9 @@ class MemberController extends Controller
      */
     public function edit(Member $member)
     {
-        if ($member->user_id !== Auth::id()) {
+        $userId = Auth::id();
+
+        if ($member->user_id !== $userId) {
             return abort(404);
         }
 
@@ -119,6 +147,15 @@ class MemberController extends Controller
         $groups = $member->groups()->orderBy('order')->get();
 
         if (!$groups->isEmpty()) {
+            // user_id チェック
+            foreach ($groups as $group) {
+                $groupTmp = Group::findOrFail($group->id);
+
+                if ($groupTmp->user_id !== $userId) {
+                    return abort(404);
+                }
+            }
+
             foreach ($groups as $group) {
                 $groupData = [
                     'group_id' => $group->id,
@@ -147,8 +184,20 @@ class MemberController extends Controller
      */
     public function update(UpdateMemberRequest $request, Member $member)
     {
-        if ($member->user_id !== Auth::id()) {
+        $userId = Auth::id();
+
+        if ($member->user_id !== $userId) {
             return abort(404);
+        }
+
+        // user_id チェック
+        if (!empty($request->groupAllocatable)) {
+            foreach ($request->groupAllocatable as $group) {
+                $groupTmp = Group::findOrFail($group['group_id']);
+                if ($groupTmp->user_id !== $userId) {
+                    return abort(404);
+                }
+            }
         }
 
         $member->name = $request->memberName;

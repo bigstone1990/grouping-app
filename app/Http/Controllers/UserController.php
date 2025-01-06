@@ -72,9 +72,11 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
+        $userId = Auth::id();
+
         $modifiable = true;
         $deletable = true;
-        if ($user->id === Auth::id()) {
+        if ($user->id === $userId) {
             $deletable = false;
             if ($user->role === 1) {
                 $modifiable = false;
@@ -93,7 +95,9 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, User $user)
     {
-        if ($user->id === Auth::id()) {
+        $userId = Auth::id();
+
+        if ($user->id === $userId) {
             if ($user->role === 1) {
                 return abort(404);
             }
@@ -114,7 +118,9 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        if ($user->id === Auth::id()) {
+        $userId = Auth::id();
+
+        if ($user->id === $userId) {
             return abort(404);
         }
 

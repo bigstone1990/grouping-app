@@ -21,7 +21,9 @@ class GroupController extends Controller
      */
     public function index()
     {
-        $groups = Group::where('user_id', '=', Auth::id())->orderBy('order')->get();
+        $userId = Auth::id();
+
+        $groups = Group::where('user_id', '=', $userId)->orderBy('order')->get();
         return Inertia::render('Group/Index', [
             'groups' => $groups,
         ]);
@@ -98,7 +100,9 @@ class GroupController extends Controller
      */
     public function edit(Group $group)
     {
-        if ($group->user_id !== Auth::id()) {
+        $userId = Auth::id();
+
+        if ($group->user_id !== $userId) {
             return abort(404);
         }
 
@@ -112,7 +116,9 @@ class GroupController extends Controller
      */
     public function update(UpdateGroupRequest $request, Group $group)
     {
-        if ($group->user_id !== Auth::id()) {
+        $userId = Auth::id();
+
+        if ($group->user_id !== $userId) {
             return abort(404);
         }
 
@@ -156,7 +162,7 @@ class GroupController extends Controller
 
         $group->delete();
 
-        $groups = Group::where('user_id', '=', Auth::id())->orderBy('order')->get();
+        $groups = Group::where('user_id', '=', $userId)->orderBy('order')->get();
 
         if (!$groups->isEmpty()) {
             for ($i = 0; $i < count($groups); $i++) {
@@ -173,7 +179,9 @@ class GroupController extends Controller
 
     public function orderingEdit()
     {
-        $groups = Group::where('user_id', '=', Auth::id())->orderBy('order')->get();
+        $userId = Auth::id();
+
+        $groups = Group::where('user_id', '=', $userId)->orderBy('order')->get();
         return Inertia::render('Group/Order', [
             'groups' => $groups,
         ]);
@@ -181,16 +189,25 @@ class GroupController extends Controller
 
     public function orderingUpdate(Request $request)
     {
+        $userId = Auth::id();
+
         if (!empty($request->orderData)) {
+            // user_id チェック
+            foreach ($request->orderData as $data) {
+                $groupId = $data['id'];
+                
+                $group = Group::findOrFail($groupId);
+    
+                if ($group->user_id !== $userId) {
+                    return abort(404);
+                }
+            }
+
             foreach ($request->orderData as $data) {
                 $groupId = $data['id'];
                 $groupOrder = $data['order'];
                 
                 $group = Group::findOrFail($groupId);
-    
-                if ($group->user_id !== Auth::id()) {
-                    return abort(404);
-                }
                 
                 $group->order = $groupOrder;
                 $group->save();
