@@ -45,7 +45,7 @@ class UserController extends Controller
         $password = Str::random(8);
 
         $user = User::create([
-            'name' => $request->name,
+            'name' => $request->userName,
             'email' => $request->email,
             'password' => Hash::make($password),
             'role' => intval($request->role),

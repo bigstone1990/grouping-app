@@ -169,15 +169,7 @@ onBeforeUnmount(() => {
         max-height: 322px;
       
         @media screen and (min-height: map.get($breakpoint-data, tablet-base)) {
-          max-height: 422px;
-        }
-      
-        @media screen and (min-height: map.get($breakpoint-data, tablet-wide)) {
-          max-height: 678px;
-        }
-      
-        @media screen and (min-height: map.get($breakpoint-data, fhd-base)) {
-          max-height: 734px;
+          max-height: calc(100vh - 346px);
         }
 
         .GroupOrderListItem {

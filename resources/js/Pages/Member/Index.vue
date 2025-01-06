@@ -86,15 +86,7 @@ if (props.members.length !== 0) {
   overflow-y: auto;
 
   @media screen and (min-height: map.get($breakpoint-data, tablet-base)) {
-    max-height: 510px;
-  }
-
-  @media screen and (min-height: map.get($breakpoint-data, tablet-wide)) {
-    max-height: 766px;
-  }
-
-  @media screen and (min-height: map.get($breakpoint-data, fhd-base)) {
-    max-height: 822px;
+    max-height: calc(100vh - 258px);
   }
   
   table {
