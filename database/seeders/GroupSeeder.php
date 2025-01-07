@@ -29,16 +29,16 @@ class GroupSeeder extends Seeder
                 'name' => 'テストグループ3',
                 'order' => 3,
             ],
-            // [
-            //     'user_id' => 1,
-            //     'name' => 'テストグループ4',
-            //     'order' => 4,
-            // ],
-            // [
-            //     'user_id' => 1,
-            //     'name' => 'テストグループ5',
-            //     'order' => 5,
-            // ],
+            [
+                'user_id' => 1,
+                'name' => 'テストグループ4',
+                'order' => 4,
+            ],
+            [
+                'user_id' => 1,
+                'name' => 'テストグループ5',
+                'order' => 5,
+            ],
             // [
             //     'user_id' => 1,
             //     'name' => 'テストグループ6',

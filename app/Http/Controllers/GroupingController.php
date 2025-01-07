@@ -49,9 +49,9 @@ class GroupingController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $id, string $date)
     {
-        //
+        return abort(404);
     }
 
     /**
@@ -59,6 +59,12 @@ class GroupingController extends Controller
      */
     public function edit(string $id, string $date)
     {
+        $userId = Auth::id();
+
+        if (intval($id) !== $userId || $date !== 'today') {
+            return abort(404);
+        }
+
         $date = Carbon::today();
         $groupingData = GroupingService::getGroupingData($date);
 
@@ -70,20 +76,24 @@ class GroupingController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $id, string $date)
     {
-        //
+        $userId = Auth::id();
+
+        if (intval($id) !== $userId || $date !== 'today') {
+            return abort(404);
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $id, string $date)
     {
         return abort(404);
     }
 
     public function past() {
-
+        return Inertia::render('Grouping/Past');
     }
 }

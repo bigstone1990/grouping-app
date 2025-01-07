@@ -30,6 +30,16 @@ class AllocationSeeder extends Seeder
                 'allocatable' => true,
             ],
             [
+                'member_id' => 1,
+                'group_id' => 4,
+                'allocatable' => true,
+            ],
+            [
+                'member_id' => 1,
+                'group_id' => 5,
+                'allocatable' => true,
+            ],
+            [
                 'member_id' => 2,
                 'group_id' => 1,
                 'allocatable' => true,
@@ -42,6 +52,16 @@ class AllocationSeeder extends Seeder
             [
                 'member_id' => 2,
                 'group_id' => 3,
+                'allocatable' => true,
+            ],
+            [
+                'member_id' => 2,
+                'group_id' => 4,
+                'allocatable' => true,
+            ],
+            [
+                'member_id' => 2,
+                'group_id' => 5,
                 'allocatable' => true,
             ],
             [
@@ -60,6 +80,16 @@ class AllocationSeeder extends Seeder
                 'allocatable' => true,
             ],
             [
+                'member_id' => 3,
+                'group_id' => 4,
+                'allocatable' => true,
+            ],
+            [
+                'member_id' => 3,
+                'group_id' => 5,
+                'allocatable' => true,
+            ],
+            [
                 'member_id' => 4,
                 'group_id' => 1,
                 'allocatable' => true,
@@ -75,6 +105,16 @@ class AllocationSeeder extends Seeder
                 'allocatable' => true,
             ],
             [
+                'member_id' => 4,
+                'group_id' => 4,
+                'allocatable' => true,
+            ],
+            [
+                'member_id' => 4,
+                'group_id' => 5,
+                'allocatable' => true,
+            ],
+            [
                 'member_id' => 5,
                 'group_id' => 1,
                 'allocatable' => true,
@@ -89,81 +129,141 @@ class AllocationSeeder extends Seeder
                 'group_id' => 3,
                 'allocatable' => true,
             ],
-            // [
-            //     'member_id' => 6,
-            //     'group_id' => 1,
-            //     'allocatable' => true,
-            // ],
-            // [
-            //     'member_id' => 6,
-            //     'group_id' => 2,
-            //     'allocatable' => true,
-            // ],
-            // [
-            //     'member_id' => 6,
-            //     'group_id' => 3,
-            //     'allocatable' => true,
-            // ],
-            // [
-            //     'member_id' => 7,
-            //     'group_id' => 1,
-            //     'allocatable' => true,
-            // ],
-            // [
-            //     'member_id' => 7,
-            //     'group_id' => 2,
-            //     'allocatable' => true,
-            // ],
-            // [
-            //     'member_id' => 7,
-            //     'group_id' => 3,
-            //     'allocatable' => true,
-            // ],
-            // [
-            //     'member_id' => 8,
-            //     'group_id' => 1,
-            //     'allocatable' => true,
-            // ],
-            // [
-            //     'member_id' => 8,
-            //     'group_id' => 2,
-            //     'allocatable' => true,
-            // ],
-            // [
-            //     'member_id' => 8,
-            //     'group_id' => 3,
-            //     'allocatable' => true,
-            // ],
-            // [
-            //     'member_id' => 9,
-            //     'group_id' => 1,
-            //     'allocatable' => true,
-            // ],
-            // [
-            //     'member_id' => 9,
-            //     'group_id' => 2,
-            //     'allocatable' => true,
-            // ],
-            // [
-            //     'member_id' => 9,
-            //     'group_id' => 3,
-            //     'allocatable' => true,
-            // ],
-            // [
-            //     'member_id' => 10,
-            //     'group_id' => 1,
-            //     'allocatable' => true,
-            // ],
-            // [
-            //     'member_id' => 10,
-            //     'group_id' => 2,
-            //     'allocatable' => true,
-            // ],
-            // [
-            //     'member_id' => 10,
-            //     'group_id' => 3,
-            //     'allocatable' => true,
-            // ],
+            [
+                'member_id' => 5,
+                'group_id' => 4,
+                'allocatable' => true,
+            ],
+            [
+                'member_id' => 5,
+                'group_id' => 5,
+                'allocatable' => true,
+            ],
+            [
+                'member_id' => 6,
+                'group_id' => 1,
+                'allocatable' => true,
+            ],
+            [
+                'member_id' => 6,
+                'group_id' => 2,
+                'allocatable' => true,
+            ],
+            [
+                'member_id' => 6,
+                'group_id' => 3,
+                'allocatable' => true,
+            ],
+            [
+                'member_id' => 6,
+                'group_id' => 4,
+                'allocatable' => true,
+            ],
+            [
+                'member_id' => 6,
+                'group_id' => 5,
+                'allocatable' => true,
+            ],
+            [
+                'member_id' => 7,
+                'group_id' => 1,
+                'allocatable' => true,
+            ],
+            [
+                'member_id' => 7,
+                'group_id' => 2,
+                'allocatable' => true,
+            ],
+            [
+                'member_id' => 7,
+                'group_id' => 3,
+                'allocatable' => true,
+            ],
+            [
+                'member_id' => 7,
+                'group_id' => 4,
+                'allocatable' => true,
+            ],
+            [
+                'member_id' => 7,
+                'group_id' => 5,
+                'allocatable' => true,
+            ],
+            [
+                'member_id' => 8,
+                'group_id' => 1,
+                'allocatable' => true,
+            ],
+            [
+                'member_id' => 8,
+                'group_id' => 2,
+                'allocatable' => true,
+            ],
+            [
+                'member_id' => 8,
+                'group_id' => 3,
+                'allocatable' => true,
+            ],
+            [
+                'member_id' => 8,
+                'group_id' => 4,
+                'allocatable' => true,
+            ],
+            [
+                'member_id' => 8,
+                'group_id' => 5,
+                'allocatable' => true,
+            ],
+            [
+                'member_id' => 9,
+                'group_id' => 1,
+                'allocatable' => true,
+            ],
+            [
+                'member_id' => 9,
+                'group_id' => 2,
+                'allocatable' => true,
+            ],
+            [
+                'member_id' => 9,
+                'group_id' => 3,
+                'allocatable' => true,
+            ],
+            [
+                'member_id' => 9,
+                'group_id' => 4,
+                'allocatable' => true,
+            ],
+            [
+                'member_id' => 9,
+                'group_id' => 5,
+                'allocatable' => true,
+            ],
+            [
+                'member_id' => 10,
+                'group_id' => 1,
+                'allocatable' => true,
+            ],
+            [
+                'member_id' => 10,
+                'group_id' => 2,
+                'allocatable' => true,
+            ],
+            [
+                'member_id' => 10,
+                'group_id' => 3,
+                'allocatable' => true,
+            ],
+            [
+                'member_id' => 10,
+                'group_id' => 4,
+                'allocatable' => true,
+            ],
+            [
+                'member_id' => 10,
+                'group_id' => 5,
+                'allocatable' => true,
+            ],
             // [
             //     'member_id' => 11,
             //     'group_id' => 1,
