@@ -1,3 +1,9 @@
+const nl2br = (str) => {
+  str = str.replace(/\r\n/g, "<br />");
+  str = str.replace(/(\n|\r)/g, "<br />");
+  return str;
+}
+
 const isEmpty = (obj) => {
   return Object.keys(obj).length === 0
 }
@@ -19,4 +25,4 @@ const customDateStringToJP = (date) => {
   return `${year}年${month}月${day}日`;
 }
 
-export { isEmpty, customDateToString, customDateStringToJP }
+export { nl2br, isEmpty, customDateToString, customDateStringToJP }
