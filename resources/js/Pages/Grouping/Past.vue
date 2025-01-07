@@ -26,11 +26,13 @@ onMounted(() => {
     maxDate: new Date().fp_incr(-1),
     minDate: new Date().fp_incr(-7),
     onReady: function (selectedDates, dateStr, instance) {
-      const yearElement = instance.calendarContainer.querySelector(".cur-year");
-      if (yearElement) {
-        const yearLabel = document.createElement("span");
-        yearLabel.textContent = "年";
-        yearElement.parentNode.before(yearLabel);
+      if (instance.calendarContainer) {
+        const yearElement = instance.calendarContainer.querySelector(".cur-year");
+        if (yearElement) {
+          const yearLabel = document.createElement("span");
+          yearLabel.textContent = "年";
+          yearElement.parentNode.before(yearLabel);
+        }
       }
     },
   });
@@ -119,15 +121,15 @@ const nextDate = () => {
       <div class="PageWrapper">
         <div class="Page">
           <div class="PageContent">
-            <div class="flex gap-4 justify-between mb-4 w-full">
-              <div class="flex flex-col">
+            <div class="flex flex-col-reverse sm:flex-row gap-4 justify-between mb-4 w-full">
+              <div class="flex flex-col mx-auto sm:mx-0">
                 <div class="flex gap-2 items-center">
                   <button type="button" @click="prevDate" class="MoveDateButton">&lt;前日</button>
                   <div>
                     <TextInput
                       id="date"
                       type="text"
-                      class="mt-1 mb-1 block mx-auto"
+                      class="block mx-auto w-48"
                       v-model="date"
                       @input="getGroupingData"
                     />
@@ -136,7 +138,7 @@ const nextDate = () => {
                 </div>
                 <p class="text-sm">※過去7日間まで閲覧できます</p>
               </div>
-              <Link as="button" :href="route('groupings.index')" class="h-full text-white bg-gray-500 border-0 py-2 px-8 hover:bg-gray-600 rounded">戻る</Link>
+              <Link as="button" :href="route('groupings.index')" class="ml-auto sm:ml-0 h-full text-white bg-gray-500 border-0 py-2 px-8 hover:bg-gray-600 rounded">戻る</Link>
             </div>
             <div class="GroupingIndexPageContentLayout">
               <section id="GroupContainer" class="GroupContainer">
@@ -161,11 +163,17 @@ const nextDate = () => {
 }
 
 .MoveDateButton {
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 0.7rem;
   border-radius: 0.5rem;
   border: 1px solid #d1d5db;
   box-shadow: 0 0 #0000, 0 0 #0000, 0 1px 2px 0 rgb(0 0 0 / 0.05);
   background-color: #ffffff;
+  font-size: 1rem;
+  line-height: 1.5rem;
+
+  @media screen and (min-width: map.get($breakpoint-data, smartphone-wide)) {
+    padding: 0.5rem 1rem;
+  }
 
   &:hover,
   &:focus {
