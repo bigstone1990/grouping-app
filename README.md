@@ -74,3 +74,19 @@ QUEUE_CONNECTION=database
 ターミナルでワーカー起動
 sail artisan queue:work
 *queue:workプロセスをバックグラウンドで永続的に実行し続けるには、Supervisorなどのプロセスモニタを使用して、キューワーカの実行が停止しないようにする必要があります。
+
+## Sanctum インストール
+### コマンド
+sail artisan install:api
+
+### bootstrap/app.php
+$middleware->statefulApi(); を追加
+    ->withMiddleware(function (Middleware $middleware) {
+        $middleware->statefulApi();
+    })
+
+### config/sanctum.php （必要に応じて）
+APIへのリクエストを許可するクライアントのドメインを設定
+
+## flatpickr インストール
+sail npm i flatpickr --save
