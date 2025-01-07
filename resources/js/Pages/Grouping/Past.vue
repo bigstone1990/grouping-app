@@ -2,12 +2,17 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import GroupList from '@/Components/GroupList.vue';
 import TextInput from '@/Components/TextInput.vue';
-import { Head, Link } from '@inertiajs/vue3';
+import { Head, Link, usePage } from '@inertiajs/vue3';
 import flatpickr from "flatpickr";
 import "flatpickr/dist/flatpickr.css";
 import { Japanese } from "flatpickr/dist/l10n/ja.js";
 import { ref, onMounted, onBeforeUnmount } from 'vue';
 import { isEmpty, customDateToString } from '@/common';
+import axios from 'axios';
+
+const user = usePage().props.auth.user;
+
+const groupings = ref();
 
 const date = ref(new Date());
 date.value.setDate(date.value.getDate() - 1);
@@ -40,28 +45,32 @@ onBeforeUnmount(() => {
 
 const getGroupingData = async () => {
     try {
-        // await axios.get('/api/calendar/', {
-        //     params: {
-        //         start_date: event_date.value
-        //     }
-        // }).then(
-        //     res => {
-        //         week_calendar.value = res.data.week_calendar.slice();
-        //         day_name.value = res.data.day_name.slice();
-        //         // events.value = res.data.events.slice();
-        //         week_of_event.value = res.data.week_of_event.slice();
-        //         // console.log(res.data.week_of_event);
-        //         // console.log(res.data.day_of_event);
-        //     }
-        // )
+      await axios.get('/api/groupings/', {
+        params: {
+          userId: user.id,
+          date: date.value,
+        }
+      }).then(
+        res => {
+          if (res.data.checkId === false) {
+            alert('データを閲覧できません');
+          }
+          else if (res.data.checkDate === false) {
+            alert('不正な日付が入力されています')
+          }
+          else {
+            groupings.value = res.data.groupings;
+          }
+        }
+      )
     } catch (error) {
-        
+      
     }
 }
 
 const prevDate = () => {
   if (date.value < customDateToString(fpDate.value.config._minDate) || date.value > customDateToString(fpDate.value.config._maxDate)) {
-    alert('日付フォームに不正な値が入力されています');
+    alert('不正な日付が入力されています');
     return;
   }
   else if (date.value == customDateToString(fpDate.value.config._minDate)) {
@@ -131,7 +140,7 @@ const nextDate = () => {
             </div>
             <div class="GroupingIndexPageContentLayout">
               <section id="GroupContainer" class="GroupContainer">
-                <!-- <GroupList :groups="props.groupings" :options="{index: 1}" :isDraggablePage="false" /> -->
+                <GroupList v-if="groupings" :groups="groupings" :options="{index: 1}" :isDraggablePage="false" />
               </section>
             </div>
           </div>
