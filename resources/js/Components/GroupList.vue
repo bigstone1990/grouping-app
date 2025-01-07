@@ -1,5 +1,6 @@
 <script setup>
 import GroupListItem from './GroupListItem.vue';
+import { customDateStringToJP } from '@/common';
 
 const props = defineProps({
   groups: Object,
@@ -11,7 +12,8 @@ const props = defineProps({
 <template>
   <article :id="'GroupListWrapper' + props.options.index" class="GroupListWrapper">
     <header class="GroupListHeader">
-      <h3 class="GroupListHeading">本日のグループ分け</h3>
+      <h3 v-if="props.options.date" v-html="customDateStringToJP(props.options.date) + ' のグループ分け'" class="GroupListHeading"></h3>
+      <h3 v-else class="GroupListHeading">本日のグループ分け</h3>
     </header>
     <div class="GroupListContainer">
       <ul class="GroupList">

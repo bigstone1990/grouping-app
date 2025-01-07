@@ -7,7 +7,7 @@ import flatpickr from "flatpickr";
 import "flatpickr/dist/flatpickr.css";
 import { Japanese } from "flatpickr/dist/l10n/ja.js";
 import { ref, onMounted, onBeforeUnmount } from 'vue';
-import { isEmpty, customDateToString } from '@/common';
+import { customDateToString } from '@/common';
 import axios from 'axios';
 
 const user = usePage().props.auth.user;
@@ -140,7 +140,7 @@ const nextDate = () => {
             </div>
             <div class="GroupingIndexPageContentLayout">
               <section id="GroupContainer" class="GroupContainer">
-                <GroupList v-if="groupings" :groups="groupings" :options="{index: 1}" :isDraggablePage="false" />
+                <GroupList v-if="groupings" :groups="groupings" :options="{index: 1, date: date}" :isDraggablePage="false" />
               </section>
             </div>
           </div>
