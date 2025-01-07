@@ -23,7 +23,7 @@ class GroupingSeeder extends Seeder
         $pastDay5 = Carbon::today()->addDays(-5);
         $pastDay6 = Carbon::today()->addDays(-6);
         $pastDay7 = Carbon::today()->addDays(-7);
-        $pastDay8 = Carbon::today()->addDays(-8);
+        $pastDay8 = Carbon::today()->addDays(-30);
         DB::table('groupings')->insert([
             [
                 'date' => $today,

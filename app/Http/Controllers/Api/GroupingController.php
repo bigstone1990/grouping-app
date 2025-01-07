@@ -14,7 +14,7 @@ class GroupingController extends Controller
     {
         $userId = Auth::id();
         $maxDate = Carbon::today()->addDays(-1)->format('Y-m-d');
-        $minDate = Carbon::today()->addDays(-7)->format('Y-m-d');
+        $minDate = Carbon::today()->addDays(-30)->format('Y-m-d');
 
         if (intval($request->userId) !== $userId) {
             return response()->json([

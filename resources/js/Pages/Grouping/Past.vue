@@ -24,7 +24,7 @@ onMounted(() => {
   fpDate.value = flatpickr("#date", {
     "locale": Japanese,
     maxDate: new Date().fp_incr(-1),
-    minDate: new Date().fp_incr(-7),
+    minDate: new Date().fp_incr(-30),
     onReady: function (selectedDates, dateStr, instance) {
       if (instance.calendarContainer) {
         const yearElement = instance.calendarContainer.querySelector(".cur-year");
@@ -46,28 +46,28 @@ onBeforeUnmount(() => {
 })
 
 const getGroupingData = async () => {
-    try {
-      await axios.get('/api/groupings/', {
-        params: {
-          userId: user.id,
-          date: date.value,
+  try {
+    await axios.get('/api/groupings/', {
+      params: {
+        userId: user.id,
+        date: date.value,
+      }
+    }).then(
+      res => {
+        if (res.data.checkId === false) {
+          alert('データを閲覧できません');
         }
-      }).then(
-        res => {
-          if (res.data.checkId === false) {
-            alert('データを閲覧できません');
-          }
-          else if (res.data.checkDate === false) {
-            alert('不正な日付が入力されています')
-          }
-          else {
-            groupings.value = res.data.groupings;
-          }
+        else if (res.data.checkDate === false) {
+          alert('不正な日付が入力されています')
         }
-      )
-    } catch (error) {
-      
-    }
+        else {
+          groupings.value = res.data.groupings;
+        }
+      }
+    )
+  } catch (error) {
+    
+  }
 }
 
 const prevDate = () => {
@@ -136,7 +136,7 @@ const nextDate = () => {
                   </div>
                   <button type="button" @click="nextDate" class="MoveDateButton">翌日&gt;</button>
                 </div>
-                <p class="text-sm">※過去7日間まで閲覧できます</p>
+                <p class="text-sm">※過去30日間まで閲覧できます</p>
               </div>
               <Link as="button" :href="route('groupings.index')" class="ml-auto sm:ml-0 h-full text-white bg-gray-500 border-0 py-2 px-8 hover:bg-gray-600 rounded">戻る</Link>
             </div>
