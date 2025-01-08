@@ -35,6 +35,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('members/calcgroupings', [MemberController::class, 'calcGroupings'])->name('members.calcgroupings');
     Route::resource('members', MemberController::class);
 });
 

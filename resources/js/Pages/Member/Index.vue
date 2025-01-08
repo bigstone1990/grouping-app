@@ -37,6 +37,7 @@ if (props.members.length !== 0) {
                 <div class="w-full mx-auto overflow-auto">
                   <div class="flex gap-4 justify-end mb-4 w-full">
                     <Link as="button" :href="route('members.create')" class="text-white bg-indigo-500 border-0 py-2 px-8 hover:bg-indigo-600 rounded">新規作成</Link>
+                    <Link as="button" :href="route('members.calcgroupings')" class="text-white bg-indigo-500 border-0 py-2 px-8 hover:bg-indigo-600 rounded">実績</Link>
                   </div>
                   <div class="MemberTableContainer">
                     <table class="table-fixed w-full text-left whitespace-normal">

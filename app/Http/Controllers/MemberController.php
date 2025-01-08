@@ -254,4 +254,13 @@ class MemberController extends Controller
             'status' => 'success',
         ]);
     }
+
+    public function calcGroupings()
+    {
+        $memberData = null;
+
+        return Inertia::render('Member/CalcGroupings', [
+            'member' => $memberData,
+        ]);
+    }
 }
