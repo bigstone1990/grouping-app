@@ -241,10 +241,12 @@ class MemberController extends Controller
         }
 
         $date = Carbon::today();
-        $grouping = Grouping::where('date', '=', $date)->where('user_id', '=', $userId)->where('member_id', '=', $member->id)->first();
+        $groupings = Grouping::where('date', '=', $date)->where('user_id', '=', $userId)->where('member_id', '=', $member->id)->get();
 
-        if (!is_null($grouping)) {
-            $grouping->delete();
+        if (!$groupings->isEmpty()) {
+            foreach ($groupings as $grouping) {
+                $grouping->delete();
+            }
         }
 
         $member->delete();

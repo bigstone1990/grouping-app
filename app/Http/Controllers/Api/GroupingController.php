@@ -32,7 +32,7 @@ class GroupingController extends Controller
             ]);
         }
 
-        $groupingData = GroupingService::getGroupingData($request->date);
+        $groupingData = GroupingService::getGroupingPastData($request->date);
 
         return response()->json([
             'checkId'=> null,
