@@ -175,8 +175,7 @@ const nextDate = () => {
     padding: 0.5rem 1rem;
   }
 
-  &:hover,
-  &:focus {
+  &:hover {
     background-color: #f3f4f6;
   }
 
