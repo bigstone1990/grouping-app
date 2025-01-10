@@ -80,7 +80,7 @@ const props = defineProps({
 <style lang="scss">
 .UserTableContainer {
   min-width: 343px;
-  max-width: calc(6rem + 10rem + 12rem + 6rem);
+  max-width: calc(6rem + 10rem + 12rem + 6rem + 16px + 1px);
   max-height: 410px;
   overflow-x: auto;
   overflow-y: auto;

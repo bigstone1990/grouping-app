@@ -70,10 +70,10 @@ const props = defineProps({
 <style lang="scss">
 .GroupTableContainer {
   min-width: 343px;
-  max-width: calc(4rem + 11rem + 6rem);
+  max-width: calc(4rem + 11rem + 6rem + 16px + 1px);
   max-height: 410px;
-  overflow-x: auto;
-  overflow-y: auto;
+  // overflow-x: auto;
+  overflow-y: scroll;
   margin-left: auto;
   margin-right: auto;
 
