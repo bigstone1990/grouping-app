@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Allocation;
 use App\Models\Grouping;
 use Carbon\Carbon;
+use Illuminate\Database\Query\JoinClause;
 
 class MemberController extends Controller
 {
@@ -259,10 +260,72 @@ class MemberController extends Controller
 
     public function calcGroupings()
     {
-        $memberData = null;
+        $userId = Auth::id();
+        $maxDate = Carbon::today()->addDays(-1)->format('Y-m-d');
+        $minDate = Carbon::today()->addDays(-30)->format('Y-m-d');
+        
+        $groups = DB::table('groups')
+        ->selectRaw('id, name, `order`')
+        ->where('user_id', '=', $userId)
+        ->whereNull('deleted_at')
+        ->orderBy('order')
+        ->get();
+
+        $members = DB::table('members')
+        ->selectRaw('id, name')
+        ->where('user_id', '=', $userId)
+        ->whereNull('deleted_at')
+        ->orderBy('id')
+        ->get();
+
+        $membersData = [];
+
+        foreach ($members as $member) {
+            $memberData = [
+                'member_id' =>$member->id,
+                'member_name' => $member->name,
+                'groups_data' => [],
+            ];
+
+            $total = DB::table('groupings')
+            ->where('user_id', '=', $userId)
+            ->where('member_id', '=', $member->id)
+            ->whereBetween('date', [$minDate, $maxDate])
+            ->whereNull('deleted_at')
+            ->count();
+
+            foreach ($groups as $group) {
+                $subTotal = DB::table('groupings')
+                ->where('user_id', '=', $userId)
+                ->where('group_id', '=', $group->id)
+                ->where('member_id', '=', $member->id)
+                ->whereBetween('date', [$minDate, $maxDate])
+                ->whereNull('deleted_at')
+                ->count();
+
+                $calc = 0.0;
+
+                if ($total !== 0) {
+                    $calc = round($subTotal / $total * 100, 1);
+                }
+
+                $groupData = [
+                    'group_id' => $group->id,
+                    'group_name' => $group->name,
+                    'group_order' => $group->order,
+                    'group_calc' => $calc
+                ];
+
+                array_push($memberData['groups_data'], $groupData);
+            }
+
+            array_push($membersData, $memberData);
+        }
+
+        // dd($membersData);
 
         return Inertia::render('Member/CalcGroupings', [
-            'member' => $memberData,
+            'members' => $membersData,
         ]);
     }
 }
