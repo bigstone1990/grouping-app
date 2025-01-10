@@ -68,29 +68,32 @@
   .MemberListContainer {
     flex: 1 1 auto;
     overflow: hidden;
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-
+    
     .MemberList {
       height: 100%;
+      min-height: 72px;
       max-height: 190px;
       overflow: scroll;
       display: flex;
       flex-direction: column;
       gap: 1rem;
-      padding-left: 1rem;
-      padding-right: 1rem;
+      padding-top: 1rem;
+      padding-bottom: 1rem;
+      padding-left: 2rem;
+      padding-right: 2rem;
     
       @media screen and (min-width: map.get($breakpoint-data, smartphone-wide)) {
         flex-direction: row;
         flex-wrap: wrap;
-        max-height: 135px;
       }
     
       @media screen and (min-width: map.get($breakpoint-data, tablet-wide)) {
         flex-direction: column;
         flex-wrap: nowrap;
+        min-height: initial;
         max-height: initial;
+        padding-left: 1rem;
+        padding-right: 1rem;
       }
     }
   }
@@ -229,14 +232,14 @@
   .GroupListContainer {
     flex: 1 1 auto;
     overflow: hidden;
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-
+    
     .GroupList {
       height: 100%;
       display: flex;
       flex-direction: column;
       gap: 1rem;
+      padding-top: 1rem;
+      padding-bottom: 1rem;
       padding-left: 1rem;
       padding-right: 1rem;
     }
@@ -271,19 +274,20 @@
     }
 
     .GroupMemberListContainer {
-      padding-top: 1rem;
-      padding-bottom: 1rem;
       background-color: #ffedcc;
       // background-image: repeating-linear-gradient(-45deg, currentColor 0%, currentColor 40%, #111827 40%, #111827 50%, currentColor 50%);
       // background-size: 0.8rem 0.8rem;
-
+      
       .GroupMemberList {
         display: flex;
         flex-direction: column;
         gap: 1rem;
+        padding-top: 1rem;
+        padding-bottom: 1rem;
         padding-left: 1rem;
         padding-right: 1rem;
-        min-height: 2.5rem;
+        min-height: 4.5rem;
+        height: 100%;
       
         @media screen and (min-width: map.get($breakpoint-data, smartphone-wide)) {
           flex-direction: row;

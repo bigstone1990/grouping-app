@@ -15,12 +15,13 @@ const props = defineProps({
           <h4 class="GroupListItemHeading">{{ props.group.group_name }}</h4>
       </header>
       <div class="GroupMemberListContainer">
-        <ul v-if="props.group.members.length > 0" class="GroupMemberList">
-          <GroupMemberListItem v-for="member in props.group.members" :key="member.member_id" :member="member" :options="{index: member.member_id}" :isDraggablePage="props.isDraggablePage" />
+        <ul class="GroupMemberList">
+          <GroupMemberListItem v-if="props.group.members.length > 0" v-for="member in props.group.members" :key="member.member_id" :member="member" :options="{index: member.member_id}" :isDraggablePage="props.isDraggablePage" />
+          <p v-else class="text-gray-600 flex items-center">
+            <template v-if="props.isDraggablePage">枠を追加してください</template>
+            <template v-else>メンバーがいません</template>
+          </p>
         </ul>
-        <div v-else class="flex justify-center items-center px-4 h-full">
-          <p class="text-gray-900">メンバーがいません</p>
-        </div>
       </div>
     </div>
   </li>

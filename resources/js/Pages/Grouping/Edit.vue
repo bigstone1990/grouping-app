@@ -47,10 +47,8 @@ onMounted(() => {
     }
   }
 
-  console.log(GroupMemberListItemContainer);
-
-
   const GroupMemberListItemCapacity = 1;
+  let DraggableElementsForContainer;
   let GroupMemberListItemChildren;
   let CapacityReached;
   let SourceContainer;
@@ -65,7 +63,14 @@ onMounted(() => {
     OverContainer = evt.overContainer;
     if (SourceContainer !== OverContainer) {
       if (GroupMemberListItemContainer.includes(OverContainer)) {
-        GroupMemberListItemChildren = sortable.value.getDraggableElementsForContainer(OverContainer).length;
+        DraggableElementsForContainer = sortable.value.getDraggableElementsForContainer(OverContainer)
+        GroupMemberListItemChildren = DraggableElementsForContainer.length;
+        
+        DraggableElementsForContainer.forEach(element => {
+          if (element.classList.contains('draggable-source--is-dragging')) {
+            GroupMemberListItemChildren = GroupMemberListItemChildren - 1;
+          }
+        });
         if (GroupMemberListItemChildren >= GroupMemberListItemCapacity) {
           evt.overContainer.classList.add('draggable-container-parent--capacity');
           CapacityReached = true;
