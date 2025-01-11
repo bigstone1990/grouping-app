@@ -90,3 +90,14 @@ APIへのリクエストを許可するクライアントのドメインを設�
 
 ## flatpickr インストール
 sail npm i flatpickr --save
+
+## sail share の利用
+bootstrap/app.php に記述追加
+->withMiddleware(function (Middleware $middleware) {
+    $middleware->trustProxies(at: '*');
+})
+
+sail share コマンドでできるみたいだが、
+sail npm run build を実行してから
+sail npm run dev していない状態でしなければならない？
+
