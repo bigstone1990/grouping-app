@@ -31,7 +31,7 @@ const props = defineProps({
             </div>
             <div class="GroupingIndexPageContentLayout">
               <section id="GroupContainer" class="GroupContainer">
-                <GroupList :groups="props.groupings" :options="{index: 1}" :isDraggablePage="false" />
+                <GroupList :groups="props.groupings" :isDraggablePage="false" />
               </section>
             </div>
           </div>

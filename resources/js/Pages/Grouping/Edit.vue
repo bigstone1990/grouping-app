@@ -158,10 +158,10 @@ onBeforeUnmount(() => {
             </div>
             <div class="GroupingEditPageContentLayout">
               <section id="MemberContainer" class="MemberContainer">
-                <MemberList :members="members" :options="{index: 1}" />
+                <MemberList :members="members" />
               </section>
               <section id="GroupContainer" class="GroupContainer">
-                <GroupList :groups="props.groupings" :options="{index: 1}" :isDraggablePage="true" />
+                <GroupList :groups="props.groupings" :isDraggablePage="true" />
               </section>
             </div>
           </div>

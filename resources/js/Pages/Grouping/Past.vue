@@ -142,7 +142,7 @@ const nextDate = () => {
             </div>
             <div class="GroupingIndexPageContentLayout">
               <section id="GroupContainer" class="GroupContainer">
-                <GroupList v-if="groupings" :groups="groupings" :options="{index: 1, date: date}" :isDraggablePage="false" />
+                <GroupList v-if="groupings" :groups="groupings" :date="date" :isDraggablePage="false" />
               </section>
             </div>
           </div>

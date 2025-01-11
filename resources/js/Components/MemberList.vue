@@ -9,7 +9,6 @@ import axios from 'axios';
 
 const props = defineProps({
   members: Object,
-  options: Object,
 });
 
 const user = usePage().props.auth.user;
@@ -52,15 +51,15 @@ const editMemberList = async () => {
           if (curMembers.value.length !== 0) {
             curMembers.value.forEach(curMember => {
               if (allMembers.value.length === 0) {
-                alert('１ページをリロードして再実行してください');
+                alert('ページをリロードして再実行してください');
               }
               else {
-                const index = allMembers.value.findIndex(obj => obj.id === curMember.id);
+                const index = allMembers.value.findIndex(obj => obj.id == curMember.id);
                 if (index != -1) {
                   allMembers.value[index].isSelected = true;
                 }
                 else {
-                  alert('２ページをリロードして再実行してください');
+                  alert('ページをリロードして再実行してください');
                 }
               }
             })
@@ -75,25 +74,66 @@ const editMemberList = async () => {
   }
 };
 
+const selectMembers = () => {
+  if (allMembers.value.length === 0) {
+    listMembers.value = [];
+    curMembers.value = [];
+  }
+  else {
+    allMembers.value.forEach(member => {
+      const memberId = member.id;
+      const memberName = member.name;
+
+      if (!member.isSelected) {
+        const curMemberIndex = curMembers.value.findIndex(obj => obj.id == memberId);
+
+        if (curMemberIndex != -1) {
+          curMembers.value.splice(curMemberIndex, 1);
+
+          const listMemberindex = listMembers.value.findIndex(obj => obj.id == memberId);
+          
+          if (listMemberindex != -1) {
+            listMembers.value.splice(listMemberindex, 1);
+          }
+          
+          const deleteElement = document.querySelectorAll(`[data-member-id="${memberId}"]`);
+
+        }
+      }
+      else {
+        const curMemberIndex = curMembers.value.findIndex(obj => obj.id == memberId);
+
+        if (curMemberIndex == -1) {
+          if (!listMembers.value.find(obj => obj.id == memberId)) {
+            const memberData = {id: memberId, name: memberName};
+            curMembers.value.push(memberData)
+            listMembers.value.push(memberData);
+          }
+        }
+      }
+    });
+  }
+
+  editingMemberList.value = false;
+}
+
 const closeModal = () => {
   editingMemberList.value = false;
 };
 
-// const members = ref([{id: 1, name: 'テストメンバー1'}, {id: 2, name: 'テストメンバー2'}, {id: 3, name: 'テストメンバー3'}]);
-// const members = ref([{id: 1, name: 'テストメンバー1'}, {id: 2, name: 'テストメンバー2'}, {id: 3, name: 'テストメンバー3'}, {id: 4, name: 'テストメンバー4'}, {id: 5, name: 'テストメンバー5'}, {id: 6, name: 'テストメンバー6'}, {id: 7, name: 'テストメンバー7'}, {id: 8, name: 'テストメンバー8'}, {id: 9, name: 'テストメンバー9'}]);
 </script>
 
 <template>
-  <article :id="'MemberListWrapper' + props.options.index" class="MemberListWrapper">
+  <article class="MemberListWrapper">
     <header class="MemberListHeader">
       <h3 class="MemberListHeading">本日のメンバー</h3>
     </header>
 
     <div class="MemberListContainer">
-      <ul class="MemberList">
-        <button type="button" @click="editMemberList" class="MemberListEditButton">メンバーリスト編集</button>        
-        <MemberListItem v-if="listMembers.length !== 0" v-for="member in listMembers" :key="member.id" :heading="member.name" :options="{index: member.id}" />
-      </ul>
+      <div class="MemberList">
+        <button type="button" @click="editMemberList" class="MemberListEditButton">メンバーリスト編集</button>
+        <MemberListItem v-if="listMembers.length !== 0" v-for="member in listMembers" :key="member.id" :heading="member.name" :memberId="member.id" />
+      </div>
     </div>
   </article>
   <Modal :show="editingMemberList" @close="closeModal">
@@ -118,7 +158,7 @@ const closeModal = () => {
 
     <div class="mt-6 flex justify-end gap-4">
       <button v-if="allMembers.length !== 0" type="button" @click="closeModal" class="text-white bg-gray-500 border-0 py-2 px-8 hover:bg-gray-600 rounded">キャンセル</button>
-      <button v-if="allMembers.length !== 0" type="button" @click="" class="text-white bg-indigo-500 border-0 py-2 px-8 hover:bg-indigo-600 rounded">決定</button>
+      <button v-if="allMembers.length !== 0" type="button" @click="selectMembers" class="text-white bg-indigo-500 border-0 py-2 px-8 hover:bg-indigo-600 rounded">決定</button>
       <button v-if="allMembers.length === 0" type="button" @click="closeModal" class="text-white bg-gray-500 border-0 py-2 px-8 hover:bg-gray-600 rounded">閉じる</button>
     </div>
   </div>
