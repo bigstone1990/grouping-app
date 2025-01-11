@@ -31,7 +31,7 @@ const showingNavigationDropdown = ref(false);
 
                             <!-- Navigation Links -->
                             <div
-                                class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex"
+                                class="hidden space-x-8 md:-my-px md:ms-10 md:flex"
                             >
                                 <NavLink
                                     :href="route('dashboard')"
@@ -67,7 +67,7 @@ const showingNavigationDropdown = ref(false);
                             </div>
                         </div>
 
-                        <div class="hidden sm:ms-6 sm:flex sm:items-center">
+                        <div class="hidden md:ms-6 md:flex md:items-center">
                             <!-- Settings Dropdown -->
                             <div class="relative ms-3">
                                 <Dropdown align="right" width="48">
@@ -114,7 +114,7 @@ const showingNavigationDropdown = ref(false);
                         </div>
 
                         <!-- Hamburger -->
-                        <div class="-me-2 flex items-center sm:hidden">
+                        <div class="-me-2 flex items-center md:hidden">
                             <button
                                 @click="
                                     showingNavigationDropdown =
@@ -162,7 +162,7 @@ const showingNavigationDropdown = ref(false);
                         block: showingNavigationDropdown,
                         hidden: !showingNavigationDropdown,
                     }"
-                    class="sm:hidden"
+                    class="md:hidden"
                 >
                     <div class="space-y-1 pb-3 pt-2">
                         <ResponsiveNavLink
