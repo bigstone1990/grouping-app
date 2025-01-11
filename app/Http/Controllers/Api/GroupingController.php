@@ -5,12 +5,14 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Services\GroupingService;
+use App\Models\Member;
 
 class GroupingController extends Controller
 {
-    public function index(Request $request)
+    public function getPastGroupings(Request $request)
     {
         $userId = Auth::id();
         $maxDate = Carbon::today()->addDays(-1)->format('Y-m-d');
@@ -39,6 +41,25 @@ class GroupingController extends Controller
             'checkDate'=> null,
             'groupings' => $groupingData,
         ]);
+    }
 
+    public function getAllMembers(Request $request)
+    {
+        $userId = Auth::id();
+
+        if (intval($request->userId) !== $userId) {
+            return response()->json([
+                'checkId'=> false,
+                'members' => null,
+            ]);
+        }
+
+        $members = Member::where('user_id', '=', $userId)->orderBy('id')->get();
+
+        return response()->json([
+            'checkId'=> null,
+            'checkDate'=> null,
+            'members' => $members,
+        ]);
     }
 }

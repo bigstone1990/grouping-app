@@ -53,9 +53,9 @@
   .MemberListHeader {
     flex: 0 0 2.5rem;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
-    padding: 0.5rem 1rem;
+    padding: 0.5rem;
     background-color: #111827;
 
     .MemberListHeading {
@@ -71,9 +71,9 @@
     
     .MemberList {
       height: 100%;
-      min-height: 72px;
-      max-height: 190px;
-      overflow: scroll;
+      min-height: 128px;
+      max-height: 240px;
+      overflow-y: auto;
       display: flex;
       flex-direction: column;
       gap: 1rem;
@@ -94,6 +94,63 @@
         max-height: initial;
         padding-left: 1rem;
         padding-right: 1rem;
+      }
+    }
+  }
+}
+
+.MemberListEditButton {
+  width: 100%;
+  height: 100%;
+  color: #ffffff;
+  background-color: #22c55e;
+  border-width: 0px;
+  padding: 0.5rem 2rem;
+  border-radius: 0.25rem;
+
+  @media screen and (min-width: map.get($breakpoint-data, tablet-wide)) {
+    height: initial;
+  }
+
+  &:hover {
+    background-color: #16a34a;
+  }
+}
+
+.EditMemberList {
+  margin-top: 1rem;
+  max-height: 147px;
+  overflow-y: auto;
+  
+  @media screen and (min-height: map.get($breakpoint-data, smartphone-wide)) {
+    max-height: calc(100vh - 228px);
+  }
+
+  .EditMemberListLayout {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    @media screen and (min-width: map.get($breakpoint-data, smartphone-wide)) {
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+
+    .EditMemberListItem {
+      flex: 0 1 100%;
+      padding-left: 0.5rem;
+      border-radius: 0.5rem;
+      border: 1px solid #d1d5db;
+      box-shadow: 0 0 #0000, 0 0 #0000, 0 1px 2px 0 rgb(0 0 0 / 0.05);
+      background-color: #f3f4f6;
+      
+      @media screen and (min-width: map.get($breakpoint-data, smartphone-wide)) {
+        flex: 0 1 calc(calc(100% - 2rem) / 3);
+      }
+
+      &.IsChecked {
+        background-color: #5cb85c;
+        border-color: #5cb85c;
       }
     }
   }

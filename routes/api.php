@@ -8,4 +8,6 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-Route::get('/groupings', [GroupingController::class, 'index'])->middleware('auth:sanctum')->name('api.groupings');
+Route::get('/getPastGroupings', [GroupingController::class, 'getPastGroupings'])->middleware('auth:sanctum')->name('api.groupings');
+
+Route::get('/getAllMembers', [GroupingController::class, 'getAllMembers'])->middleware('auth:sanctum')->name('api.members');

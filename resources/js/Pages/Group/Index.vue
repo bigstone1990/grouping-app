@@ -72,8 +72,8 @@ const props = defineProps({
   min-width: 343px;
   max-width: calc(4rem + 11rem + 6rem + 16px + 1px);
   max-height: 410px;
-  // overflow-x: auto;
-  overflow-y: scroll;
+  overflow-x: auto;
+  overflow-y: auto;
   margin-left: auto;
   margin-right: auto;
 

@@ -159,7 +159,7 @@ onBeforeUnmount(() => {
       padding-bottom: 1rem;
 
       .GroupOrderList {
-        overflow-y: scroll;
+        overflow-y: auto;
         display: flex;
         flex-direction: column;
         flex-wrap: nowrap;

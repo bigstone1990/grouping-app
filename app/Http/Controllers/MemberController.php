@@ -247,6 +247,16 @@ class MemberController extends Controller
         if (!$groupings->isEmpty()) {
             foreach ($groupings as $grouping) {
                 $grouping->delete();
+
+                $curGrouping = Grouping::where('date', '=', $date)->where('user_id', '=', $userId)->where('group_id', '=', $grouping->group_id)->get();
+                if($curGrouping->isEmpty()) {
+                    Grouping::create([
+                        'date' => $date,
+                        'user_id' => $userId,
+                        'member_id' => null,
+                        'group_id' => $grouping->id,
+                    ]);
+                }
             }
         }
 

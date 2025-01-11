@@ -47,7 +47,7 @@ onBeforeUnmount(() => {
 
 const getGroupingData = async () => {
   try {
-    await axios.get('/api/groupings/', {
+    await axios.get('/api/getPastGroupings/', {
       params: {
         userId: user.id,
         date: date.value,

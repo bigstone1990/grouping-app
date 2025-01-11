@@ -11,6 +11,21 @@ const props = defineProps({
   'groupings': Object,
 });
 
+const members = ref([]);
+
+if (props.groupings.length !== 0)
+props.groupings.forEach(grouping => {
+  if (grouping.members !== 0) {
+    grouping.members.forEach(member => {
+      const id = {
+        id: member.member_id,
+      };
+
+      members.value.push(id);
+    });
+  }
+});
+
 const updateGrouping = () => {
   // form.put(route('groups.update', {group: id}));
 };
@@ -143,7 +158,7 @@ onBeforeUnmount(() => {
             </div>
             <div class="GroupingEditPageContentLayout">
               <section id="MemberContainer" class="MemberContainer">
-                <MemberList :options="{index: 1}" />
+                <MemberList :members="members" :options="{index: 1}" />
               </section>
               <section id="GroupContainer" class="GroupContainer">
                 <GroupList :groups="props.groupings" :options="{index: 1}" :isDraggablePage="true" />
