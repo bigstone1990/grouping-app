@@ -1,6 +1,6 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import GroupList from '@/Components/GroupList.vue';
+import GroupListOnlyRead from '@/Components/GroupListOnlyRead.vue';
 import TextInput from '@/Components/TextInput.vue';
 import { Head, Link, usePage } from '@inertiajs/vue3';
 import flatpickr from "flatpickr";
@@ -142,7 +142,7 @@ const nextDate = () => {
             </div>
             <div class="GroupingIndexPageContentLayout">
               <section id="GroupContainer" class="GroupContainer">
-                <GroupList v-if="groupings" :groups="groupings" :date="date" :isDraggablePage="false" />
+                <GroupListOnlyRead v-if="groupings" :groups="groupings" :date="date" />
               </section>
             </div>
           </div>
