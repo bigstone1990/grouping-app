@@ -1,6 +1,6 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import GroupListOnlyRead from '@/Components/GroupListOnlyRead.vue';
+import GroupListForRead from '@/Components/GroupListForRead.vue';
 import { Head, Link } from '@inertiajs/vue3';
 
 const props = defineProps({
@@ -31,7 +31,7 @@ const props = defineProps({
             </div>
             <div class="GroupingIndexPageContentLayout">
               <section id="GroupContainer" class="GroupContainer">
-                <GroupListOnlyRead :groups="props.groupings" />
+                <GroupListForRead :groups="props.groupings" />
               </section>
             </div>
           </div>

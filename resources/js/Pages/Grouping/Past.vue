@@ -1,6 +1,6 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import GroupListOnlyRead from '@/Components/GroupListOnlyRead.vue';
+import GroupListForRead from '@/Components/GroupListForRead.vue';
 import TextInput from '@/Components/TextInput.vue';
 import { Head, Link, usePage } from '@inertiajs/vue3';
 import flatpickr from "flatpickr";
@@ -42,6 +42,7 @@ onMounted(() => {
 onBeforeUnmount(() => {
   if (fpDate.value) {
     fpDate.value.destroy();
+    fpDate.value = null;
   }
 })
 
@@ -142,7 +143,7 @@ const nextDate = () => {
             </div>
             <div class="GroupingIndexPageContentLayout">
               <section id="GroupContainer" class="GroupContainer">
-                <GroupListOnlyRead v-if="groupings" :groups="groupings" :date="date" />
+                <GroupListForRead v-if="groupings" :groups="groupings" :date="date" />
               </section>
             </div>
           </div>

@@ -1,5 +1,5 @@
 <script setup>
-import GroupListItemOnlyRead from './GroupListItemOnlyRead.vue';
+import GroupListItemForRead from './GroupListItemForRead.vue';
 import { customDateStringToJP } from '@/common';
 
 const props = defineProps({
@@ -16,7 +16,7 @@ const props = defineProps({
     </header>
     <div class="GroupListContainer">
       <div class="GroupList">
-        <GroupListItemOnlyRead v-if="props.groups.length !== 0" v-for="group in props.groups" :key="group.group_id" :group="group" />
+        <GroupListItemForRead v-if="props.groups.length !== 0" v-for="group in props.groups" :key="group.group_id" :group="group" />
         <div v-else class="flex justify-center px-4">
           <p class="text-gray-600">グループ分けが未作成です</p>
         </div>
