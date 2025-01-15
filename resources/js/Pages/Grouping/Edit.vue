@@ -33,7 +33,7 @@ if (props.groupings.length !== 0) {
     const data = {
       group_id: grouping.group_id,
       issuedNumber: 0,
-      dropzones: [],
+      data: [],
     };
     dropzones.value.push(data);
   });
@@ -47,7 +47,7 @@ const sortContainers = ref(null);
 const sortable = ref(null);
 
 onMounted(() => {
-  sortContainers.value = document.querySelectorAll('.MemberList, .GroupMemberListItem');
+  sortContainers.value = document.querySelectorAll('.MemberList, .Dropzone');
   if (sortContainers.value.length === 0) {
     return false;
   }
@@ -174,7 +174,7 @@ onBeforeUnmount(() => {
                 <MemberListForEdit v-model:curMembers="curMembers" v-model:listMembers="listMembers" />
               </section>
               <section id="GroupContainer" class="GroupContainer">
-                <GroupListForEdit v-model:dropzones="dropzones" :groups="props.groupings" />
+                <GroupListForEdit v-model:sortable="sortable" v-model:dropzones="dropzones" :groups="props.groupings" />
               </section>
             </div>
           </div>
