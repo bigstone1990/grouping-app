@@ -1,5 +1,5 @@
 <script setup>
-import GroupMemberListItemForRead from './GroupMemberListItemForRead.vue';
+import GroupMemberListItemForShow from './GroupMemberListItemForShow.vue';
 
 const props = defineProps({
   group: Object,
@@ -15,8 +15,8 @@ const props = defineProps({
       </header>
       <div class="GroupMemberListContainer">
         <div class="GroupMemberList">
-          <GroupMemberListItemForRead v-if="props.group.members.length > 0" v-for="member in props.group.members" :key="member.member_id" :member="member" />
-          <p v-else class="text-gray-600 flex items-center">メンバーがいません</p>
+          <GroupMemberListItemForShow v-if="props.group.members.length > 0" v-for="member in props.group.members" :key="member.member_id" :member="member" />
+          <p v-else class="text-gray-600">メンバーがいません</p>
         </div>
       </div>
     </div>
