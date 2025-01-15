@@ -1,7 +1,7 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import MemberList from '@/Components/MemberList.vue';
-import GroupList from '@/Components/GroupList.vue';
+import MemberListForEdit from '@/Components/MemberListForEdit.vue';
+import GroupListForEdit from '@/Components/GroupListForEdit.vue';
 import { Head, Link } from '@inertiajs/vue3';
 import { Sortable, Plugins } from '@shopify/draggable';
 import { ref, onMounted, onBeforeUnmount } from 'vue';
@@ -11,20 +11,33 @@ const props = defineProps({
   'groupings': Object,
 });
 
-const members = ref([]);
+const curMembers = ref([]);
+if (props.groupings.length !== 0) {
+  props.groupings.forEach(grouping => {
+    if (grouping.members !== 0) {
+      grouping.members.forEach(member => {
+        const data = {
+          member_id: member.member_id,
+        };
+        curMembers.value.push(data);
+      });
+    }
+  });
+}
 
-if (props.groupings.length !== 0)
-props.groupings.forEach(grouping => {
-  if (grouping.members !== 0) {
-    grouping.members.forEach(member => {
-      const id = {
-        id: member.member_id,
-      };
+const listMembers = ref([]);
 
-      members.value.push(id);
-    });
-  }
-});
+const dropzones = ref([]);
+if (props.groupings.length !== 0) {
+  props.groupings.forEach(grouping => {
+    const data = {
+      group_id: grouping.group_id,
+      issuedNumber: 0,
+      dropzones: [],
+    };
+    dropzones.value.push(data);
+  });
+}
 
 const updateGrouping = () => {
   // form.put(route('groups.update', {group: id}));
@@ -158,10 +171,10 @@ onBeforeUnmount(() => {
             </div>
             <div class="GroupingEditPageContentLayout">
               <section id="MemberContainer" class="MemberContainer">
-                <MemberList :members="members" />
+                <MemberListForEdit v-model:curMembers="curMembers" v-model:listMembers="listMembers" />
               </section>
               <section id="GroupContainer" class="GroupContainer">
-                <GroupList :groups="props.groupings" :isDraggablePage="true" />
+                <GroupListForEdit v-model:dropzones="dropzones" :groups="props.groupings" />
               </section>
             </div>
           </div>

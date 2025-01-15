@@ -2,25 +2,16 @@
 import Checkbox from '@/Components/Checkbox.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import Modal from '@/Components/Modal.vue';
-import MemberListItem from './MemberListItem.vue';
 import { usePage } from '@inertiajs/vue3';
 import { ref } from 'vue';
 import axios from 'axios';
+import { isDraggableMemberHTML } from '@/grouping'
 
-const props = defineProps({
-  members: Object,
-});
+const curMembers = defineModel("curMembers");
+const listMembers = defineModel("listMembers");
 
 const user = usePage().props.auth.user;
-const curMembers = ref([]);
-const listMembers = ref([]);
 const allMembers = ref([]);
-
-if (props.members.length !== 0) {
-  props.members.forEach(member => {
-    curMembers.value.push(member);
-  });
-}
 
 const editingMemberList = ref(false);
 
@@ -52,14 +43,16 @@ const editMemberList = async () => {
             curMembers.value.forEach(curMember => {
               if (allMembers.value.length === 0) {
                 alert('ページをリロードして再実行してください');
+                throw new Error('break');
               }
               else {
-                const index = allMembers.value.findIndex(obj => obj.id == curMember.id);
+                const index = allMembers.value.findIndex(member => member.id == curMember.member_id);
                 if (index != -1) {
                   allMembers.value[index].isSelected = true;
                 }
                 else {
                   alert('ページをリロードして再実行してください');
+                  throw new Error('break');
                 }
               }
             })
@@ -70,44 +63,67 @@ const editMemberList = async () => {
       }
     )
   } catch (error) {
-    
+    if (error.message !== 'break') {
+      throw e;
+    }
   }
 };
 
 const selectMembers = () => {
-  if (allMembers.value.length === 0) {
-    listMembers.value = [];
-    curMembers.value = [];
-  }
-  else {
+  if (allMembers.value.length !== 0) {
     allMembers.value.forEach(member => {
       const memberId = member.id;
       const memberName = member.name;
 
-      if (!member.isSelected) {
-        const curMemberIndex = curMembers.value.findIndex(obj => obj.id == memberId);
+      if (member.isSelected) {
+        const listMemberindex = listMembers.value.findIndex(member => member.member_id == memberId);
 
-        if (curMemberIndex != -1) {
-          curMembers.value.splice(curMemberIndex, 1);
+        if (listMemberindex == -1 ) {
+          const curMemberIndex = curMembers.value.findIndex(member => member.member_id == memberId);
 
-          const listMemberindex = listMembers.value.findIndex(obj => obj.id == memberId);
-          
-          if (listMemberindex != -1) {
-            listMembers.value.splice(listMemberindex, 1);
+          if (curMemberIndex == -1) {
+            const data = {
+              member_id: memberId,
+            };
+            listMembers.value.push(data);
+            curMembers.value.push(data);
+
+            const memberElement = document.createElement('div');
+            memberElement.id = 'Member' + memberId;
+            memberElement.classList.add('MemberListItem', 'Member--isDraggable');
+            memberElement.dataset.memberId = memberId;
+            memberElement.innerHTML = isDraggableMemberHTML(memberName);
+
+            const container = document.getElementById('MemberList');
+            container.appendChild(memberElement);
           }
-          
-          const deleteElement = document.querySelectorAll(`[data-member-id="${memberId}"]`);
-
         }
       }
       else {
-        const curMemberIndex = curMembers.value.findIndex(obj => obj.id == memberId);
+        const listMemberIndex = listMembers.value.findIndex(member => member.member_id == memberId);
+        
+        if (listMemberIndex != -1) {
+          listMembers.value.splice(listMemberIndex, 1);
 
-        if (curMemberIndex == -1) {
-          if (!listMembers.value.find(obj => obj.id == memberId)) {
-            const memberData = {id: memberId, name: memberName};
-            curMembers.value.push(memberData)
-            listMembers.value.push(memberData);
+          const curMemberIndex = curMembers.value.findIndex(member => member.member_id == memberId);
+          if (curMemberIndex != -1) {
+            curMembers.value.splice(curMemberIndex, 1);
+
+            const memberElement = document.getElementById('Member' + memberId);
+            if (memberElement) {
+              memberElement.remove();
+            }
+          }
+        }
+        else {
+          const curMemberIndex = curMembers.value.findIndex(member => member.member_id == memberId);
+          if (curMemberIndex != -1) {
+            curMembers.value.splice(curMemberIndex, 1);
+
+            const memberElement = document.getElementById('Member' + memberId);
+            if (memberElement) {
+              memberElement.remove();
+            }
           }
         }
       }
@@ -130,9 +146,8 @@ const closeModal = () => {
     </header>
 
     <div class="MemberListContainer">
-      <div class="MemberList">
+      <div id="MemberList" class="MemberList">
         <button type="button" @click="editMemberList" class="MemberListEditButton">メンバーリスト編集</button>
-        <MemberListItem v-if="listMembers.length !== 0" v-for="member in listMembers" :key="member.id" :heading="member.name" :memberId="member.id" />
       </div>
     </div>
   </article>
