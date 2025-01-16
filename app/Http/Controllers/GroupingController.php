@@ -78,11 +78,59 @@ class GroupingController extends Controller
      */
     public function update(Request $request, string $id, string $date)
     {
+        
         $userId = Auth::id();
-
+        
         if (intval($id) !== $userId || $date !== 'today') {
             return abort(404);
         }
+        
+        $date = Carbon::today();
+
+        $groupings = json_decode($request->getContent(), true);
+        
+        $groups = Group::where('user_id', '=', $userId)->get();
+
+        foreach ($groups as $group) {
+            $filtered = array_filter($groupings, function ($grouping) use ($group) {
+                return $grouping['group_id'] === strval($group->id);
+            });
+            if (empty($filtered)) {
+                $deleteGroupings = Grouping::where('date', '=', $date)->where('user_id', '=', $userId)->where('group_id', '=', $group->id)->get();
+                if (!$deleteGroupings->isEmpty()) {
+                    foreach ($deleteGroupings as $deleteGrouping) {
+                        $deleteGrouping->delete();
+                    }
+                }
+                Grouping::create([
+                    'date' => $date,
+                    'user_id' => $userId,
+                    'member_id' => null,
+                    'group_id' => $group->id,
+                ]);
+            }
+            else {
+                $deleteGroupings = Grouping::where('date', '=', $date)->where('user_id', '=', $userId)->where('group_id', '=', $group->id)->get();
+                if (!$deleteGroupings->isEmpty()) {
+                    foreach ($deleteGroupings as $deleteGrouping) {
+                        $deleteGrouping->delete();
+                    }
+                }
+                foreach ($filtered as $item) {
+                    Grouping::create([
+                        'date' => $date,
+                        'user_id' => $userId,
+                        'member_id' => intval($item['member_id']),
+                        'group_id' => $group->id,
+                    ]);
+                }
+            }
+        }
+
+        return to_route('groupings.index')->with([
+            'message' => '更新しました',
+            'status' => 'success',
+        ]);
     }
 
     /**

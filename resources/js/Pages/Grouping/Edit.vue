@@ -2,13 +2,15 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import MemberListForEdit from '@/Components/MemberListForEdit.vue';
 import GroupListForEdit from '@/Components/GroupListForEdit.vue';
-import { Head, Link } from '@inertiajs/vue3';
+import { Head, Link, router, usePage } from '@inertiajs/vue3';
 import { Sortable, Plugins } from '@shopify/draggable';
 import { ref, onMounted, onBeforeUnmount, computed } from 'vue';
 
 const props = defineProps({
   'groupings': Object,
 });
+
+const user = usePage().props.auth.user;
 
 const curMembers = ref([]);
 if (props.groupings.length !== 0) {
@@ -57,7 +59,22 @@ const dropzoneCounts = computed(() => {
 })
 
 const updateGrouping = () => {
+  let data = [];
+  
+  const dropzoneElements = document.querySelectorAll('.Dropzone');
+  if (dropzoneElements.length !== 0) {
+    dropzoneElements.forEach(dropzoneElement => {
+      const groupId = dropzoneElement.dataset.groupId;
+      const memberElement = dropzoneElement.querySelector('.MemberListItem');
+      if (memberElement) {        
+        const memberId = memberElement.dataset.memberId;
 
+        data.push({group_id: groupId, member_id: memberId});
+      }
+    });
+  }
+  
+  router.put(route('groupings.update', {user_id: user.id, date: 'today'}), data);
 };
 
 const autoGrouping = () => {
