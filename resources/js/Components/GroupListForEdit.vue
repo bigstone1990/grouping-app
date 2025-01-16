@@ -9,6 +9,7 @@ const props = defineProps({
 const sortable = defineModel("sortable");
 const dropzones = defineModel("dropzones");
 const dropzonesNumber = defineModel("dropzonesNumber");
+const dropzoneContainer = defineModel("dropzoneContainer");
 
 </script>
 
@@ -19,7 +20,7 @@ const dropzonesNumber = defineModel("dropzonesNumber");
     </header>
     <div class="GroupListContainer">
       <div class="GroupList">
-        <GroupListItemForEdit v-for="group in props.groups" :key="group.group_id" v-model:sortable="sortable" v-model:dropzones="dropzones" v-model:dropzonesNumber="dropzonesNumber" :group="group" />
+        <GroupListItemForEdit v-for="group in props.groups" :key="group.group_id" v-model:sortable="sortable" v-model:dropzones="dropzones" v-model:dropzonesNumber="dropzonesNumber" v-model:dropzoneContainer="dropzoneContainer" :group="group" />
       </div>
     </div>
   </article>

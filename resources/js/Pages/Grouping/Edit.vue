@@ -42,6 +42,8 @@ if (props.groupings.length !== 0) {
   });
 }
 
+const dropzoneContainer = ref([]);
+
 const updateGrouping = () => {
   // form.put(route('groups.update', {group: id}));
 };
@@ -72,19 +74,26 @@ onMounted(() => {
     plugins: [Plugins.ResizeMirror],
   });
 
-  let GroupMemberListItemContainer = [];
-  const SortableContainers = sortable.value.containers;
+  // const SortableContainers = sortable.value.containers;
 
-  for (let i = 0; i < SortableContainers.length; i++) {
-    let SortableContainer = SortableContainers[i];
-    if (!SortableContainer.classList.contains('MemberList')) {
-      GroupMemberListItemContainer.push(SortableContainer);
-    }
+  // for (let i = 0; i < SortableContainers.length; i++) {
+  //   let SortableContainer = SortableContainers[i];
+  //   if (!SortableContainer.classList.contains('MemberList')) {
+  //     groupMemberListItemContainer.value.push(SortableContainer);
+  //   }
+  // }
+  const dropzoneElement = document.querySelectorAll(".Dropzone");
+  if (dropzoneElement.length !== 0) {
+    dropzoneElement.forEach(element => {
+      dropzoneContainer.value.push(element);
+    });
   }
 
-  const GroupMemberListItemCapacity = 1;
+  // console.log(dropzoneContainer.value);
+
+  const DropzoneCapacity = 1;
   let DraggableElementsForContainer;
-  let GroupMemberListItemChildren;
+  let DropzoneChildren;
   let CapacityReached;
   let SourceContainer;
   let OverContainer;
@@ -97,16 +106,16 @@ onMounted(() => {
     SourceContainer = evt.sourceContainer;
     OverContainer = evt.overContainer;
     if (SourceContainer !== OverContainer) {
-      if (GroupMemberListItemContainer.includes(OverContainer)) {
+      if (dropzoneContainer.value.includes(OverContainer)) {
         DraggableElementsForContainer = sortable.value.getDraggableElementsForContainer(OverContainer)
-        GroupMemberListItemChildren = DraggableElementsForContainer.length;
+        DropzoneChildren = DraggableElementsForContainer.length;
         
         DraggableElementsForContainer.forEach(element => {
           if (element.classList.contains('draggable-source--is-dragging')) {
-            GroupMemberListItemChildren = GroupMemberListItemChildren - 1;
+            DropzoneChildren = DropzoneChildren - 1;
           }
         });
-        if (GroupMemberListItemChildren >= GroupMemberListItemCapacity) {
+        if (DropzoneChildren >= DropzoneCapacity) {
           evt.overContainer.classList.add('draggable-container-parent--capacity');
           CapacityReached = true;
         }
@@ -117,7 +126,7 @@ onMounted(() => {
   sortable.value.on('drag:out:container', (evt) => {
     OverContainer = evt.overContainer;
     if (SourceContainer !== OverContainer) {
-      if (GroupMemberListItemContainer.includes(OverContainer)) {
+      if (dropzoneContainer.value.includes(OverContainer)) {
         if (OverContainer.classList.contains('draggable-container-parent--capacity')) {
           OverContainer.classList.remove('draggable-container-parent--capacity');
           CapacityReached = false;
@@ -140,7 +149,7 @@ onMounted(() => {
   });
 
   sortable.value.on('drag:stop', (evt) => {
-    if (GroupMemberListItemContainer.includes(OverContainer)) {
+    if (dropzoneContainer.value.includes(OverContainer)) {
       if (OverContainer.classList.contains('draggable-container-parent--capacity')) {
         OverContainer.classList.remove('draggable-container-parent--capacity');
         CapacityReached = false;
@@ -152,6 +161,7 @@ onMounted(() => {
 onBeforeUnmount(() => {
   if (sortable.value !== null) {
     sortable.value.destroy();
+    sortable.value = null;
   }
 })
 </script>
@@ -186,7 +196,7 @@ onBeforeUnmount(() => {
                 <MemberListForEdit v-model:curMembers="curMembers" v-model:listMembers="listMembers" v-model:membersNumber="membersNumber" />
               </section>
               <section id="GroupContainer" class="GroupContainer">
-                <GroupListForEdit v-model:sortable="sortable" v-model:dropzones="dropzones" v-model:dropzonesNumber="dropzonesNumber" :groups="props.groupings" />
+                <GroupListForEdit v-model:sortable="sortable" v-model:dropzones="dropzones" v-model:dropzonesNumber="dropzonesNumber" v-model:dropzoneContainer="dropzoneContainer" :groups="props.groupings" />
               </section>
             </div>
           </div>

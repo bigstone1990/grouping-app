@@ -9,6 +9,7 @@ const props = defineProps({
 const sortable = defineModel("sortable");
 const dropzones = defineModel("dropzones");
 const dropzonesNumber = defineModel("dropzonesNumber");
+const dropzoneContainer = defineModel("dropzoneContainer");
 
 onMounted(() => {
   props.group.members.forEach(member => {
@@ -28,6 +29,7 @@ onMounted(() => {
       deleteButtonElement.addEventListener('click', deleteGroupMemberListItem);
 
       const dropzoneElement = document.createElement('div');
+      dropzoneElement.id = 'Dropzone' + dropzones.value[index].group_id + '-' + dropzones.value[index].issuedNumber;
       dropzoneElement.classList.add('Dropzone');
       dropzoneElement.dataset.groupId = props.group.group_id;
 
@@ -66,6 +68,7 @@ const addDropzone = () => {
     deleteButtonElement.addEventListener('click', deleteGroupMemberListItem);
 
     const dropzoneElement = document.createElement('div');
+    dropzoneElement.id = 'Dropzone' + dropzones.value[index].group_id + '-' + dropzones.value[index].issuedNumber;
     dropzoneElement.classList.add('Dropzone');
     dropzoneElement.dataset.groupId = props.group.group_id;
 
@@ -79,6 +82,8 @@ const addDropzone = () => {
     sortable.value.addContainer(dropzoneElement);
     
     dropzonesNumber.value = dropzonesNumber.value + 1;
+
+    dropzoneContainer.value.push(dropzoneElement)
   }
 };
 
@@ -92,6 +97,11 @@ const deleteGroupMemberListItem = (e) => {
       e.target.parentElement.remove();
 
       dropzonesNumber.value = dropzonesNumber.value - 1;
+
+      const dropzoneContainerIndex = dropzoneContainer.value.findIndex(element => element.id == 'Dropzone' + e.target.parentElement.dataset.dropzoneId);
+      if (dropzoneContainerIndex != -1) {
+        dropzoneContainer.value.splice(dropzoneContainerIndex, 1);
+      }
     }
   }
 };
