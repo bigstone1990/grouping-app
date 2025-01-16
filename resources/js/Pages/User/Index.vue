@@ -45,7 +45,7 @@ const props = defineProps({
                       <tbody>
                         <tr v-if="props.users.length !== 0" v-for="user in props.users" :key="user.id">
                           <td class="border-b-2 px-4 py-3 bg-white">
-                            <Link as="button" :href="route('users.edit', {user: user.id})" class="w-full text-white bg-green-500 border-0 py-2 px-4 hover:bg-green-600 rounded">編集</Link>
+                            <Link as="button" :href="route('users.edit', {user: user.id})" class="w-full text-white bg-sky-500 border-0 py-2 px-4 hover:bg-sky-600 rounded">編集</Link>
                           </td>
                           <td class="border-b-2 px-4 py-3 bg-white">{{ user.name }}</td>
                           <td class="border-b-2 px-4 py-3 bg-white">{{ user.email }}</td>

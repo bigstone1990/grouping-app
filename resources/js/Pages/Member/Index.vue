@@ -52,7 +52,7 @@ if (props.members.length !== 0) {
                       <tbody>
                         <tr v-if="props.members.length !== 0" v-for="member in props.members" :key="member.id">
                           <td class="border-b-2 px-4 py-3 bg-white">
-                            <Link as="button" :href="route('members.edit', {member: member.member_id})" class="w-full text-white bg-green-500 border-0 py-2 px-4 hover:bg-green-600 rounded">編集</Link>
+                            <Link as="button" :href="route('members.edit', {member: member.member_id})" class="w-full text-white bg-sky-500 border-0 py-2 px-4 hover:bg-sky-600 rounded">編集</Link>
                           </td>
                           <td class="border-b-2 px-4 py-3 bg-white">{{ member.member_name }}</td>
                           <td v-if="groupColumns !== 0" v-for="group_data in member.groups_data" :key="group_data.group_id" class="border-b-2 px-4 py-3 bg-white">
