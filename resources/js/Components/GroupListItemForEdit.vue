@@ -8,6 +8,7 @@ const props = defineProps({
 
 const sortable = defineModel("sortable");
 const dropzones = defineModel("dropzones");
+const dropzonesNumber = defineModel("dropzonesNumber");
 
 onMounted(() => {
   props.group.members.forEach(member => {
@@ -50,34 +51,35 @@ onMounted(() => {
 
 const addDropzone = () => {
   const index = dropzones.value.findIndex(dropzone => dropzone.group_id === props.group.group_id);
-    if (index != -1) {
-      dropzones.value[index].issuedNumber += 1;
+  if (index != -1) {
+    dropzones.value[index].issuedNumber += 1;
 
-      const groupMemberListItemElement = document.createElement('div');
-      groupMemberListItemElement.id = 'GroupMemberListItem' + dropzones.value[index].group_id + '-' + dropzones.value[index].issuedNumber;
-      groupMemberListItemElement.classList.add('GroupMemberListItem');
-      groupMemberListItemElement.dataset.dropzoneId = dropzones.value[index].group_id + '-' + dropzones.value[index].issuedNumber;
-      
-      const deleteButtonElement = document.createElement('button');
-      deleteButtonElement.setAttribute('type', 'button');
-      deleteButtonElement.classList.add('deleteGroupMemberListItemButton')
-      deleteButtonElement.textContent = "×";
-      deleteButtonElement.addEventListener('click', deleteGroupMemberListItem);
+    const groupMemberListItemElement = document.createElement('div');
+    groupMemberListItemElement.id = 'GroupMemberListItem' + dropzones.value[index].group_id + '-' + dropzones.value[index].issuedNumber;
+    groupMemberListItemElement.classList.add('GroupMemberListItem');
+    groupMemberListItemElement.dataset.dropzoneId = dropzones.value[index].group_id + '-' + dropzones.value[index].issuedNumber;
+    
+    const deleteButtonElement = document.createElement('button');
+    deleteButtonElement.setAttribute('type', 'button');
+    deleteButtonElement.classList.add('deleteGroupMemberListItemButton')
+    deleteButtonElement.textContent = "×";
+    deleteButtonElement.addEventListener('click', deleteGroupMemberListItem);
 
-      const dropzoneElement = document.createElement('div');
-      dropzoneElement.classList.add('Dropzone');
-      dropzoneElement.dataset.groupId = props.group.group_id;
+    const dropzoneElement = document.createElement('div');
+    dropzoneElement.classList.add('Dropzone');
+    dropzoneElement.dataset.groupId = props.group.group_id;
 
-      groupMemberListItemElement.appendChild(deleteButtonElement);
-      groupMemberListItemElement.appendChild(dropzoneElement);
-      
-      const container = document.getElementById('GroupMemberList' + props.group.group_id);
-      container.appendChild(groupMemberListItemElement);
+    groupMemberListItemElement.appendChild(deleteButtonElement);
+    groupMemberListItemElement.appendChild(dropzoneElement);
+    
+    const container = document.getElementById('GroupMemberList' + props.group.group_id);
+    container.appendChild(groupMemberListItemElement);
 
-      dropzones.value[index].data.push({ id: props.group.group_id + '-' + dropzones.value[index].issuedNumber});
-
-      sortable.value.addContainer(dropzoneElement);
-    }
+    dropzones.value[index].data.push({ id: props.group.group_id + '-' + dropzones.value[index].issuedNumber});
+    sortable.value.addContainer(dropzoneElement);
+    
+    dropzonesNumber.value = dropzonesNumber.value + 1;
+  }
 };
 
 const deleteGroupMemberListItem = (e) => {
@@ -88,6 +90,8 @@ const deleteGroupMemberListItem = (e) => {
       dropzones.value[groupIndex].data.splice(dropzoneIndex, 1)
       sortable.value.removeContainer(e.target.parentElement);
       e.target.parentElement.remove();
+
+      dropzonesNumber.value = dropzonesNumber.value - 1;
     }
   }
 };

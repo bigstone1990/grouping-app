@@ -36,4 +36,21 @@ const isUndraggableMemberHTML = (name) => {
   return innerHTML;
 }
 
-export { isDraggableMemberHTML, isUndraggableMemberHTML }
+const countMembers =(groupings) => {
+  let count = 0;
+  if (groupings.length !== 0) {
+    groupings.forEach(grouping => {
+      if (grouping.members.length !== 0) {
+        grouping.members.forEach(member => {
+          if (member.member_id) {
+            count = count + 1;
+          }
+        });
+      }
+    });
+  }
+  
+  return count;
+}
+
+export { isDraggableMemberHTML, isUndraggableMemberHTML, countMembers }

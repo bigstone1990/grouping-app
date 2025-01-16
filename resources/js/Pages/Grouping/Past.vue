@@ -9,10 +9,13 @@ import { Japanese } from "flatpickr/dist/l10n/ja.js";
 import { ref, onMounted, onBeforeUnmount } from 'vue';
 import { customDateToString } from '@/common';
 import axios from 'axios';
+import { countMembers } from '@/grouping'
 
 const user = usePage().props.auth.user;
 
 const groupings = ref();
+
+const membersNumber = ref(0);
 
 const date = ref(new Date());
 date.value.setDate(date.value.getDate() - 1);
@@ -63,6 +66,7 @@ const getGroupingData = async () => {
         }
         else {
           groupings.value = res.data.groupings;
+          membersNumber.value = countMembers(groupings.value);
         }
       }
     )
@@ -140,6 +144,9 @@ const nextDate = () => {
                 <p class="text-sm">※過去30日間まで閲覧できます</p>
               </div>
               <Link as="button" :href="route('groupings.index')" class="ml-auto sm:ml-0 h-full text-white bg-gray-500 border-0 py-2 px-8 hover:bg-gray-600 rounded">戻る</Link>
+            </div>
+            <div class="flex gap-4 justify-start mb-4 w-full">
+              <div class="bg-white border py-2 px-2 rounded">メンバー数: {{ membersNumber }}</div>
             </div>
             <div class="GroupingIndexPageContentLayout">
               <section id="GroupContainer" class="GroupContainer">

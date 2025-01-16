@@ -5,11 +5,14 @@ import GroupListForEdit from '@/Components/GroupListForEdit.vue';
 import { Head, Link } from '@inertiajs/vue3';
 import { Sortable, Plugins } from '@shopify/draggable';
 import { ref, onMounted, onBeforeUnmount } from 'vue';
-
+import { countMembers } from '@/grouping'
 
 const props = defineProps({
   'groupings': Object,
 });
+
+const membersNumber = ref(countMembers(props.groupings));
+const dropzonesNumber = ref(countMembers(props.groupings));
 
 const curMembers = ref([]);
 if (props.groupings.length !== 0) {
@@ -42,6 +45,10 @@ if (props.groupings.length !== 0) {
 const updateGrouping = () => {
   // form.put(route('groups.update', {group: id}));
 };
+
+const autoGrouping = () => {
+
+}
 
 const sortContainers = ref(null);
 const sortable = ref(null);
@@ -169,12 +176,17 @@ onBeforeUnmount(() => {
               <Link as="button" :href="route('groupings.index')" class="text-white bg-gray-500 border-0 py-2 px-8 hover:bg-gray-600 rounded">戻る</Link>
               <button type="button" v-on:click="updateGrouping()" class="text-white bg-indigo-500 border-0 py-2 px-8 hover:bg-indigo-600 rounded">更新</button>
             </div>
+            <div class="flex gap-4 justify-start mb-4 w-full">
+              <button type="button" v-on:click="autoGrouping()" class="text-white bg-indigo-500 border-0 py-2 px-8 hover:bg-indigo-600 rounded">自動編成</button>
+              <div class="bg-white border py-2 px-2 rounded">メンバー数: {{ membersNumber }}</div>
+              <div class="bg-white border py-2 px-2 rounded">枠数: {{ dropzonesNumber }}</div>
+            </div>
             <div class="GroupingEditPageContentLayout">
               <section id="MemberContainer" class="MemberContainer">
-                <MemberListForEdit v-model:curMembers="curMembers" v-model:listMembers="listMembers" />
+                <MemberListForEdit v-model:curMembers="curMembers" v-model:listMembers="listMembers" v-model:membersNumber="membersNumber" />
               </section>
               <section id="GroupContainer" class="GroupContainer">
-                <GroupListForEdit v-model:sortable="sortable" v-model:dropzones="dropzones" :groups="props.groupings" />
+                <GroupListForEdit v-model:sortable="sortable" v-model:dropzones="dropzones" v-model:dropzonesNumber="dropzonesNumber" :groups="props.groupings" />
               </section>
             </div>
           </div>
