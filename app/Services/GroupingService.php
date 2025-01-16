@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Services;
+
+use App\Models\Group;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Query\JoinClause;
@@ -191,6 +193,30 @@ class GroupingService
         }
 
         if (!empty($groupData)) {
+            array_push($groupingData, $groupData);
+        }
+
+        return $groupingData;
+    }
+
+    public static function getEmptyGroupingData()
+    {
+        $userId = Auth::id();
+
+        $groups = Group::where('user_id', '=', $userId)->orderBy('order')->get();
+
+        $groupingData = [];
+
+        foreach ($groups as $group) {
+            $groupId = $group->id;
+            $groupName = $group->name;
+
+            $groupData = [
+                'group_id' => $groupId,
+                'group_name' => $groupName,
+                'members' => [],
+            ];
+
             array_push($groupingData, $groupData);
         }
 

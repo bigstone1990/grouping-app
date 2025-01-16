@@ -35,7 +35,20 @@ class GroupingController extends Controller
      */
     public function create()
     {
-        //
+        $userId = Auth::id();
+
+        $date = Carbon::today();
+        $groupingData = GroupingService::getGroupingData($date);
+
+        if (!empty($groupingData)) {
+            return to_route('groupings.edit', ['user_id' => $userId, 'date' => 'today']);
+        }
+
+        $groupingData = GroupingService::getEmptyGroupingData();
+
+        return Inertia::render('Grouping/Create', [
+            'groupings' => $groupingData,
+        ]);
     }
 
     /**
@@ -43,7 +56,53 @@ class GroupingController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $userId = Auth::id();        
+        $date = Carbon::today();
+
+        $groupings = json_decode($request->getContent(), true);
+        
+        $groups = Group::where('user_id', '=', $userId)->get();
+
+        foreach ($groups as $group) {
+            $filtered = array_filter($groupings, function ($grouping) use ($group) {
+                return $grouping['group_id'] === strval($group->id);
+            });
+            if (empty($filtered)) {
+                $deleteGroupings = Grouping::where('date', '=', $date)->where('user_id', '=', $userId)->where('group_id', '=', $group->id)->get();
+                if (!$deleteGroupings->isEmpty()) {
+                    foreach ($deleteGroupings as $deleteGrouping) {
+                        $deleteGrouping->delete();
+                    }
+                }
+                Grouping::create([
+                    'date' => $date,
+                    'user_id' => $userId,
+                    'member_id' => null,
+                    'group_id' => $group->id,
+                ]);
+            }
+            else {
+                $deleteGroupings = Grouping::where('date', '=', $date)->where('user_id', '=', $userId)->where('group_id', '=', $group->id)->get();
+                if (!$deleteGroupings->isEmpty()) {
+                    foreach ($deleteGroupings as $deleteGrouping) {
+                        $deleteGrouping->delete();
+                    }
+                }
+                foreach ($filtered as $item) {
+                    Grouping::create([
+                        'date' => $date,
+                        'user_id' => $userId,
+                        'member_id' => intval($item['member_id']),
+                        'group_id' => $group->id,
+                    ]);
+                }
+            }
+        }
+
+        return to_route('groupings.index')->with([
+            'message' => '作成しました',
+            'status' => 'success',
+        ]);
     }
 
     /**
