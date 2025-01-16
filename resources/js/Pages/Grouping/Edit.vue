@@ -4,15 +4,11 @@ import MemberListForEdit from '@/Components/MemberListForEdit.vue';
 import GroupListForEdit from '@/Components/GroupListForEdit.vue';
 import { Head, Link } from '@inertiajs/vue3';
 import { Sortable, Plugins } from '@shopify/draggable';
-import { ref, onMounted, onBeforeUnmount } from 'vue';
-import { countMembers } from '@/grouping'
+import { ref, onMounted, onBeforeUnmount, computed } from 'vue';
 
 const props = defineProps({
   'groupings': Object,
 });
-
-const membersNumber = ref(countMembers(props.groupings));
-const dropzonesNumber = ref(countMembers(props.groupings));
 
 const curMembers = ref([]);
 if (props.groupings.length !== 0) {
@@ -44,8 +40,24 @@ if (props.groupings.length !== 0) {
 
 const dropzoneContainer = ref([]);
 
+const memberCounts = computed(() => {
+  return curMembers.value.length;
+})
+
+const dropzoneCounts = computed(() => {
+  let count = 0;
+  if (dropzones.value.length !== 0) {
+    dropzones.value.forEach(dropzone => {
+      if (dropzone.data.length !== 0) {
+        count = count + dropzone.data.length
+      }
+    });
+  }
+  return count;
+})
+
 const updateGrouping = () => {
-  // form.put(route('groups.update', {group: id}));
+
 };
 
 const autoGrouping = () => {
@@ -74,22 +86,12 @@ onMounted(() => {
     plugins: [Plugins.ResizeMirror],
   });
 
-  // const SortableContainers = sortable.value.containers;
-
-  // for (let i = 0; i < SortableContainers.length; i++) {
-  //   let SortableContainer = SortableContainers[i];
-  //   if (!SortableContainer.classList.contains('MemberList')) {
-  //     groupMemberListItemContainer.value.push(SortableContainer);
-  //   }
-  // }
   const dropzoneElement = document.querySelectorAll(".Dropzone");
   if (dropzoneElement.length !== 0) {
     dropzoneElement.forEach(element => {
       dropzoneContainer.value.push(element);
     });
   }
-
-  // console.log(dropzoneContainer.value);
 
   const DropzoneCapacity = 1;
   let DraggableElementsForContainer;
@@ -188,15 +190,15 @@ onBeforeUnmount(() => {
             </div>
             <div class="flex gap-4 justify-start mb-4 w-full">
               <button type="button" v-on:click="autoGrouping()" class="text-white bg-indigo-500 border-0 py-2 px-8 hover:bg-indigo-600 rounded">自動編成</button>
-              <div class="bg-white border py-2 px-2 rounded">メンバー数: {{ membersNumber }}</div>
-              <div class="bg-white border py-2 px-2 rounded">枠数: {{ dropzonesNumber }}</div>
+              <div class="bg-white border py-2 px-2 rounded">メンバー数: {{ memberCounts }}</div>
+              <div class="bg-white border py-2 px-2 rounded">枠数: {{ dropzoneCounts }}</div>
             </div>
             <div class="GroupingEditPageContentLayout">
               <section id="MemberContainer" class="MemberContainer">
-                <MemberListForEdit v-model:curMembers="curMembers" v-model:listMembers="listMembers" v-model:membersNumber="membersNumber" />
+                <MemberListForEdit v-model:curMembers="curMembers" v-model:listMembers="listMembers" />
               </section>
               <section id="GroupContainer" class="GroupContainer">
-                <GroupListForEdit v-model:sortable="sortable" v-model:dropzones="dropzones" v-model:dropzonesNumber="dropzonesNumber" v-model:dropzoneContainer="dropzoneContainer" :groups="props.groupings" />
+                <GroupListForEdit v-model:sortable="sortable" v-model:dropzones="dropzones" v-model:dropzoneContainer="dropzoneContainer" :groups="props.groupings" />
               </section>
             </div>
           </div>

@@ -9,7 +9,6 @@ import { isDraggableMemberHTML } from '@/grouping'
 
 const curMembers = defineModel("curMembers");
 const listMembers = defineModel("listMembers");
-const membersNumber = defineModel("membersNumber");
 
 const user = usePage().props.auth.user;
 const allMembers = ref([]);
@@ -72,7 +71,6 @@ const editMemberList = async () => {
 
 const selectMembers = () => {
   if (allMembers.value.length !== 0) {
-    let count = 0;
     allMembers.value.forEach(member => {
       const memberId = member.id;
       const memberName = member.name;
@@ -89,8 +87,6 @@ const selectMembers = () => {
             };
             listMembers.value.push(data);
             curMembers.value.push(data);
-
-            count = count + 1;
             
             const memberElement = document.createElement('div');
             memberElement.id = 'Member' + memberId;
@@ -116,8 +112,6 @@ const selectMembers = () => {
             const memberElement = document.getElementById('Member' + memberId);
             if (memberElement) {
               memberElement.remove();
-
-              count = count - 1;
             }
           }
         }
@@ -129,14 +123,11 @@ const selectMembers = () => {
             const memberElement = document.getElementById('Member' + memberId);
             if (memberElement) {
               memberElement.remove();
-
-              count = count - 1;
             }
           }
         }
       }
     });
-    membersNumber.value = membersNumber.value + count;
   }
 
   editingMemberList.value = false;
