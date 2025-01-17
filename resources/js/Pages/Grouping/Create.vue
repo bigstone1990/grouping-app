@@ -5,6 +5,7 @@ import GroupListForCreate from '@/Components/GroupListForCreate.vue';
 import { Head, Link, router, usePage } from '@inertiajs/vue3';
 import { Sortable, Plugins } from '@shopify/draggable';
 import { ref, onMounted, onBeforeUnmount, computed } from 'vue';
+import axios from 'axios';
 
 const props = defineProps({
   'groupings': Object,
@@ -64,8 +65,43 @@ const storeGrouping = () => {
   router.post(route('groupings.store'), data);
 };
 
-const autoGrouping = () => {
+const autoGrouping = async () => {
+  if (confirm('自動編成を実施しますか？')) {
+    if (memberCounts.value !== dropzoneCounts.value) {
+      alert('メンバー数と枠数を合わせて再実行してください');
+    }
+    else {
+      const group = [];
+      dropzones.value.forEach(dropzone => {
+        group.push({group_id: dropzone.group_id, group_number: dropzone.data.length});
 
+      });
+      const sendData ={members: curMembers.value, groups: group}
+      
+      try {
+        await axios.get('/api/getAutoGroupings/', {
+          params: {
+            userId: user.id,
+            sendData: sendData,
+          }
+        }).then(
+          res => {
+            if (res.data.checkId === false) {
+              alert('データを閲覧できません');
+            }
+            else if (res.data.checkSendData === false) {
+              alert('不正な操作がありました');
+            }
+            else {
+              console.log(res.data.groupings)
+            }
+          }
+        )
+      } catch (error) {
+        
+      }
+    }
+  }
 }
 
 const sortContainers = ref(null);

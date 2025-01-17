@@ -11,3 +11,5 @@ Route::get('/user', function (Request $request) {
 Route::get('/getPastGroupings', [GroupingController::class, 'getPastGroupings'])->middleware('auth:sanctum')->name('api.groupings');
 
 Route::get('/getAllMembers', [GroupingController::class, 'getAllMembers'])->middleware('auth:sanctum')->name('api.members');
+
+Route::get('/getAutoGroupings', [GroupingController::class, 'getAutoGroupings'])->middleware('auth:sanctum')->name('api.autogroupings');
