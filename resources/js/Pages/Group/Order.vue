@@ -168,7 +168,7 @@ onBeforeUnmount(() => {
         padding-right: 1rem;
         max-height: 322px;
       
-        @media screen and (min-height: map.get($breakpoint-data, tablet-base)) {
+        @media screen and (min-height: map.get($breakpoint-data, smartphone-wide)) {
           max-height: calc(100vh - 346px);
         }
 

@@ -86,7 +86,7 @@ if (props.members.length !== 0) {
   overflow-x: auto;
   overflow-y: auto;
 
-  @media screen and (min-height: map.get($breakpoint-data, tablet-base)) {
+  @media screen and (min-height: map.get($breakpoint-data, smartphone-wide)) {
     max-height: calc(100vh - 258px);
   }
   
