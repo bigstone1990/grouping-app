@@ -60,8 +60,19 @@ class GroupingController extends Controller
         $date = Carbon::today();
 
         $groupings = json_decode($request->getContent(), true);
-        
         $groups = Group::where('user_id', '=', $userId)->get();
+        $members = Member::where('user_id', '=', $userId)->get();
+
+        // チェック
+        foreach ($groupings as $grouping) {
+            if (!$groups->contains('id', intval($grouping['group_id']))) {
+                abort(404);
+            }
+
+            if ($members->contains('id', intval($grouping['member_id']))) {
+                abort(404);
+            }
+        }
 
         foreach ($groups as $group) {
             $filtered = array_filter($groupings, function ($grouping) use ($group) {
@@ -147,8 +158,19 @@ class GroupingController extends Controller
         $date = Carbon::today();
 
         $groupings = json_decode($request->getContent(), true);
-        
         $groups = Group::where('user_id', '=', $userId)->get();
+        $members = Member::where('user_id', '=', $userId)->get();
+
+        // チェック
+        foreach ($groupings as $grouping) {
+            if (!$groups->contains('id', intval($grouping['group_id']))) {
+                abort(404);
+            }
+
+            if ($members->contains('id', intval($grouping['member_id']))) {
+                abort(404);
+            }
+        }
 
         foreach ($groups as $group) {
             $filtered = array_filter($groupings, function ($grouping) use ($group) {
