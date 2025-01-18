@@ -69,14 +69,14 @@ const submit = () => {
                 <InputError class="mt-2" :message="form.errors.password" />
             </div>
 
-            <div class="mt-4 block">
+            <!-- <div class="mt-4 block">
                 <label class="flex items-center">
                     <Checkbox name="remember" v-model:checked="form.remember" />
                     <span class="ms-2 text-sm text-gray-600"
                         >アカウントを記憶する</span
                     >
                 </label>
-            </div>
+            </div> -->
 
             <div class="mt-4 flex items-center justify-end">
                 <Link
