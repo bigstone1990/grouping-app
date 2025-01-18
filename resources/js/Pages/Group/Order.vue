@@ -115,6 +115,8 @@ onBeforeUnmount(() => {
 </template>
 
 <style lang="scss">
+@use '../../../sass/pattern.scss';
+
 .draggable--is-dragging,
 .draggable--is-dragging * {
   cursor: grabbing;
@@ -227,7 +229,7 @@ onBeforeUnmount(() => {
             outline: none;
           }
         
-          &:focus,
+          // &:focus,
           &:hover {
             .GroupOrderListItemContent {
               background-color: #0042ff;

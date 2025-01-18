@@ -46,7 +46,7 @@ import { Head, Link } from '@inertiajs/vue3';
 
     .DashboardButton {
         width: 100%;
-        font-size: 1.2rem;
+        font-size: 1rem;
         font-weight: 900;
         color: #ffffff;
         background-color: #6366f1;

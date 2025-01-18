@@ -81,13 +81,13 @@ const deleteUser = (id) => {
                               <div class="UserRoleContainer" :class="{ 'IsChecked': form.role === '1' }">
                                 <div class="flex items-center">
                                   <input type="radio" id="roleAdmin" v-model="form.role" value="1">
-                                  <InputLabel for="roleAdmin" value="管理者" class="flex-auto pl-2 py-2 leading-7 text-sm text-gray-600" :class="{ 'text-white': form.role === '1' }"/>
+                                  <InputLabel for="roleAdmin" value="管理者" class="flex-auto pl-2 py-4 leading-7 text-sm text-gray-600" :class="{ 'text-white': form.role === '1' }"/>
                                 </div>
                               </div>
                               <div class="UserRoleContainer" :class="{ 'IsChecked': form.role === '9' }">
                                 <div class="flex items-center">
                                   <input type="radio" id="roleUser" v-model="form.role" value="9">
-                                  <InputLabel for="roleUser" value="一般" class="flex-auto pl-2 py-2 leading-7 text-sm text-gray-600" :class="{ 'text-white': form.role === '9' }" />
+                                  <InputLabel for="roleUser" value="一般" class="flex-auto pl-2 py-4 leading-7 text-sm text-gray-600" :class="{ 'text-white': form.role === '9' }" />
                                 </div>
                               </div>
                             </div>

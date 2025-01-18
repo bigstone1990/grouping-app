@@ -79,6 +79,9 @@ sail artisan queue:work
 ### コマンド
 sail artisan install:api
 
+### 注意
+/config/sanctum.phpの'stateful'にドメインを追加すること
+
 ### bootstrap/app.php
 $middleware->statefulApi(); を追加
     ->withMiddleware(function (Middleware $middleware) {
@@ -96,8 +99,7 @@ bootstrap/app.php に記述追加
 ->withMiddleware(function (Middleware $middleware) {
     $middleware->trustProxies(at: '*');
 })
-
-sail share コマンドでできるみたいだが、
 sail npm run build を実行してから
-sail npm run dev していない状態でしなければならない？
+sail share
+※sail npm run dev していない状態で実行
 

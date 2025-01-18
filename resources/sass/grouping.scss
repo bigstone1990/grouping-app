@@ -193,7 +193,7 @@
     outline: none;
   }
 
-  &:focus,
+  // &:focus,
   &:hover {
     .MemberListItemContent {
       background-color: #0042ff;
@@ -257,7 +257,7 @@
   .Member--isDraggable {
     cursor: initial;
   
-    &:focus,
+    // &:focus,
     &:hover {
       .MemberListItemContent {
         background-color: #5cb85c;
