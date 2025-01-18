@@ -25,14 +25,14 @@ const deleteGroup = (id) => {
 </script>
 
 <template>
-  <Head title="グループ名編集" />
+  <Head title="グループ編集" />
 
   <AuthenticatedLayout>
     <template #header>
       <h2
           class="text-xl font-semibold leading-tight text-gray-800"
       >
-        グループ名編集
+        グループ編集
       </h2>
     </template>
 
