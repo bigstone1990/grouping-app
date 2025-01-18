@@ -27,7 +27,7 @@ const submit = () => {
 
         <div class="mb-4 text-sm text-gray-600">
             パスワードを忘れましたか？<br>
-            登録しているメールアドレスを入力するとパスワードリセットリンクを送ることができます。
+            登録しているメールアドレスを入力するとパスワードリセット用リンクを送ることができます。
         </div>
 
         <div
@@ -59,7 +59,7 @@ const submit = () => {
                     :class="{ 'opacity-25': form.processing }"
                     :disabled="form.processing"
                 >
-                    パスワードリセットリンクをメールする
+                    パスワードリセット用リンクをメールする
                 </PrimaryButton>
             </div>
         </form>
