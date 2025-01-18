@@ -69,7 +69,7 @@ class GroupingController extends Controller
                 abort(404);
             }
 
-            if ($members->contains('id', intval($grouping['member_id']))) {
+            if (!$members->contains('id', intval($grouping['member_id']))) {
                 abort(404);
             }
         }
@@ -167,7 +167,7 @@ class GroupingController extends Controller
                 abort(404);
             }
 
-            if ($members->contains('id', intval($grouping['member_id']))) {
+            if (!$members->contains('id', intval($grouping['member_id']))) {
                 abort(404);
             }
         }

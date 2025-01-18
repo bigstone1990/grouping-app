@@ -17,13 +17,22 @@ const props = defineProps({
     <div class="GroupListContainer">
       <div class="GroupList">
         <GroupListItemForShow v-if="props.groups.length !== 0" v-for="group in props.groups" :key="group.group_id" :group="group" />
-        <div v-else class="flex justify-center px-4">
-          <p class="text-gray-600">グループ分けが未作成です</p>
-        </div>
+        <p v-else class="NoGroupingData">グループ分けが未作成です</p>
       </div>
     </div>
   </article>
 </template>
 
 <style lang="scss">
+.NoGroupingData {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #4b5563;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
 </style>

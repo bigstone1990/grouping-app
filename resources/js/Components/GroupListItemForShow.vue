@@ -16,7 +16,7 @@ const props = defineProps({
       <div class="GroupMemberListContainer">
         <div class="GroupMemberList">
           <GroupMemberListItemForShow v-if="props.group.members.length > 0" v-for="member in props.group.members" :key="member.member_id" :member="member" />
-          <p v-else class="text-gray-600">メンバーがいません</p>
+          <p v-else class="NoMemberData">メンバーがいません</p>
         </div>
       </div>
     </div>
@@ -24,4 +24,15 @@ const props = defineProps({
 </template>
 
 <style lang="scss">
+.NoMemberData {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #4b5563;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
 </style>
