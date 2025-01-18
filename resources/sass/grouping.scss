@@ -119,12 +119,8 @@
 
 .EditMemberList {
   margin-top: 1rem;
-  max-height: 147px;
+  max-height: calc(100vh - 228px);
   overflow-y: auto;
-  
-  @media screen and (min-height: map.get($breakpoint-data, smartphone-wide)) {
-    max-height: calc(100vh - 228px);
-  }
 
   .EditMemberListLayout {
     display: flex;
