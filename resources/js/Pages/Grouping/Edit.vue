@@ -5,6 +5,7 @@ import GroupListForEdit from '@/Components/GroupListForEdit.vue';
 import { Head, Link, router, usePage } from '@inertiajs/vue3';
 import { Sortable, Plugins } from '@shopify/draggable';
 import { ref, onMounted, onBeforeUnmount, computed } from 'vue';
+import axios from 'axios';
 
 const props = defineProps({
   'groupings': Object,
@@ -77,8 +78,76 @@ const updateGrouping = () => {
   router.put(route('groupings.update', {user_id: user.id, date: 'today'}), data);
 };
 
-const autoGrouping = () => {
+const autoGrouping = async () => {
+  if (confirm('自動編成を実施しますか？')) {
+    if (memberCounts.value !== dropzoneCounts.value) {
+      alert('メンバー数と枠数を合わせて再実行してください');
+    }
+    else {
+      const group = [];
+      dropzones.value.forEach(dropzone => {
+        group.push({group_id: dropzone.group_id, group_number: dropzone.data.length});
 
+      });
+      const sendData ={members: curMembers.value, groups: group}
+      
+      try {
+        await axios.get('/api/getAutoGroupings/', {
+          params: {
+            userId: user.id,
+            sendData: sendData,
+          }
+        }).then(
+          res => {
+            if (res.data.checkId === false) {
+              alert('データを閲覧できません');
+            }
+            else if (res.data.checkSendData === false) {
+              alert('不正な操作がありました');
+            }
+            else {
+              allocateMemberToMemberList();
+
+              allocateMemberToGroup(res.data.groupings);
+
+              if (res.data.checkGroupingMembers === false || res.data.checkGroupingGroups === false) {
+                alert('グループに振り分けできなかったメンバーがいます');
+              }
+            }
+          }
+        )
+      } catch (error) {
+        
+      }
+    }
+  }
+}
+
+const allocateMemberToMemberList = () => {
+  const memberListElement = document.getElementById('MemberList');
+  curMembers.value.forEach(curMember => {
+    const memberId = curMember.member_id;
+    const memberElement = document.getElementById('Member' + memberId);
+    memberListElement.appendChild(memberElement);
+  });
+}
+
+const allocateMemberToGroup = (grouping) => {
+  grouping.forEach(groupingItem => {
+    const groupId = groupingItem.group_id;
+    if (groupId !== null) {
+      const members = groupingItem.members;
+      if (members.length !== 0) {
+        const dropzoneElements = document.querySelectorAll(`[data-group-id="${groupId}"]`);
+        if (dropzoneElements.length !== 0 && members.length <= dropzoneElements.length) {
+          for (let i = 0; i < members.length; i++) {
+            const memberElement = document.getElementById('Member' + members[i].member_id);
+            dropzoneElements[i].appendChild(memberElement);
+          }
+        }
+      }
+    }
+  });
 }
 
 const sortContainers = ref(null);

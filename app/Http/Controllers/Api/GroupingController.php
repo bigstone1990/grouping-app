@@ -73,49 +73,55 @@ class GroupingController extends Controller
         if (intval($request->userId) !== $userId) {
             return response()->json([
                 'checkId'=> false,
-                'checkSendData'=> null,
+                'checkReceiveData'=> null,
+                'checkGroupingMembers' =>null,
+                'checkGroupingGroups' => null,
                 'groupings' => null,
             ]);
         }
 
-        $sendData = $request->sendData;
+        $receiveData = $request->sendData;
         $groups = Group::where('user_id', '=', $userId)->get();
         $members = Member::where('user_id', '=', $userId)->get();
 
-        foreach ($sendData['groups'] as $sendGroup) {
-            if (!$groups->contains('id', intval($sendGroup['group_id']))) {
+        foreach ($receiveData['groups'] as $receiveDataGroup) {
+            if (!$groups->contains('id', intval($receiveDataGroup['group_id']))) {
                 return response()->json([
                     'checkId'=> null,
-                    'checkSendData'=> false,
+                    'checkReceiveData'=> false,
+                    'checkGroupingMembers' =>null,
+                    'checkGroupingGroups' => null,
                     'groupings' => null,
                 ]);
             }
         }
 
-        foreach ($sendData['members'] as $sendMember) {
-            if (!$members->contains('id', intval($sendMember['member_id']))) {
+        foreach ($receiveData['members'] as $receiveDataMember) {
+            if (!$members->contains('id', intval($receiveDataMember['member_id']))) {
                 return response()->json([
                     'checkId'=> null,
-                    'checkSendData'=> false,
+                    'checkReceiveData'=> false,
+                    'checkGroupingMembers' =>null,
+                    'checkGroupingGroups' => null,
                     'groupings' => null,
                 ]);
             }
         }
 
         // 受信データ加工
-        $revSendMembers = [];
-        foreach ($sendData['members'] as $sendMember) {
-            array_push($revSendMembers, [
-                'member_id' => intval($sendMember['member_id']),
+        $revReceiveDataMembers = [];
+        foreach ($receiveData['members'] as $receiveDataMember) {
+            array_push($revReceiveDataMembers, [
+                'member_id' => intval($receiveDataMember['member_id']),
             ]);
         }
 
-        $revSendGroups = [];
-        foreach ($sendData['groups'] as $sendGroup) {
-            if (intval($sendGroup['group_number']) > 0) {
-                array_push($revSendGroups, [
-                    'group_id' => intval($sendGroup['group_id']),
-                    'group_number' => intval($sendGroup['group_number'])
+        $revReceiveDataGroups = [];
+        foreach ($receiveData['groups'] as $receiveDataGroup) {
+            if (intval($receiveDataGroup['group_number']) > 0) {
+                array_push($revReceiveDataGroups, [
+                    'group_id' => intval($receiveDataGroup['group_id']),
+                    'group_number' => intval($receiveDataGroup['group_number'])
                 ]);
             }
         }
@@ -125,10 +131,10 @@ class GroupingController extends Controller
         $minDate = Carbon::today()->addDays(-30)->format('Y-m-d');
 
         $refData = [];
-        foreach ($revSendMembers as $revSendMember) {
-            $member = Member::findOrFail($revSendMember['member_id']);
-            foreach($revSendGroups as $revSendGroup) {
-                $group = $member->groups()->where('groups.id', '=', $revSendGroup['group_id'])->first();
+        foreach ($revReceiveDataMembers as $revReceiveDataMember) {
+            $member = Member::findOrFail($revReceiveDataMember['member_id']);
+            foreach($revReceiveDataGroups as $revReceiveDataGroup) {
+                $group = $member->groups()->where('groups.id', '=', $revReceiveDataGroup['group_id'])->first();
                 if(!is_null($group)) {
                     $total = DB::table('groupings')
                     ->where('user_id', '=', $userId)
@@ -164,44 +170,44 @@ class GroupingController extends Controller
         $refData = collect($refData);
 
         // allocatable == true の個数を計算
-        $allocatables = [];
-        foreach ($revSendMembers as $revSendMember) {
-            $member = Member::findOrFail($revSendMember['member_id']);
+        $allocatablesData = [];
+        foreach ($revReceiveDataMembers as $revReceiveDataMember) {
+            $member = Member::findOrFail($revReceiveDataMember['member_id']);
             
-            $count = $refData->where('member_id', '=', $member->id)->where('allocatable', '=', true)->count();
+            $allocatableNum = $refData->where('member_id', '=', $member->id)->where('allocatable', '=', true)->count();
 
-            array_push($allocatables, [
+            array_push($allocatablesData, [
                 'member_id' => $member->id,
-                'allocatables' => $count,
+                'allocatableNum' => $allocatableNum,
             ]);
         }
 
         // コレクションに加工
-        $revSendMembers = collect($revSendMembers);
-        $revSendGroups = collect($revSendGroups);
-        $allocatables = collect($allocatables);
+        $revReceiveDataMembers = collect($revReceiveDataMembers);
+        $revReceiveDataGroups = collect($revReceiveDataGroups);
+        $allocatablesData = collect($allocatablesData);
 
         // オブジェクトのコレクションに変換
         $refData = $refData->map(function ($item) {
             return (object) $item;
         });
-        $revSendMembers = $revSendMembers->map(function ($item) {
+        $revReceiveDataMembers = $revReceiveDataMembers->map(function ($item) {
             return (object) $item;
         });
-        $revSendGroups = $revSendGroups->map(function ($item) {
+        $revReceiveDataGroups = $revReceiveDataGroups->map(function ($item) {
             return (object) $item;
         });
-        $allocatables = $allocatables->map(function ($item) {
+        $allocatablesData = $allocatablesData->map(function ($item) {
             return (object) $item;
         });
 
         // 計算処理初期化
-        $maxAllocatables = $allocatables->max('allocatables');
+        $maxAllocatableNum = $allocatablesData->max('allocatableNum');
         $membersState = [];
         $groupsState = [];
 
-        foreach ($revSendMembers as $revSendMember) {
-            $member = Member::findOrFail($revSendMember->member_id);
+        foreach ($revReceiveDataMembers as $revReceiveDataMember) {
+            $member = Member::findOrFail($revReceiveDataMember->member_id);
             array_push($membersState, [
                 'member_id' => $member->id,
                 'group_id' => null,
@@ -209,10 +215,11 @@ class GroupingController extends Controller
             ]);
         }
 
-        foreach ($revSendGroups as $revSendGroup) {
-            $group = Group::findOrFail($revSendGroup->group_id);
+        foreach ($revReceiveDataGroups as $revReceiveDataGroup) {
+            $group = Group::findOrFail($revReceiveDataGroup->group_id);
             array_push($groupsState, [
                 'group_id' => $group->id,
+                'maxNumber' => $revReceiveDataGroup->group_number,
                 'setCounts' => 0,
                 'isSet' => false,
             ]);
@@ -234,30 +241,30 @@ class GroupingController extends Controller
         $debugData = [];
 
         // 計算処理本処理
-        for ($i = 0; $i <= $maxAllocatables; $i++) {
-            $iAllocatables = $allocatables->filter(function ($allocatable) use ($i) {
-                return $allocatable->allocatables == $i;
+        for ($i = 0; $i <= $maxAllocatableNum; $i++) {
+            $iAllocatables = $allocatablesData->filter(function ($allocatableData) use ($i) {
+                return $allocatableData->allocatableNum == $i;
             });
 
             $iMembers = [];
             if (count($iAllocatables) != 0) {
                 foreach($iAllocatables as $iAllocatable) {
-                    $memberRefData = $refData->filter(function ($ref) use ($iAllocatable) {
-                        return ($ref->member_id == $iAllocatable->member_id && $ref->allocatable == true);
+                    $memberRefData = $refData->filter(function ($refDataItem) use ($iAllocatable) {
+                        return ($refDataItem->member_id == $iAllocatable->member_id && $refDataItem->allocatable == true);
                     });
                     
                     if (count($memberRefData) == 0) {
-                        $index = $membersState->search(function ($member) use ($iAllocatable) {
-                            return $member->member_id == $iAllocatable->member_id;
+                        $membersStateIndex = $membersState->search(function ($memberState) use ($iAllocatable) {
+                            return $memberState->member_id == $iAllocatable->member_id;
                         });
                         
-                        $membersState[$index]->group_id = null;
-                        $membersState[$index]->isSet = true;
+                        $membersState[$membersStateIndex]->group_id = null;
+                        $membersState[$membersStateIndex]->isSet = true;
                         continue;
                     }
                     else {
-                        foreach ($memberRefData as $member) {
-                            array_push($iMembers, $member);
+                        foreach ($memberRefData as $memberRefDataItem) {
+                            array_push($iMembers, $memberRefDataItem);
                         }
                     }
                 }
@@ -269,18 +276,148 @@ class GroupingController extends Controller
             $iMembers = $iMembers->map(function ($item) {
                 return (object) $item;
             });
-            // foreach ($iMembers as $iMember) {
-            //     array_push($debugData, $iMember);
-            // };
-            // array_push($debugData, $i);
+
+            if (count($iMembers) > 0) {
+                // ここのアルゴリズムで計算結果が変わってくるので要検討
+                //  priMemberId: member_id順でratioが最も小さいgroup_idに割り振っていく
+                $calcType = 'priMemberId';
+
+                if ($calcType == 'priMemberId') {
+                    // $iMembersに含まれるmember_idを取得
+                    $iMembersId = [];
+                    foreach ($iMembers as $iMember) {
+                        if (!in_array($iMember->member_id, $iMembersId)) {
+                            array_push($iMembersId, $iMember->member_id);
+                        }
+                    }
+
+                    // メンバー一人についてデータをまとめる
+                    foreach ($iMembersId as $iMemberId) {
+                        $iMemberData = [];
+                        foreach ($iMembers as $iMember) {
+                            if ($iMember->member_id === $iMemberId) {
+                                array_push($iMemberData, $iMember);
+                            }
+                        }
+
+                        // ratioを昇順に並び替え
+                        usort($iMemberData, function($a, $b) {
+                            return $a->ratio <=> $b->ratio; // 昇順
+                        });
+
+                        // コレクションに加工
+                        $iMemberData = collect($iMemberData);
+                        // オブジェクトのコレクションに変換
+                        $iMemberData = $iMemberData->map(function ($item) {
+                            return (object) $item;
+                        });
+
+                        foreach ($iMemberData as $iMemberDataItem) {
+                            $iMemberDataItemMemberId = $iMemberDataItem->member_id;
+                            $membersStateIndex = $membersState->search(function ($memberState) use ($iMemberDataItemMemberId) {
+                                return $memberState->member_id == $iMemberDataItemMemberId;
+                            });
+
+                            if ($membersState[$membersStateIndex]->group_id !== null && $membersState[$membersStateIndex]->isSet === true) {
+                                break;
+                            }
+
+                            $iMemberDataItemGroupId = $iMemberDataItem->group_id;
+                            $groupsStateIndex = $groupsState->search(function ($groupState) use ($iMemberDataItemGroupId) {
+                                return $groupState->group_id == $iMemberDataItemGroupId;
+                            });
+                            
+                            if (($groupsState[$groupsStateIndex]->maxNumber > $groupsState[$groupsStateIndex]->setCounts) && $groupsState[$groupsStateIndex]->isSet === false) {
+                                $membersState[$membersStateIndex]->group_id = $iMemberDataItemGroupId;
+                                $membersState[$membersStateIndex]->isSet = true;
+
+                                $groupsState[$groupsStateIndex]->setCounts += 1;
+                                if($groupsState[$groupsStateIndex]->maxNumber === $groupsState[$groupsStateIndex]->setCounts) {
+                                    $groupsState[$groupsStateIndex]->isSet = true;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         // 送信データ加工
+        $checkGroupingMembers = true;
+        $checkGroupingGroups = true;
+
+        foreach ($membersState as $memberState) {
+            if (!$memberState->group_id) {
+                $checkGroupingMembers = false;
+                break;
+            }
+        }
+
+        foreach ($groupsState as $groupState) {
+            if (!$groupState->isSet) {
+                $checkGroupingGroups = false;
+                break;
+            }
+        }
+        
+        // 自力でgroup_id, member_idの順に並び替え
+        $sendGroupingsData = [];
+
+        $getOrderedGroups = Group::where('user_id', '=', $userId)->orderBy('order')->get();
+        $getOrderedMembers = Member::where('user_id', '=', $userId)->orderBy('id')->get();
+
+        $orderedGroupId = [];
+        foreach ($getOrderedGroups as $orderedGroup) {
+            array_push($orderedGroupId, $orderedGroup->id);
+        }
+        array_push($orderedGroupId, null);
+
+        $orderedMemberId = [];
+        foreach ($getOrderedMembers as $orderedMember) {
+            array_push($orderedMemberId, $orderedMember->id);
+        }
+
+        foreach ($orderedGroupId as $orderedGroupIdItem) {
+            $sendGroupingData = [];
+            $filteredMembersState = $membersState->filter(function ($memberState) use ($orderedGroupIdItem) {
+                return ($memberState->group_id == $orderedGroupIdItem);
+            });
+            if (count($filteredMembersState) === 0) {
+                $sendGroupingData = [
+                    'group_id' => $orderedGroupIdItem,
+                    'members' => [],
+                ];
+                array_push($sendGroupingsData, $sendGroupingData);
+            }
+            else {
+                $sendGroupingMembersData = [];
+                foreach ($orderedMemberId as $orderedMemberIdItem) {
+                    $doubleFilteredMemberState = $filteredMembersState->filter(function ($filteredMemberState) use ($orderedMemberIdItem) {
+                        return ($filteredMemberState->member_id == $orderedMemberIdItem);
+                    });
+
+                    if (count($doubleFilteredMemberState) == 1) {
+                        $sendGroupingMemberData = [
+                            'member_id' => $orderedMemberIdItem,
+                        ];
+                        array_push($sendGroupingMembersData, $sendGroupingMemberData);
+                    }
+                }
+                $sendGroupingData = [
+                    'group_id' => $orderedGroupIdItem,
+                    'members' => $sendGroupingMembersData,
+                ];
+                
+                array_push($sendGroupingsData, $sendGroupingData);
+            }
+        }
 
         return response()->json([
             'checkId'=> null,
-            'checkSendData'=> null,
-            'groupings' => $debugData,
+            'checkReceiveData'=> null,
+            'checkGroupingMembers' => $checkGroupingMembers,
+            'checkGroupingGroups' => $checkGroupingGroups,
+            'groupings' => $sendGroupingsData,
         ]);
     }
 }

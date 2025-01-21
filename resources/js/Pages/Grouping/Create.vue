@@ -93,7 +93,13 @@ const autoGrouping = async () => {
               alert('不正な操作がありました');
             }
             else {
-              console.log(res.data.groupings)
+              allocateMemberToMemberList();
+
+              allocateMemberToGroup(res.data.groupings);
+
+              if (res.data.checkGroupingMembers === false || res.data.checkGroupingGroups === false) {
+                alert('グループに振り分けできなかったメンバーがいます');
+              }
             }
           }
         )
@@ -102,6 +108,33 @@ const autoGrouping = async () => {
       }
     }
   }
+}
+
+const allocateMemberToMemberList = () => {
+  const memberListElement = document.getElementById('MemberList');
+  curMembers.value.forEach(curMember => {
+    const memberId = curMember.member_id;
+    const memberElement = document.getElementById('Member' + memberId);
+    memberListElement.appendChild(memberElement);
+  });
+}
+
+const allocateMemberToGroup = (grouping) => {
+  grouping.forEach(groupingItem => {
+    const groupId = groupingItem.group_id;
+    if (groupId !== null) {
+      const members = groupingItem.members;
+      if (members.length !== 0) {
+        const dropzoneElements = document.querySelectorAll(`[data-group-id="${groupId}"]`);
+        if (dropzoneElements.length !== 0 && members.length <= dropzoneElements.length) {
+          for (let i = 0; i < members.length; i++) {
+            const memberElement = document.getElementById('Member' + members[i].member_id);
+            dropzoneElements[i].appendChild(memberElement);
+          }
+        }
+      }
+    }
+  });
 }
 
 const sortContainers = ref(null);
