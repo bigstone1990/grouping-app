@@ -221,7 +221,7 @@ return [
         'minute' => '分',
         'mobile' => '携帯',
         'month' => '月',
-        'name' => '名前',
+        // 'name' => '名前',
         'national_code' => '国コード',
         'number' => '番号',
         'password' => 'パスワード',
@@ -256,6 +256,10 @@ return [
         'updated_at' => '更新日',
         'username' => 'ユーザー名',
         'year' => '年',
+        'groupName' => 'グループ名',
+        'memberName' => 'メンバー名',
+        'userName' => 'ユーザー名',
+        'name' => 'ユーザー名',
     ],
 
 ];

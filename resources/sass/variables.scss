@@ -1,0 +1,18 @@
+$breakpoint-data: (
+  smartphone-base: 375px,
+  smartphone-wide: 667px,
+  tablet-base: 768px,
+  tablet-wide: 1024px,
+  fhd-base: 1080px,
+  fhd-wide: 1920px,
+  qhd-base: 1440px,
+  qhd-wide: 2560px
+);
+
+// Tailwind CSS
+// クラス名	最小幅 (px)	説明
+// sm	640px	スモールデバイス (例: スマートフォン)
+// md	768px	ミディアムデバイス (例: タブレット)
+// lg	1024px	ラージデバイス (例: 小型ノートPC)
+// xl	1280px	エクストララージデバイス (例: デスクトップ)
+// 2xl	1536px	より大きなデバイス (例: 大型ディスプレイ)

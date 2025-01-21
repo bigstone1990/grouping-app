@@ -17,4 +17,14 @@ export default defineConfig({
             },
         }),
     ],
+    css: {
+        preprocessorOptions: {
+            scss: {
+                additionalData: `
+                    @use "sass:map";
+                    @use "/resources/sass/variables.scss" as *;
+                `,
+            },
+        },
+    },
 });

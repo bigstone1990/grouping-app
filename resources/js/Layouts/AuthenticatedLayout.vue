@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue';
-import ApplicationLogo from '@/Components/ApplicationLogo.vue';
+import ApplicationFullLogo from '@/Components/ApplicationFullLogo.vue';
 import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
 import NavLink from '@/Components/NavLink.vue';
@@ -23,7 +23,7 @@ const showingNavigationDropdown = ref(false);
                             <!-- Logo -->
                             <div class="flex shrink-0 items-center">
                                 <Link :href="route('dashboard')">
-                                    <ApplicationLogo
+                                    <ApplicationFullLogo
                                         class="block h-9 w-auto fill-current text-gray-800"
                                     />
                                 </Link>
@@ -31,18 +31,43 @@ const showingNavigationDropdown = ref(false);
 
                             <!-- Navigation Links -->
                             <div
-                                class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex"
+                                class="hidden space-x-8 md:-my-px md:ms-10 md:flex"
                             >
                                 <NavLink
                                     :href="route('dashboard')"
                                     :active="route().current('dashboard')"
                                 >
-                                    Dashboard
+                                    ダッシュボード
+                                </NavLink>
+                                <NavLink
+                                    :href="route('groupings.index')"
+                                    :active="route().current('groupings.index')"
+                                >
+                                    グループ分け
+                                </NavLink>
+                                <NavLink
+                                    v-if="$page.props.auth.permissions.admin"
+                                    :href="route('users.index')"
+                                    :active="route().current('users.index')"
+                                >
+                                    ユーザー管理
+                                </NavLink>
+                                <NavLink
+                                    :href="route('groups.index')"
+                                    :active="route().current('groups.index')"
+                                >
+                                    グループ管理
+                                </NavLink>
+                                <NavLink
+                                    :href="route('members.index')"
+                                    :active="route().current('members.index')"
+                                >
+                                    メンバー管理
                                 </NavLink>
                             </div>
                         </div>
 
-                        <div class="hidden sm:ms-6 sm:flex sm:items-center">
+                        <div class="hidden md:ms-6 md:flex md:items-center">
                             <!-- Settings Dropdown -->
                             <div class="relative ms-3">
                                 <Dropdown align="right" width="48">
@@ -74,14 +99,14 @@ const showingNavigationDropdown = ref(false);
                                         <DropdownLink
                                             :href="route('profile.edit')"
                                         >
-                                            Profile
+                                            個人設定
                                         </DropdownLink>
                                         <DropdownLink
                                             :href="route('logout')"
                                             method="post"
                                             as="button"
                                         >
-                                            Log Out
+                                            ログアウト
                                         </DropdownLink>
                                     </template>
                                 </Dropdown>
@@ -89,7 +114,7 @@ const showingNavigationDropdown = ref(false);
                         </div>
 
                         <!-- Hamburger -->
-                        <div class="-me-2 flex items-center sm:hidden">
+                        <div class="-me-2 flex items-center md:hidden">
                             <button
                                 @click="
                                     showingNavigationDropdown =
@@ -137,14 +162,39 @@ const showingNavigationDropdown = ref(false);
                         block: showingNavigationDropdown,
                         hidden: !showingNavigationDropdown,
                     }"
-                    class="sm:hidden"
+                    class="md:hidden"
                 >
                     <div class="space-y-1 pb-3 pt-2">
                         <ResponsiveNavLink
                             :href="route('dashboard')"
                             :active="route().current('dashboard')"
                         >
-                            Dashboard
+                            ダッシュボード
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            :href="route('groupings.index')"
+                            :active="route().current('groupings.index')"
+                        >
+                            グループ分け
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            v-if="$page.props.auth.permissions.admin"
+                            :href="route('users.index')"
+                            :active="route().current('users.index')"
+                        >
+                            ユーザー管理
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            :href="route('groups.index')"
+                            :active="route().current('groups.index')"
+                        >
+                            グループ管理
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            :href="route('members.index')"
+                            :active="route().current('members.index')"
+                        >
+                            メンバー管理
                         </ResponsiveNavLink>
                     </div>
 
@@ -165,14 +215,14 @@ const showingNavigationDropdown = ref(false);
 
                         <div class="mt-3 space-y-1">
                             <ResponsiveNavLink :href="route('profile.edit')">
-                                Profile
+                                個人設定
                             </ResponsiveNavLink>
                             <ResponsiveNavLink
                                 :href="route('logout')"
                                 method="post"
                                 as="button"
                             >
-                                Log Out
+                                ログアウト
                             </ResponsiveNavLink>
                         </div>
                     </div>
