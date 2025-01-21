@@ -75,7 +75,7 @@ const deleteMember = (id) => {
                             <div v-for="group in form.groupAllocatable" :key="group.group_id" class="GroupAllocateContainer" :class="{ 'IsChecked': group.group_allocatable }">
                               <div class="flex items-center">
                                 <Checkbox :id="group.group_id" v-model:checked="group.group_allocatable" />
-                                <InputLabel :for="group.group_id" :value="group.group_name" class="flex-auto pl-2 py-4 leading-7 text-sm text-gray-600" :class="{ 'text-white': group.group_allocatable }" />
+                                <InputLabel :for="group.group_id" :value="group.group_name" class="flex-auto pl-2 py-4 leading-7 text-sm text-gray-600 select-none" :class="{ 'text-white': group.group_allocatable }" />
                               </div>
                             </div>
                           </div>

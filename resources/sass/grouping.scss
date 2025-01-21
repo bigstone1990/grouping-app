@@ -139,6 +139,7 @@
       border: 1px solid #d1d5db;
       box-shadow: 0 0 #0000, 0 0 #0000, 0 1px 2px 0 rgb(0 0 0 / 0.05);
       background-color: #f3f4f6;
+      user-select: none;
       
       @media screen and (min-width: map.get($breakpoint-data, smartphone-wide)) {
         flex: 0 1 calc(calc(100% - 2rem) / 3);
