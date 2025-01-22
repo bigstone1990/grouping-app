@@ -1,8 +1,11 @@
 <p class="mb-4">{{$user->name}} 様</p>
 
-<p class="mb-4">ユーザー登録が完了しました。</p>
+<p class="mb-4">Grouperのユーザー登録が完了しました。</p>
 
 <div class="mb-4">
-  <p>初期パスワード</p>
-  <p>{{$password}}</p>
+  URL: <a href="https://grouper.fun">https://grouper.fun</a>
+</div>
+
+<div class="mb-4">
+  初期パスワード: {{$password}}
 </div>
