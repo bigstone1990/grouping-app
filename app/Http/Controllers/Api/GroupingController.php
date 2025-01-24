@@ -56,7 +56,7 @@ class GroupingController extends Controller
             ]);
         }
 
-        $members = Member::where('user_id', '=', $userId)->orderBy('id')->get();
+        $members = Member::where('user_id', '=', $userId)->orderBy('kana')->get();
 
         return response()->json([
             'checkId'=> null,
@@ -364,7 +364,7 @@ class GroupingController extends Controller
         $sendGroupingsData = [];
 
         $getOrderedGroups = Group::where('user_id', '=', $userId)->orderBy('order')->get();
-        $getOrderedMembers = Member::where('user_id', '=', $userId)->orderBy('id')->get();
+        $getOrderedMembers = Member::where('user_id', '=', $userId)->orderBy('kana')->get();
 
         $orderedGroupId = [];
         foreach ($getOrderedGroups as $orderedGroup) {

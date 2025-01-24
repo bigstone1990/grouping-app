@@ -19,12 +19,12 @@ class GroupingService
         ->whereNull('deleted_at');
 
         $members = DB::table('members')
-        ->selectRaw('id, name as member_name')
+        ->selectRaw('id, name as member_name, kana as member_kana')
         ->where('user_id', '=', $userId)
         ->whereNull('deleted_at');
 
         $groupings = DB::table('groupings')
-        ->selectRaw('groupings.id, groupings.date, groupings.group_id, groups.group_name, groups.group_order, groupings.member_id, members.member_name')
+        ->selectRaw('groupings.id, groupings.date, groupings.group_id, groups.group_name, groups.group_order, groupings.member_id, members.member_name, members.member_kana')
         ->leftJoinSub($groups, 'groups', function (JoinClause $join) {
             $join->on('groupings.group_id', '=', 'groups.id');
         })
@@ -35,7 +35,7 @@ class GroupingService
         ->where('groupings.user_id', $userId)
         ->whereNull('groupings.deleted_at')
         ->orderBy('groups.group_order')
-        ->orderBy('groupings.member_id')
+        ->orderBy('members.member_kana')
         ->get();
 
         $groupingData = [];
@@ -114,11 +114,11 @@ class GroupingService
         ->where('user_id', '=', $userId);
 
         $members = DB::table('members')
-        ->selectRaw('id, name as member_name')
+        ->selectRaw('id, name as member_name, kana as member_kana')
         ->where('user_id', '=', $userId);
 
         $groupings = DB::table('groupings')
-        ->selectRaw('groupings.id, groupings.date, groupings.group_id, groups.group_name, groups.group_order, groupings.member_id, members.member_name')
+        ->selectRaw('groupings.id, groupings.date, groupings.group_id, groups.group_name, groups.group_order, groupings.member_id, members.member_name, members.member_kana')
         ->leftJoinSub($groups, 'groups', function (JoinClause $join) {
             $join->on('groupings.group_id', '=', 'groups.id');
         })
@@ -129,7 +129,7 @@ class GroupingService
         ->where('groupings.user_id', $userId)
         ->whereNull('groupings.deleted_at')
         ->orderBy('groups.group_order')
-        ->orderBy('groupings.member_id')
+        ->orderBy('members.member_kana')
         ->get();
 
         $groupingData = [];

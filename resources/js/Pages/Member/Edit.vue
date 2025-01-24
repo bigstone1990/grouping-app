@@ -13,6 +13,7 @@ const props = defineProps({
 
 const form = useForm({
   memberName: props.member.member_name,
+  memberKana: props.member.member_kana,
   groupAllocatable: reactive(
     props.member.groups_data.map((group) => ({
       group_id: group.group_id,
@@ -66,6 +67,19 @@ const deleteMember = (id) => {
                             autofocus
                           />
                           <InputError class="mt-2" :message="form.errors.memberName" />
+                        </div>
+                      </div>
+                      <div class="p-2 w-full">
+                        <div class="relative">
+                          <InputLabel for="memberKana" value="メンバー名かな" class="leading-7 text-sm text-gray-600" />
+                          <TextInput
+                            id="memberKana"
+                            type="text"
+                            class="mt-1 block w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                            v-model="form.memberKana"
+                            required
+                          />
+                          <InputError class="mt-2" :message="form.errors.memberKana" />
                         </div>
                       </div>
                       <div class="p-2 w-full">

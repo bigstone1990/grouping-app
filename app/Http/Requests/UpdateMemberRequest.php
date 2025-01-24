@@ -23,6 +23,14 @@ class UpdateMemberRequest extends FormRequest
     {
         return [
             'memberName' => ['required', 'string', 'max:10'],
+            'memberKana' => ['required', 'string', 'regex:/^[ぁ-ゖー０-９]+$/u', 'max:255'],
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'memberKana.regex' => 'メンバー名かなは、ひらがなと全角数字のみで入力してください。',
         ];
     }
 }
