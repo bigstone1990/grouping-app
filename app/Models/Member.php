@@ -17,6 +17,7 @@ class Member extends Model
     protected $fillable = [
         'user_id',
         'name',
+        'kana',
     ];
 
     public function user(): BelongsTo

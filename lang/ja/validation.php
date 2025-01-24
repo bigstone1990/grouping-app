@@ -258,6 +258,7 @@ return [
         'year' => '年',
         'groupName' => 'グループ名',
         'memberName' => 'メンバー名',
+        'memberKana' => 'メンバー名かな',
         'userName' => 'ユーザー名',
         'name' => 'ユーザー名',
     ],

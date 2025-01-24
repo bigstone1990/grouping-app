@@ -26,7 +26,7 @@ class MemberController extends Controller
 
         $membersData = [];
         
-        $members = Member::where('user_id', '=', $userId)->orderBy('id')->get();
+        $members = Member::where('user_id', '=', $userId)->orderBy('kana')->get();
         
         if (!$members->isEmpty()) {
             foreach ($members as $member) {
@@ -106,6 +106,7 @@ class MemberController extends Controller
         $member = Member::create([
             'user_id' => $userId,
             'name' => $request->memberName,
+            'kana' => $request->memberKana,
         ]);
 
         if (!empty($request->groupAllocatable)) {
@@ -172,6 +173,7 @@ class MemberController extends Controller
         $memberData = [
             'member_id' => $member->id,
             'member_name' => $member->name,
+            'member_kana' => $member->kana,
             'groups_data' => $groupsData,
         ];
 
@@ -202,6 +204,7 @@ class MemberController extends Controller
         }
 
         $member->name = $request->memberName;
+        $member->kana = $request->memberKana;
 
         $member->save();
 
@@ -285,7 +288,7 @@ class MemberController extends Controller
         ->selectRaw('id, name')
         ->where('user_id', '=', $userId)
         ->whereNull('deleted_at')
-        ->orderBy('id')
+        ->orderBy('kana')
         ->get();
 
         $membersData = [];
