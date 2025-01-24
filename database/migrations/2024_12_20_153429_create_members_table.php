@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->string('name');
-            $table->string('kana')->collation('utf8mb4_ja_0900_as_cs');;
+            $table->string('kana')->collation('utf8mb4_bin');;
             $table->softDeletes();
             $table->timestamps();
         });
