@@ -22,10 +22,10 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             UserSeeder::class,
-            GroupSeeder::class,
-            MemberSeeder::class,
-            AllocationSeeder::class,
-            GroupingSeeder::class,
+            // GroupSeeder::class,
+            // MemberSeeder::class,
+            // AllocationSeeder::class,
+            // GroupingSeeder::class,
         ]);
     }
 }
