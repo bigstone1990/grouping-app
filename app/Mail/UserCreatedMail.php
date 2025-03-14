@@ -41,7 +41,7 @@ class UserCreatedMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.user-created',
+            markdown: 'mail.user-created',
         );
     }
 
