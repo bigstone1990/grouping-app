@@ -1,105 +1,37 @@
-# グループ分けWEBアプリケーション
+# グループ分けWEBアプリケーション - Grouper
+## 背景
+私が所属している事業所では毎日掃除する時間があります。
+掃除は「テーブル」「廊下」「トイレ」など複数の担当があり、スタッフが当日メンバーの振り分けを考えてそれぞれの担当へ配置します。
+しかし、問題が2点あります。
+1点目は、スタッフが頭で考えて振り分けるため、振り分け作業に時間がかかり、非効率的です。
+もう1点は、掃除担当に偏りが生じることが多く、メンバーによっては不満を感じることもあります。
+そこで、掃除担当分けをシステム化し、一定期間の掃除担当をデータ化することで、掃除担当に偏りが生じないように自動でメンバーを振り分けるWEBアプリケーションを考案しました。
+それぞれの掃除担当をグループとして捉え、登録されたメンバーごとに初期設定で自動配置可能なグループを設定し、システムがそのグループ設定に応じて、過去の履歴から自動で振り分けるWEBアプリケーションを開発しました。
 
-## 初期環境構築
+## 使い方
+### ユーザー管理
+管理者の機能です。
+このWEBアプリケーションのユーザーを作成、削除することができます。
+ユーザー作成すると作成時に入力されたメールアドレスにWEBアプリケーションのURLと初期ログインパスワードがメール送信されます。
+後述するグループやメンバーはユーザーごとに紐づけられていることに注意してください。
 
-### Laravel Sail インストール
-curl -s https://laravel.build/grouping-app | bash
+### グループ管理
+管理者・一般の機能です。
+グループを作成、編集、削除することができます。
 
-### PhpMyAdminの追加
-#### docker-compose.yml
-    phpmyadmin:
-        image: phpmyadmin/phpmyadmin
-        links:
-            - mysql:mysql
-        ports:
-            - 8080:80
-        environment:
-            MYSQL_USERNAME: '${DB_USERNAME}'
-            MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
-            PMA_HOST: mysql
-        networks:
-            - sail
-#### コマンド
-sail up
+### メンバー管理
+管理者・一般の機能です。
+グループに配置できるメンバーを作成、編集、削除することができます。
+グループ設定では、自動編成操作を実行したときに振り分け可能なグループの設定を選択することができます。
 
-### Laravel Breeze Inertia Vue インストール
-sail composer require laravel/breeze --dev
-sail artisan breeze:install
-Inertia Vueを選択
-オプションは不要
-テストはPHPUnit
+### グループ分け
+管理者・一般の機能です。
+当日のグループ振り分けをすることができます。
+「メンバーリスト編集」ボタンからメンバーを呼び出すことができます。
+各グループの「枠を追加」ボタンでそのグループに振り分け可能な枠を追加することができます。
+「自動編成」ボタンは、過去30日間の履歴と各メンバーのグループ配置可能設定に応じて、自動で各グループに振り分けすることができます。
+メンバーはドラッグアンドドロップ操作が可能です。
 
-### DBマイグレート
-sail artisan migrate
-
-### デバッグバーのインストール
-#### コマンド
-sail composer require --dev barryvdh/laravel-debugbar
-#### margin-bottomの余白を消す（app.blade.php）
-        @if (config('app.debug'))
-        <script>
-            PhpDebugBar.DebugBar.prototype.recomputeBottomOffset = () => {};
-        </script>
-        @endif
-
-### バリデーションの設定導入
-sail artisan lang:publish
-sail composer require askdkc/breezejp --dev
-php artisan breezejp
-
-### ストレージのリンク
-sail artisan storage:link
-
-## @shopify/draggable インストール
-sail npm install @shopify/draggable --save
-
-## sass-embedded インストール
-sail npm install -D sass-embedded
-
-## toastr インストール
-sail npm install --save toastr
-
-## メールの設定(開発環境用)
-### Mailtrapの設定
-Mailtrapにログイン
-左側リストのEmail Testing -> Inboxes を選択
-My Inbox を選択
-Integration でSMTP の設定にした状態で、PHP -> Laravel 9+ を選択
-Copy して、プロジェクトの.env に必要な項目を上書き（MAIL_PASSWORD はCopy しないと表示されない）
-
-### 非同期処理
-.env に次の項目を変更
-QUEUE_CONNECTION=database
-
-ターミナルでワーカー起動
-sail artisan queue:work
-*queue:workプロセスをバックグラウンドで永続的に実行し続けるには、Supervisorなどのプロセスモニタを使用して、キューワーカの実行が停止しないようにする必要があります。
-
-## Sanctum インストール
-### コマンド
-sail artisan install:api
-
-### 注意
-/config/sanctum.phpの'stateful'にドメインを追加すること
-
-### bootstrap/app.php
-$middleware->statefulApi(); を追加
-    ->withMiddleware(function (Middleware $middleware) {
-        $middleware->statefulApi();
-    })
-
-### config/sanctum.php （必要に応じて）
-APIへのリクエストを許可するクライアントのドメインを設定
-
-## flatpickr インストール
-sail npm i flatpickr --save
-
-## sail share の利用
-bootstrap/app.php に記述追加
-->withMiddleware(function (Middleware $middleware) {
-    $middleware->trustProxies(at: '*');
-})
-sail npm run build を実行してから
-sail share
-※sail npm run dev していない状態で実行
-
+### 個人設定
+管理者・一般の機能です。
+自分のメールアドレスやパスワードを変更できます。
